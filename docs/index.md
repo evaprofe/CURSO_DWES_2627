@@ -3,7 +3,7 @@ hide:
   - toc
 ---
 
-# Bienvenida al Curso
+# Bienvenido al Curso 2026-2027
 
 Material de **Desarrollo Web en Entorno Servidor** para 2.º curso del IES Juan de Garay.
 
@@ -33,6 +33,5 @@ Selecciona un tema para comenzar. Las actividades están identificadas en dorado
 
 </div>
 
-!!! tip "Acceso rápido"
-    Utiliza el menú de la izquierda para recorrer el curso y la tabla de contenidos de la derecha para moverte dentro de cada documento.
+
 
