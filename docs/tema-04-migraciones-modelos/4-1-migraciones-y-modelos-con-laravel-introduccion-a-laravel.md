@@ -1025,4 +1025,3 @@ Fíjate que el nombre del modelo está en `CamelCase` y el nombre de la tabla es
 
 No siempre que creamos una migración creamos un modelo, pero siempre que trabajamos con un modelo debemos tener su tabla correspondiente.
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )

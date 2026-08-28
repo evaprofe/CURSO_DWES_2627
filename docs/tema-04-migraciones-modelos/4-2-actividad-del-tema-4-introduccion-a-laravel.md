@@ -263,4 +263,3 @@ $increme
 
 **Prueba** Se demuestra 10 % **funcional** que la inserción de un registro en la tabla se realiza correctamente.
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )
