@@ -1230,4 +1230,3 @@ json
 
 - **ApiResource** permite estructurar y controlar la salida de tus datos.
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )
