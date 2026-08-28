@@ -884,4 +884,3 @@ En este tema hemos aprendido:
 
 Con estas bases, estamos preparados para empezar a trabajar en proyectos más complejos usando Laravel y Blade de forma profesional.
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )
