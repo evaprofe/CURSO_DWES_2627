@@ -566,4 +566,3 @@ nosotros": http://localhost:8080/about
 ¡Ya has creado tu primera pequeña web usando
 Laravel, rutas y vistas Blade!
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )

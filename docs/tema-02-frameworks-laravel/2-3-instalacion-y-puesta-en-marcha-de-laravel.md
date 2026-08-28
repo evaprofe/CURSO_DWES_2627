@@ -207,4 +207,3 @@ Esto indica que Laravel está instalado correctamente y que la configuración de
 
 Ahora que Laravel está instalado, el siguiente paso será aprender a trabajar con rutas, controladores y modelos dentro del framework.
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )

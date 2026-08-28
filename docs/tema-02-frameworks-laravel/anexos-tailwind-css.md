@@ -349,4 +349,3 @@ Hecho. A partir de aquí Nginx sirve
 public/build y las vistas cargan
 Tailwind.
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )

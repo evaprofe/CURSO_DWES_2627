@@ -98,4 +98,3 @@ Busca en el aula virtual la tarea de la
 actividad del tema 2 y sube el documento
 pdf con la actividad realizada.
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )
