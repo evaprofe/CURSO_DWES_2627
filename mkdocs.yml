@@ -9,14 +9,14 @@ theme:
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: deep orange
+      primary: teal
+      accent: amber
       toggle:
         icon: material/brightness-7
         name: Activar modo oscuro
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
+      primary: teal
       accent: amber
       toggle:
         icon: material/brightness-4
@@ -25,6 +25,7 @@ theme:
     - navigation.indexes
     - navigation.sections
     - navigation.top
+    - navigation.tracking
     - search.highlight
     - search.suggest
     - content.code.copy
@@ -46,5 +47,63 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
+
+extra_css:
+  - stylesheets/extra.css
+
+nav:
+  - Inicio: index.md
+  - "1. Introducción al Desarrollo Web":
+      - "1.1 Desarrollo Web en el Servidor": tema-01-introduccion-desarrollo-web/introduccion-laravel.md
+      - "1.2 Patrón Modelo-Vista-Controlador": tema-01-introduccion-desarrollo-web/1-2.md
+      - "1.3 Protocolo HTTP": tema-01-introduccion-desarrollo-web/1-3.md
+      - "📝 Actividad 1 · MVC y HTTP": tema-01-introduccion-desarrollo-web/1-4.md
+  - "2. Frameworks y Laravel":
+      - "2.1 Introducción a los Frameworks": tema-02-frameworks-laravel/2-1.md
+      - "2.2 Entorno de Trabajo con Docker": tema-02-frameworks-laravel/2-2-configuracion-del-entorno-de-trabajo-con-docker.md
+      - "2.3 Instalación y Puesta en Marcha": tema-02-frameworks-laravel/2-3-instalacion-y-puesta-en-marcha-de-laravel.md
+      - "2.4 Estructura de un Proyecto Laravel": tema-02-frameworks-laravel/2-4-estructura-y-elementos-de-un-proyecto-laravel.md
+      - "📝 Actividad 2 · Introducción a Laravel": tema-02-frameworks-laravel/2-5-actividad-del-tema-2.md
+      - "Anexo · Tailwind CSS": tema-02-frameworks-laravel/anexos-tailwind-css.md
+      - "Guía del Entorno": tema-02-frameworks-laravel/instrucciones.md
+      - "🚀 Proyecto Guiado · Entorno Laravel":
+          - "Presentación": tema-02-frameworks-laravel/proyecto-github/docs/index.md
+          - "Introducción": tema-02-frameworks-laravel/proyecto-github/introduccion.md
+          - "Requisitos": tema-02-frameworks-laravel/proyecto-github/requisitos.md
+          - "Paso 1 · Preparación": tema-02-frameworks-laravel/proyecto-github/paso1-preparacion.md
+          - "Paso 7 · Docker": tema-02-frameworks-laravel/proyecto-github/paso7-docker.md
+          - "Paso 9 · MySQL": tema-02-frameworks-laravel/proyecto-github/paso9-mysql-cli.md
+          - "Paso 10 · Xdebug": tema-02-frameworks-laravel/proyecto-github/paso10-xdebug.md
+          - "Instrucciones": tema-02-frameworks-laravel/proyecto-github/instrucciones.md
+          - "Conclusión": tema-02-frameworks-laravel/proyecto-github/conclusion.md
+  - "3. Vistas con Blade":
+      - "3.1 Creación de Vistas con Blade": tema-03-vistas-blade/3-1-vistas-con-blade-introduccion-a-laravel.md
+      - "📝 Actividad 3 · Agencia de Viajes": tema-03-vistas-blade/3-2-actividad-del-tema-3-introduccion-a-laravel.md
+  - "4. Migraciones y Modelos":
+      - "4.1 Migraciones y Modelos en Laravel": tema-04-migraciones-modelos/4-1-migraciones-y-modelos-con-laravel-introduccion-a-laravel.md
+      - "📝 Actividad 4 · Migraciones y Modelos": tema-04-migraciones-modelos/4-2-actividad-del-tema-4-introduccion-a-laravel.md
+  - "5. Controladores de Laravel":
+      - "5.1 Controladores": tema-05-controladores/5-1-controladores-de-laravel-introduccion-a-laravel.md
+      - "5.2 Relaciones Uno a Muchos": tema-05-controladores/unidad-5-2-relaciones-uno-a-muchos-en-laravel-introduccion-a-laravel.md
+      - "📝 Actividad 5 · Controladores y Rutas": tema-05-controladores/actividad-del-tema-5-introduccion-a-laravel.md
+  - "6. Desarrollo CRUD Completo":
+      - "6.1 Desarrollo de un CRUD": tema-06-crud-completo/6-1-desarrollo-de-un-crud-completo-en-laravel-parte-1-introduccion-a-laravel.md
+      - "📝 Actividad 6 · CRUD de Productos": tema-06-crud-completo/6-2-actividad-del-tema-6-introduccion-a-laravel.md
+  - "7. Validaciones, Rutas y Mensajes":
+      - "7.1 Validaciones y Rutas Resource": tema-07-validaciones-rutas-mensajes/7-1-validaciones-rutas-resource-y-mensajes-del-sistema-introduccion-a-laravel.md
+      - "📝 Actividad 7 · Validaciones del CRUD": tema-07-validaciones-rutas-mensajes/actividad-del-tema-7-introduccion-a-laravel.md
+  - "8. API REST":
+      - "8.1 Creación de API REST": tema-08-api-rest/8-1-apis-restful-introduccion-a-laravel.md
+      - "8.2 API con Sanctum": tema-08-api-rest/8-2-apis-con-sanctum-introduccion-a-laravel.md
+      - "📝 Actividad 8 · API de Productos": tema-08-api-rest/8-3-actividad-del-tema-8-introduccion-a-laravel.md
+  - "9. Seeders, Factories y Faker":
+      - "9.1 Datos Iniciales y de Prueba": tema-09-seeders-factories-faker/9-1-creacion-de-datos-iniciales-y-de-prueba-seeders-factories-y-faker-introduccion-a-laravel.md
+      - "📝 Actividad 9 · Generación de Datos": tema-09-seeders-factories-faker/actividad-del-tema-9-introduccion-a-laravel.md
+  - "10. Despliegue de Aplicaciones Web":
+      - "10.1 Introducción al Despliegue": tema-10-despliegue/10-1-introduccion-al-despliegue-de-aplicaciones-web-introduccion-a-laravel.md
+      - "10.2 Aplicación PHP Sencilla": tema-10-despliegue/10-2-aplicacion-simple-con-estructura-precaria-php-introduccion-a-laravel.md
+      - "10.3 Aplicación Laravel Completa": tema-10-despliegue/10-3-aplicacion-completa-con-estructura-de-laravel-introduccion-a-laravel.md
+      - "10.4 Despliegue en Render": tema-10-despliegue/10-4-despliegue-en-paas-render-introduccion-a-laravel.md
+      - "📝 Actividad 10 · Despliegue": tema-10-despliegue/10-5-actividad-del-tema-10-introduccion-a-laravel.md
 
 copyright: IES JUAN DE GARAY - 2º DWES · Curso original de Beteta adaptado por Eva María Gómez Abad
