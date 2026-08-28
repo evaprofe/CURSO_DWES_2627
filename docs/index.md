@@ -7,8 +7,6 @@ hide:
 
 Material de **Desarrollo Web en Entorno Servidor** para 2.º curso del IES Juan de Garay.
 
-Selecciona un tema para comenzar. Las actividades están identificadas en dorado y el proyecto guiado en violeta.
-
 <div class="course-grid" markdown>
 
 [**1. Introducción al Desarrollo Web**<span>Servidor, MVC y protocolo HTTP</span>](tema-01-introduccion-desarrollo-web/introduccion-laravel.md)
