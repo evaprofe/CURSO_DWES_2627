@@ -933,4 +933,3 @@ No perdamos de vista el objetivo inicial, que es conseguir que la aplicación qu
 
 Aun que nosotros por abreviar hemos desplegado los cambios en la rama `main`, Lo ideal sería tener una rama de desarrollo y una rama de producción. De esta forma, podemos realizar los cambios en la rama de desarrollo y, una vez que estén listos, hacer un merge a la rama de producción para que se desplieguen automáticamente en el servidor remoto. Pero eso queda para los cursos de `git`.
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )

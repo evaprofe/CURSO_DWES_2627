@@ -22,4 +22,3 @@ El objetivo de esta práctica es que el alumno despliegue su aplicación Laravel
 
 Documentación 10% **clara** concisa que describe el proceso de despliegue.
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )

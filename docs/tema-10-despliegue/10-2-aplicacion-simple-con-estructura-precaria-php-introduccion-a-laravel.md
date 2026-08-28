@@ -299,4 +299,3 @@ En este tutorial hemos creado una aplicación simple con una estructura de carpe
 
 En el próximo punto del tema aprovecharemos lo aprendido para desplegar una aplicación `laravel` completa en un servidor remoto, adaptando la estructura de carpetas y utilizando `GitHub Actions` para automatizar el proceso de despliegue.
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )

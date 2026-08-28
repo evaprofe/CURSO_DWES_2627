@@ -679,4 +679,3 @@ Recuerda que debes sustituir `123456` por la clave secreta que has definido en e
 
 Si todo ha ido bien, deberías ver un mensaje indicando que se ha ejecutado el comando `migrate` y por tanto las tablas necesarias se han creado en la base de datos. Si hay algún error, se mostrará un mensaje de error con los detalles del problema.
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )
