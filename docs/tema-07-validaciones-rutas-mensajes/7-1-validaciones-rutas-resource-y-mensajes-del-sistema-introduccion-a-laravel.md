@@ -839,4 +839,3 @@ Este comando crea todos los métodos básicos ( `index`, `create`, `store`, `sho
 
 - Las rutas resource simplifican la estructura del código.
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )

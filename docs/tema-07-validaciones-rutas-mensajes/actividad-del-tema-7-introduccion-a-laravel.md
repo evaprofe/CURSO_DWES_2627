@@ -160,4 +160,3 @@ session(
 
 **Verificacion** El CRUD 10 % **y prueba** funciona **final** completamente y las rutas están correctamente registradas.
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )
