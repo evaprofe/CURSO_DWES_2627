@@ -1,0 +1,3495 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Apuntes de Desarrollo Web en Entorno Servidor">
+      
+      
+        <meta name="author" content="Eva María Gómez Abad">
+      
+      
+        <link rel="canonical" href="https://evaprofe.github.io/CURSO_DWES_2627/tema-06-crud-completo/6-1-desarrollo-de-un-crud-completo-en-laravel-parte-1-introduccion-a-laravel/">
+      
+      
+        <link rel="prev" href="../../tema-05-controladores/actividad-del-tema-5-introduccion-a-laravel/">
+      
+      
+        <link rel="next" href="../6-2-actividad-del-tema-6-introduccion-a-laravel/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>6.1 Desarrollo de un CRUD - Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#desarrollo-de-un-crud" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-header__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              6.1 Desarrollo de un CRUD
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Activar modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Activar modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-nav__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introducción al Desarrollo Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1. Introducción al Desarrollo Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/introduccion-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1 Desarrollo Web en el Servidor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2 Patrón Modelo-Vista-Controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.3 Protocolo HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 1 · MVC y HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Frameworks y Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2. Frameworks y Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1 Introducción a los Frameworks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-2-configuracion-del-entorno-de-trabajo-con-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.2 Entorno de Trabajo con Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-3-instalacion-y-puesta-en-marcha-de-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.3 Instalación y Puesta en Marcha
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-4-estructura-y-elementos-de-un-proyecto-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.4 Estructura de un Proyecto Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-5-actividad-del-tema-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 2 · Introducción a Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/anexos-tailwind-css/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anexo · Tailwind CSS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/instrucciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía del Entorno
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tema-02-frameworks-laravel/proyecto-github/docs/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🚀 Proyecto Guiado · Entorno Laravel
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🚀 Proyecto Guiado · Entorno Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/requisitos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso1-preparacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 1 · Preparación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso7-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 7 · Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso9-mysql-cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 9 · MySQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso10-xdebug/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 10 · Xdebug
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/instrucciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instrucciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/conclusion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conclusión
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. Vistas con Blade
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-03-vistas-blade/3-1-vistas-con-blade-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Creación de Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-03-vistas-blade/3-2-actividad-del-tema-3-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 3 · Agencia de Viajes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4. Migraciones y Modelos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-04-migraciones-modelos/4-1-migraciones-y-modelos-con-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 Migraciones y Modelos en Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-04-migraciones-modelos/4-2-actividad-del-tema-4-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 4 · Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Controladores de Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5. Controladores de Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/5-1-controladores-de-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Controladores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/unidad-5-2-relaciones-uno-a-muchos-en-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.2 Relaciones Uno a Muchos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/actividad-del-tema-5-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 5 · Controladores y Rutas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Desarrollo CRUD Completo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. Desarrollo CRUD Completo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1 Desarrollo de un CRUD
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1 Desarrollo de un CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion-a-crud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción a CRUD
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rutas-dinamicas-y-controladores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rutas Dinámicas y Controladores
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rutas Dinámicas y Controladores">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parametros-dinamicos-en-rutas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros dinámicos en rutas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-un-circuito-mvc-rapido-para-rutas-dinamicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear un circuito MVC rápido para rutas dinámicas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parametros-opcionales-y-valores-por-defecto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros opcionales y valores por defecto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#importancia-del-orden-de-las-rutas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Importancia del orden de las rutas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#desarrollo-del-crud-para-notas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Desarrollo del CRUD para notas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Desarrollo del CRUD para notas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#listar-todas-las-notas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listar todas las notas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-una-nueva-nota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear una Nueva Nota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#guardar-la-nueva-nota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Guardar la Nueva Nota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#editar-una-nota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Editar una Nota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actualizar-la-nota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Actualizar la Nota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mostrar-una-nota-individual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mostrar una Nota Individual
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eliminar-una-nota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eliminar una Nota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prueba-completa-del-crud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prueba completa del CRUD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tipado-en-los-metodos-del-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipado en los métodos del controlador
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6-2-actividad-del-tema-6-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 6 · CRUD de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-07-validaciones-rutas-mensajes/7-1-validaciones-rutas-resource-y-mensajes-del-sistema-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.1 Validaciones y Rutas Resource
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-07-validaciones-rutas-mensajes/actividad-del-tema-7-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 7 · Validaciones del CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. API REST
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    8. API REST
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-1-apis-restful-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.1 Creación de API REST
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-2-apis-con-sanctum-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.2 API con Sanctum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-3-actividad-del-tema-8-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 8 · API de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Seeders, Factories y Faker
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    9. Seeders, Factories y Faker
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-09-seeders-factories-faker/9-1-creacion-de-datos-iniciales-y-de-prueba-seeders-factories-y-faker-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9.1 Datos Iniciales y de Prueba
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-09-seeders-factories-faker/actividad-del-tema-9-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 9 · Generación de Datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-1-introduccion-al-despliegue-de-aplicaciones-web-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.1 Introducción al Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-2-aplicacion-simple-con-estructura-precaria-php-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.2 Aplicación PHP Sencilla
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-3-aplicacion-completa-con-estructura-de-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.3 Aplicación Laravel Completa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-4-despliegue-en-paas-render-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.4 Despliegue en Render
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-5-actividad-del-tema-10-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 10 · Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion-a-crud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción a CRUD
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rutas-dinamicas-y-controladores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rutas Dinámicas y Controladores
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rutas Dinámicas y Controladores">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parametros-dinamicos-en-rutas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros dinámicos en rutas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-un-circuito-mvc-rapido-para-rutas-dinamicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear un circuito MVC rápido para rutas dinámicas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parametros-opcionales-y-valores-por-defecto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros opcionales y valores por defecto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#importancia-del-orden-de-las-rutas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Importancia del orden de las rutas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#desarrollo-del-crud-para-notas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Desarrollo del CRUD para notas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Desarrollo del CRUD para notas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#listar-todas-las-notas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listar todas las notas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-una-nueva-nota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear una Nueva Nota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#guardar-la-nueva-nota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Guardar la Nueva Nota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#editar-una-nota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Editar una Nota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actualizar-la-nota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Actualizar la Nota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mostrar-una-nota-individual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mostrar una Nota Individual
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eliminar-una-nota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eliminar una Nota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prueba-completa-del-crud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prueba completa del CRUD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tipado-en-los-metodos-del-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipado en los métodos del controlador
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="desarrollo-de-un-crud">Desarrollo de un CRUD<a class="headerlink" href="#desarrollo-de-un-crud" title="Permanent link">&para;</a></h1>
+<h2 id="introduccion-a-crud">Introducción a CRUD<a class="headerlink" href="#introduccion-a-crud" title="Permanent link">&para;</a></h2>
+<p>El término <strong>CRUD</strong> corresponde a las operaciones básicas que se realizan en la mayoría de las aplicaciones que gestionan datos:</p>
+<ul>
+<li>
+<p>reate Crear Insertar nuevos datos.</p>
+</li>
+<li>
+<p>ead Leer Consultar y visualizar datos.</p>
+</li>
+<li>
+<p>pdate Actualizar): Modificar datos existentes.</p>
+</li>
+<li>
+<p>elete Eliminar): Borrar datos.</p>
+</li>
+</ul>
+<p>En Laravel, la implementación de un CRUD completo nos permite comprender cómo los <strong>Modelos</strong>, <strong>Controladores</strong> y <strong>Vistas</strong> interactúan entre sí para ofrecer una experiencia de usuario completa.</p>
+<p>Dominar el desarrollo de CRUDs es básico para cualquier programador web, ya que casi todas las aplicaciones web tienen que manejar datos de algún tipo, y estas son las acciones fundamentales que se realizan sobre esos datos.</p>
+<p>Además, este tema nos va a servir para aprender el funcionamiento de los formularios en Laravel.</p>
+<h2 id="rutas-dinamicas-y-controladores">Rutas Dinámicas y Controladores<a class="headerlink" href="#rutas-dinamicas-y-controladores" title="Permanent link">&para;</a></h2>
+<h3 id="parametros-dinamicos-en-rutas">Parámetros dinámicos en rutas<a class="headerlink" href="#parametros-dinamicos-en-rutas" title="Permanent link">&para;</a></h3>
+<p>En Laravel, podemos definir rutas que aceptan <strong>parámetros dinámicos</strong>. Estos parámetros permiten que una misma ruta atienda solicitudes distintas según el valor proporcionado. Podemos permitirnos el símil de que el nombre de la ruta es el nombre de la función y los parámetros son los argumentos que recibe esa función. Por tanto nos va a permitir generar una respuesta dinámica en función de los parámetros que reciba.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&lt;?php
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Route::get('/
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>nota/{id}',
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>function ($id) {
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>return
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>"Mostrando la
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>nota con ID:
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>$id";
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>});
+</code></pre></div>
+<p>En este caso, <code>id</code> es un parámetro dinámico. Si accedemos a <code>http://</code> <code>localhost:8080/nota/5</code>, Laravel mostrará: "Mostrando la nota con ID 5".</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&lt;?php
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Route::get('/
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>usuario/{id}/
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>nota/{nota_id}',
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>function ($id,
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>$nota_id) {
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>return
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>"Usuario $id -
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>Nota $nota_id";
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>});
+</code></pre></div>
+<p>El orden de los parámetros en la URL debe coincidir exactamente con el orden de los parámetros en la función anónima o el controlador.</p>
+<h3 id="crear-un-circuito-mvc-rapido-para-rutas-dinamicas">Crear un circuito MVC rápido para rutas dinámicas<a class="headerlink" href="#crear-un-circuito-mvc-rapido-para-rutas-dinamicas" title="Permanent link">&para;</a></h3>
+<p><strong>Modelo</strong>: Vamos a utilizar una tabla <code>notes</code> con los campos:</p>
+<ul>
+<li>
+<p><code>id</code> (entero, autoincremental)</p>
+</li>
+<li>
+<p><code>title</code> (string)</p>
+</li>
+<li>
+<p><code>description</code> (text)</p>
+</li>
+<li>
+<p><code>date</code> (date)</p>
+</li>
+<li>
+<p><code>done</code> (boolean)</p>
+</li>
+</ul>
+<p>Vamos a crear la migración de la nota y el controador:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>php artisan
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>make:migration
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>create_notes_table
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>php artisan
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>make:model Note
+</code></pre></div>
+<p>Podemos crearla migración y la nota con un solo comando:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>php artisan
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>make:model Note -m
+</code></pre></div>
+<p>Ahora vamos al archivo de migración <code>database/migrations/</code> <code>xxxx_xx_xx_create_notes_table.ph</code> <code>p</code> y añadimos los campos:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>&lt;?php
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>use
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Illuminate\Databa
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>use Illuminate\Da
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>use Illuminate\Su
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>class CreateNotes
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>{
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>/**
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>* Run the mi
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>*
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>* @return vo
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>*/
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>public functi
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>{
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>Schema::c
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>(Blueprint $table
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>$tabl
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>$tabl
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>$table-&gt;t
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>$table-&gt;d
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>$table-&gt;b
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>&gt;default(false);
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>$table-&gt;t
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>});
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>}
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>public function d
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>{
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>Schema::drop
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>}
+</code></pre></div>
+<p>Por último, ejecutamos la migración:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>php artisan migrate
+</code></pre></div>
+<p>Si tenemos algún problema porque no hemos creado la base de datos desde 0, podemos eliminar las migraciones anteiores con:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>php artisan
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>migrate:reset
+</code></pre></div>
+<p>Ahora vamos a implementar el modelo <code>Note</code>. Vamos a definir los campos que se pueden asignar en masa y los que no:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>&lt;?php
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>namespace App\Mode
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>use
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Illuminate\Databas
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>class Note extends
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>{
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>protected $fil
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>'description', 'da
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>protected $gua
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>}
+</code></pre></div>
+<ul>
+<li>
+<p><code>$fillable</code>: Define qué campos se pueden asignar en masa.</p>
+</li>
+<li>
+<p><code>$guarded</code>: Define qué campos <strong>no</strong> se pueden asignar.</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>php artisan
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>make:controller
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>NoteController
+</code></pre></div>
+<p>Ahora codificamos el controlador <code>app/</code> <code>Http/Controllers/</code> <code>NoteController.php</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>&lt;?php
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>public function
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>show($id)
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>{
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>return
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>view('notes.show',
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>compact('id'));
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>}
+</code></pre></div>
+<p>Ahora que ya tenemos el controlador y el método que manejará la ruta, y el modelo que se conectará con la base de datos, vamos a definir la ruta en <code>routes/</code> <code>web.php</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>&lt;?php
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>use
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>App\Http\Controlle
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>Route::get('/note/
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>[NoteController::c
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>&gt;name('note.show'
+</code></pre></div>
+<p>Por último nos queda crear la vista que mostrará la información de la nota con el ID recibido:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>&lt;h1&gt;Detalle de
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>Nota&lt;/h1&gt;
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>&lt;p&gt;El ID de la
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>nota es: {{ $id
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>}}&lt;/p&gt;
+</code></pre></div>
+<p>Con esto, accediendo a <code>/note/5</code> veremos "El ID de la nota es: 5".</p>
+<p>La función <code>compact('variable')</code> crea un array asociativo <code>['variable' =&gt;</code> <code>$variable]</code> que puede ser pasado a la vista. Es una forma rápida y limpia de pasar datos. Sólo la puedo utilizar si el valor de la clave es el mismo que el nombre de la variable.</p>
+<h3 id="parametros-opcionales-y-valores-por-defecto">Parámetros opcionales y valores por defecto<a class="headerlink" href="#parametros-opcionales-y-valores-por-defecto" title="Permanent link">&para;</a></h3>
+<p>Podemos definir parámetros <strong>opcionales</strong> añadiendo un signo de interrogación <code>?</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>&lt;?php
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>Route::get('/
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>saludo/
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>{nombre?}',
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>function ($nombre
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>= 'Invitado') {
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>return "Hola,
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>$nombre";
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>});
+</code></pre></div>
+<ul>
+<li>
+<p>Si accedemos a <code>/saludo/Laura</code>, veremos "Hola, Laura".</p>
+</li>
+<li>
+<p>Si accedemos a <code>/saludo</code>, veremos "Hola, Invitado".</p>
+</li>
+<li>
+<p>El parámetro opcional debe ser el último de la URL.</p>
+</li>
+<li>
+<p>Hay que asignar un <strong>valor por defecto</strong> en la función.</p>
+</li>
+</ul>
+<h3 id="importancia-del-orden-de-las-rutas">Importancia del orden de las rutas<a class="headerlink" href="#importancia-del-orden-de-las-rutas" title="Permanent link">&para;</a></h3>
+<p>Laravel evalúa las rutas en el <strong>orden en</strong> <strong>que se definen</strong>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>&lt;?php
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>Route::get('/
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>nota/nueva',
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>function() {
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>return 'Crear
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>nueva nota'; });
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>Route::get('/
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>nota/{id}',
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>function($id) {
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>return "Nota ID:
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>$id"; });
+</code></pre></div>
+<ul>
+<li>
+<p>Primero debe definirse <code>/nota/nueva</code> porque si no, Laravel intentará interpretar <code>nueva</code> como un <code>id</code>.</p>
+</li>
+<li>
+<p>El orden correcto es siempre de <strong>rutas</strong> <strong>más especificas a más generales</strong>.</p>
+</li>
+</ul>
+<p>Primero define todas las rutas fijas y luego las rutas con parámetros dinámicos.</p>
+<h2 id="desarrollo-del-crud-para-notas">Desarrollo del CRUD para notas<a class="headerlink" href="#desarrollo-del-crud-para-notas" title="Permanent link">&para;</a></h2>
+<h3 id="listar-todas-las-notas">Listar todas las notas<a class="headerlink" href="#listar-todas-las-notas" title="Permanent link">&para;</a></h3>
+<p>Primero creamos la ruta y el método para listar todas las notas.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>&lt;?php
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>use
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>App\Http\Controlle
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>Route::get('/',
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>[NoteController::c
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>&gt;name('note.index
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>&lt;?php
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>use App\Models\Note;
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>public function
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>index()
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>{
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>$notes =
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>Note::all();
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>return
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>view('notes.index',
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>compact('notes'));
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>}
+</code></pre></div>
+<ul>
+<li>
+<p><code>@foreach</code> se utiliza para recorrer elementos, pero no gestiona si el array está vacío.</p>
+</li>
+<li>
+<p><code>@forelse</code> permite recorrer elementos y además definir qué hacer si no hay elementos.</p>
+</li>
+</ul>
+<p>Ejemplo:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>@forelse ($notes
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>as $note)
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>&lt;p&gt;{{ $note-
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>&gt;title }}&lt;/p&gt;
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>@empty
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>&lt;p&gt;No hay
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>notas
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>disponibles.&lt;/p&gt;
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>@endforelse
+</code></pre></div>
+<p>En el ejemplo anterior, si <code>$notes</code> está vacío, se mostrará "No hay notas disponibles."</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>&lt;!DOCTYPE html&gt;
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>&lt;html lang="es"&gt;
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>&lt;head&gt;
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>&lt;meta
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>charset="UTF-8"&gt;
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>&lt;title&gt;@yield('ti
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>title&gt;
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>&lt;/head&gt;
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>&lt;body&gt;
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>&lt;header&gt;
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>&lt;h1&gt;Mi
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>Aplicación de Not
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>&lt;nav&gt;
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>&lt;a h
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>route('note.index
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>}}"&gt;Inicio&lt;/a&gt; |
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>&lt;a h
+<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>route('note.creat
+<a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>}}"&gt;Crear Nota&lt;/a
+<a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a>&lt;/nav&gt;
+<a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a>&lt;/header&gt;
+<a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a>&lt;main&gt;
+<a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a>
+<a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a>@yield('content'
+<a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a>&lt;/main&gt;
+<a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a>&lt;/body&gt;
+<a id="__codelineno-17-28" name="__codelineno-17-28" href="#__codelineno-17-28"></a>&lt;/html&gt;
+</code></pre></div>
+<p>En este formulario vamos a adelantar algunas cosas que ampliaremos más adelante. Para poner el enlace a leminar una nota, vamos a utilizar un formulario con el método <code>POST</code> y la directiva <code>@method('DELETE')</code>. Esta directiva simula el método HTTP DELETE en formularios HTML (que solo permiten GET y POST. Más adelante explicaremos esto con más detalle. Hasta aquí nada especialmente llmativo. Pero también veréis que está la directiva <code>@csrf</code>. Esta directiva genera un campo oculto con un token que protege el formulario contra ataques CSRF Cross-Site Request Forgery). Más adelante también explicaremos esto con más detalle. En <code>laravel</code> esta prtección es automática, pero hay que incluir la directiva <code>@csrf</code> en los formularios para que funcione correctamente.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>@extends('layouts
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>@section('title'
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>'Listado de Notas
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>@section('content
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>&lt;h2&gt;Listado d
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>Notas&lt;/h2&gt;
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>@forelse ($no
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>$note)
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>&lt;div&gt;
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>&lt;h3&gt;&lt;
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>href="{{
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>route('note.show
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>$note-&gt;id) }}"&gt;{{
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>&gt;title }}&lt;/a&gt;&lt;/h3
+<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a>&lt;p&gt;{{
+<a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a>&gt;description }}&lt;/
+<a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a>&lt;smal
+<a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a>$note-&gt;date }}&lt;/s
+<a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a>&lt;div&gt;
+<a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a>&lt;
+<a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a>href="{{
+<a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a>route('note.edit
+<a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a>$note-&gt;id) }}"&gt;Ed
+<a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a>a&gt;
+<a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a>&lt;
+<a id="__codelineno-18-29" name="__codelineno-18-29" href="#__codelineno-18-29"></a>action="{{
+<a id="__codelineno-18-30" name="__codelineno-18-30" href="#__codelineno-18-30"></a>route('note.dest
+<a id="__codelineno-18-31" name="__codelineno-18-31" href="#__codelineno-18-31"></a>$note-&gt;id) }}"
+<a id="__codelineno-18-32" name="__codelineno-18-32" href="#__codelineno-18-32"></a>method="POST"
+<a id="__codelineno-18-33" name="__codelineno-18-33" href="#__codelineno-18-33"></a>style="display:in
+<a id="__codelineno-18-34" name="__codelineno-18-34" href="#__codelineno-18-34"></a>
+<a id="__codelineno-18-35" name="__codelineno-18-35" href="#__codelineno-18-35"></a>@csrf
+<a id="__codelineno-18-36" name="__codelineno-18-36" href="#__codelineno-18-36"></a>
+<a id="__codelineno-18-37" name="__codelineno-18-37" href="#__codelineno-18-37"></a>@method('DELETE'
+<a id="__codelineno-18-38" name="__codelineno-18-38" href="#__codelineno-18-38"></a>
+<a id="__codelineno-18-39" name="__codelineno-18-39" href="#__codelineno-18-39"></a>&lt;button
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>type="submit"&gt;Eli
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>button&gt;
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>&lt;
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>&lt;/div
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>&lt;/div&gt;
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>@empty
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>&lt;p&gt;No hay
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>disponibles.&lt;/p&gt;
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>@endforelse
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>@endsection
+</code></pre></div>
+<h3 id="crear-una-nueva-nota">Crear una Nueva Nota<a class="headerlink" href="#crear-una-nueva-nota" title="Permanent link">&para;</a></h3>
+<p>Para poder crear una nota necesitamos tres cosas:</p>
+<ol>
+<li>
+<p><strong>1</strong>. Una ruta que muestre el formulario de creación, <code>/note/create</code>.</p>
+</li>
+<li>
+<p><strong>2</strong>. Un método en el controlador que maneje esa ruta y muestre la vista con el formulario: <code>function create()</code>.</p>
+</li>
+<li>
+<p><strong>3</strong>. Una vista que contenga el formulario de creación: <code>resources/views/</code> <code>notes/create.blade.php</code>.</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>&lt;?php
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>Route::get('/note/
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>create',
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>[NoteController::class,
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>'create'])-
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>&gt;name('note.create');
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>&lt;?php
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>public function
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>create()
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>{
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>return
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>view('notes.create
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>}
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>@extends('layouts
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>@section('title'
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>'Crear Nueva Nota
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>@section('content
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>&lt;h2&gt;Crear Not
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>&lt;form action=
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>route('note.store
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>method="POST"&gt;
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>@csrf
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>&lt;label&gt;Título:&lt;/l
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>&lt;input
+<a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>type="text"
+<a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>name="title" requ
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>&lt;label&gt;Descripció
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>label&gt;
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>&lt;textarea
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>name="descriptio
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>required&gt;&lt;/texta
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>&lt;label&gt;Fe
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>label&gt;
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>&lt;input
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>type="date" name=
+<a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>required&gt;
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>&lt;label&gt;Completada
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>label&gt;
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>&lt;input
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>type="checkbox"
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>name="done"&gt;
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>&lt;button
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>type="submit"&gt;Gua
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>yp
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>button&gt;
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>&lt;a href=
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>route('note.index
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>}}"&gt;Cancelar&lt;/a&gt;
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>&lt;/form&gt;
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>@endsection
+</code></pre></div>
+<h3 id="guardar-la-nueva-nota">Guardar la Nueva Nota<a class="headerlink" href="#guardar-la-nueva-nota" title="Permanent link">&para;</a></h3>
+<p>Al igual que en el caso anterior, para guardar la nota necesitamos dos cosas. Una ruta que maneje el envío del formulario y un método en el controlador que procese los datos y guarde la nota en la base de datos. Al final, redirigiremos a la lista de notas.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>&lt;?php
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>Route::post('/note
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>store',
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>[NoteController::c
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>'store'])-
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>&gt;name('note.store
+</code></pre></div>
+<p>Para guardar la nota, podemos usar diferentes métodos. Aquí mostramos dos formas:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>&lt;?php
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>public function
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>store(Request
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>$request)
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>{
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>$note = new
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>Note();
+<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>$note-&gt;title
+<a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a>$request-
+<a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a>&gt;input('title');
+<a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a>$note-&gt;descri
+<a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a>= $request-
+<a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a>&gt;input('descripti
+<a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a>$note-&gt;date =
+<a id="__codelineno-27-15" name="__codelineno-27-15" href="#__codelineno-27-15"></a>$request-
+<a id="__codelineno-27-16" name="__codelineno-27-16" href="#__codelineno-27-16"></a>&gt;input('date');
+<a id="__codelineno-27-17" name="__codelineno-27-17" href="#__codelineno-27-17"></a>$note-&gt;done =
+<a id="__codelineno-27-18" name="__codelineno-27-18" href="#__codelineno-27-18"></a>$request-
+<a id="__codelineno-27-19" name="__codelineno-27-19" href="#__codelineno-27-19"></a>&gt;input('done') ?
+<a id="__codelineno-27-20" name="__codelineno-27-20" href="#__codelineno-27-20"></a>0;
+<a id="__codelineno-27-21" name="__codelineno-27-21" href="#__codelineno-27-21"></a>$note-&gt;save(
+<a id="__codelineno-27-22" name="__codelineno-27-22" href="#__codelineno-27-22"></a>// Redirigir
+<a id="__codelineno-27-23" name="__codelineno-27-23" href="#__codelineno-27-23"></a>lista de notas
+<a id="__codelineno-27-24" name="__codelineno-27-24" href="#__codelineno-27-24"></a>return redire
+<a id="__codelineno-27-25" name="__codelineno-27-25" href="#__codelineno-27-25"></a>&gt;route('note.inde
+<a id="__codelineno-27-26" name="__codelineno-27-26" href="#__codelineno-27-26"></a>}
+</code></pre></div>
+<p>O usando el método <code>create</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>&lt;?php
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>public function
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>store(Request
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>$request)
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>{
+<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>
+<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>Note::create($requ
+<a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>&gt;all());
+<a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a>return redirec
+<a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a>&gt;route('note.index
+<a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a>}
+</code></pre></div>
+<p>En el caso de los campos <code>checkbox</code>, si no se marca, no se envía ningún valor, es decir, en el request no existirá la clave <code>done</code> y por tanto este campo no se actualizará. Para solucionarlo, podemos usar una expresión ternaria:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>$done = $request-
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>&gt;input('done') ? 1:
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>0;
+</code></pre></div>
+<p>para asignar un valor por defecto de <code>0</code> cuando no se marque el checkbox. O simplememnte comprobar si el campo existe en el request y asignar <code>1</code> si existe o <code>0</code> si no existe</p>
+<p>Por tanto tenemos que modificar el método <code>store</code> para que el campo <code>done</code> se actualice correctamente:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>&lt;?php
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>public function
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>store(Request
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>$request)
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>{
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>$data = $requ
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>&gt;all();
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>$data['done'
+<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>$request-
+<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>&gt;has('done');
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>Note::create($dat
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>return
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>redirect()-
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>&gt;route('note.inde
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>}
+</code></pre></div>
+<ul>
+<li>
+<p><code>@csrf</code> protege contra ataques CSRF Cross-Site Request Forgery).</p>
+</li>
+<li>
+<p><code>$request-&gt;all()</code> devuelve todos los datos enviados en el formulario.</p>
+</li>
+<li>
+<p>Laravel valida automáticamente que el token CSRF esté presente. Si no lo está, lanzará un error.</p>
+</li>
+</ul>
+<p>¿Cómo funciona CSRF?</p>
+<ul>
+<li>
+<p>Laravel genera un token único para cada sesión de usuario.</p>
+</li>
+<li>
+<p>Este token se incluye en cada formulario generado por Laravel.</p>
+</li>
+<li>
+<p>Cuando se envía el formulario, Laravel verifica que el token enviado coincida con el de la sesión.</p>
+</li>
+<li>
+<p>Si no coinciden, Laravel lanza un error 419 Page Expired).</p>
+</li>
+<li>
+<p>Esto previene que un atacante envíe formularios en nombre del usuario sin su consentimiento.</p>
+</li>
+</ul>
+<h3 id="editar-una-nota">Editar una Nota<a class="headerlink" href="#editar-una-nota" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>Route::get('/note/edit/
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>{note}',
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>[NoteController::class,
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>'edit'])-
+<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>&gt;name('note.edit');
+</code></pre></div>
+<p>Tenemos varias formas de recibir el parámetro <code>note</code>. En esta primer recibimos el ID y buscamos la nota, para poder pasarla a la vista:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>&lt;?php
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>public function
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>edit($id)
+<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>{
+<a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>$note =
+<a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>Note::findOrFail($
+<a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a>return
+<a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a>view('notes.edit'
+<a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a>compact('note'));
+<a id="__codelineno-33-10" name="__codelineno-33-10" href="#__codelineno-33-10"></a>}
+</code></pre></div>
+<p>En esta segunda forma, recibimos el modelo <code>Note</code>. De esta manera es Laravel el que se encarga de buscar la nota. Cuando trabajamos con modelos, esta es la forma recomendada:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>&lt;?php
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>public function
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>edit(Note $note)
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>{
+<a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>return
+<a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a>view('notes.edit'
+<a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a>compact('note'));
+<a id="__codelineno-34-8" name="__codelineno-34-8" href="#__codelineno-34-8"></a>}
+</code></pre></div>
+<p>En este caso la ruta la hemos definido con el método <code>PUT</code>. Este método es el que se utiliza para actualizar los datos de un recurso existente. Pero ¿cómo hacerlo si las opciones de <code>form</code> solo permiten <code>GET</code> y <code>POST</code> ?. Laravel nos ofrece una solución sencilla: la directiva <code>@method('PUT')</code>. Esta directiva simula el método PUT en formularios HTML. Esta directiva debe estar dentro del formulario y antes de los inputs.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>&lt;form id="sample-
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>form"
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>action="somepage.php
+<a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>method="POST"&gt;
+<a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>@csrf
+<a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a>@method('PUT')
+<a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a>&lt;!-- Otros campo
+<a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a>del formulario --&gt;
+<a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a>&lt;/form&gt;
+</code></pre></div>
+<p>Con este formato el formulario se enviará como un PUT, aunque el método del formulario sea POST.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>@extends('layouts
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>@section('title'
+<a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>Nota')
+<a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>
+<a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a>@section('content
+<a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a>&lt;h2&gt;Editar No
+<a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a>&lt;form action=
+<a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a>route('note.updat
+<a id="__codelineno-36-10" name="__codelineno-36-10" href="#__codelineno-36-10"></a>$note-&gt;id) }}"
+<a id="__codelineno-36-11" name="__codelineno-36-11" href="#__codelineno-36-11"></a>method="POST"&gt;
+<a id="__codelineno-36-12" name="__codelineno-36-12" href="#__codelineno-36-12"></a>@csrf
+<a id="__codelineno-36-13" name="__codelineno-36-13" href="#__codelineno-36-13"></a>@method(
+<a id="__codelineno-36-14" name="__codelineno-36-14" href="#__codelineno-36-14"></a>&lt;label&gt;Tí
+<a id="__codelineno-36-15" name="__codelineno-36-15" href="#__codelineno-36-15"></a>label&gt;
+<a id="__codelineno-36-16" name="__codelineno-36-16" href="#__codelineno-36-16"></a>&lt;input ty
+<a id="__codelineno-36-17" name="__codelineno-36-17" href="#__codelineno-36-17"></a>name="title" valu
+<a id="__codelineno-36-18" name="__codelineno-36-18" href="#__codelineno-36-18"></a>$note-&gt;title }}"
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>&lt;label&gt;Descripció
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>label&gt;
+<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>&lt;textarea
+<a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a>name="descriptio
+<a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a>required&gt;{{ $note
+<a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a>&gt;description }}&lt;/
+<a id="__codelineno-37-7" name="__codelineno-37-7" href="#__codelineno-37-7"></a>
+<a id="__codelineno-37-8" name="__codelineno-37-8" href="#__codelineno-37-8"></a>&lt;label&gt;Fe
+<a id="__codelineno-37-9" name="__codelineno-37-9" href="#__codelineno-37-9"></a>label&gt;
+<a id="__codelineno-37-10" name="__codelineno-37-10" href="#__codelineno-37-10"></a>&lt;input ty
+<a id="__codelineno-37-11" name="__codelineno-37-11" href="#__codelineno-37-11"></a>name="date" value
+<a id="__codelineno-37-12" name="__codelineno-37-12" href="#__codelineno-37-12"></a>$note-&gt;date }}"
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>&lt;label&gt;Completada
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>&lt;input
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>type="checkbox"
+<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>name="done" {{ $n
+<a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>? 'checked': ''
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>&lt;button
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>type="submit"&gt;Act
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>button&gt;
+<a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>&lt;a href=
+<a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a>route('note.index
+<a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a>}}"&gt;Cancelar&lt;/a&gt;
+<a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a>&lt;/form&gt;
+<a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a>@endsection
+</code></pre></div>
+<ul>
+<li><code>@method('PUT')</code> simula el método HTTP PUT en formularios HTML (que solo permiten GET y POST.</li>
+</ul>
+<h3 id="actualizar-la-nota">Actualizar la Nota<a class="headerlink" href="#actualizar-la-nota" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>&lt;?php
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>Route::put('/note/
+<a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>update/{note}',
+<a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>[NoteController::c
+<a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>'update'])-
+<a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>&gt;name('note.update
+</code></pre></div>
+<p>En este caso también tenemos dos formas de recibir el parámetro <code>Note $note</code>. En esta primer caso recibimos la nota y <code>laravel</code> por inyección de modelo la busca por nosotros y en el segundo caso recibimos el ID y buscamos la nota nosotros.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>&lt;?php
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>public function
+<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>update(Request
+<a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>$request, Note $no
+<a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a>{
+<a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a>$note-
+<a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a>&gt;update($request-
+<a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a>&gt;all());
+<a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a>return
+<a id="__codelineno-41-10" name="__codelineno-41-10" href="#__codelineno-41-10"></a>redirect()-
+<a id="__codelineno-41-11" name="__codelineno-41-11" href="#__codelineno-41-11"></a>&gt;route('note.index
+<a id="__codelineno-41-12" name="__codelineno-41-12" href="#__codelineno-41-12"></a>}
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>&lt;?php
+<a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>public function
+<a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>update(Request
+<a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>$request, $id)
+<a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>{
+<a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a>$note =
+<a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a>Note::findOrFail($
+<a id="__codelineno-42-8" name="__codelineno-42-8" href="#__codelineno-42-8"></a>$note-
+<a id="__codelineno-42-9" name="__codelineno-42-9" href="#__codelineno-42-9"></a>&gt;update($request-
+<a id="__codelineno-42-10" name="__codelineno-42-10" href="#__codelineno-42-10"></a>&gt;all());
+<a id="__codelineno-42-11" name="__codelineno-42-11" href="#__codelineno-42-11"></a>return redirec
+<a id="__codelineno-42-12" name="__codelineno-42-12" href="#__codelineno-42-12"></a>&gt;route('note.index
+<a id="__codelineno-42-13" name="__codelineno-42-13" href="#__codelineno-42-13"></a>}
+</code></pre></div>
+<p>En este caso tenemos el mismo problema que en el método <code>store</code> con el campo <code>done</code>. Si no se marca el checkbox, no se envía ningún valor y por tanto este campo no se actualizará. Para solucionarlo, podemos usar una expresión ternaria para asignar un valor por defecto de <code>0</code> cuando no se marque el checkbox. O simplememnte comprobar si el campo existe en el request y asignar <code>1</code> si existe o <code>0</code> si no existe.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>&lt;?php
+<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>public function
+<a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>update(Request
+<a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>$request, Note $no
+<a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>{
+<a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a>$data = $reque
+<a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a>&gt;all();
+<a id="__codelineno-43-8" name="__codelineno-43-8" href="#__codelineno-43-8"></a>$data['done']
+<a id="__codelineno-43-9" name="__codelineno-43-9" href="#__codelineno-43-9"></a>$request-
+<a id="__codelineno-43-10" name="__codelineno-43-10" href="#__codelineno-43-10"></a>&gt;has('done');
+<a id="__codelineno-43-11" name="__codelineno-43-11" href="#__codelineno-43-11"></a>$note-
+<a id="__codelineno-43-12" name="__codelineno-43-12" href="#__codelineno-43-12"></a>&gt;update($data);
+<a id="__codelineno-43-13" name="__codelineno-43-13" href="#__codelineno-43-13"></a>return
+<a id="__codelineno-43-14" name="__codelineno-43-14" href="#__codelineno-43-14"></a>redirect()-
+<a id="__codelineno-43-15" name="__codelineno-43-15" href="#__codelineno-43-15"></a>&gt;route('note.index
+<a id="__codelineno-43-16" name="__codelineno-43-16" href="#__codelineno-43-16"></a>}
+</code></pre></div>
+<h3 id="mostrar-una-nota-individual">Mostrar una Nota Individual<a class="headerlink" href="#mostrar-una-nota-individual" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>&lt;?php
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>Route::get('/note/show/
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>{note}',
+<a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>[NoteController::class,
+<a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>'show'])-
+<a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>&gt;name('note.show');
+</code></pre></div>
+<p>En este caso también tenemos dos formas de recibir el parámetro <code>Note $note</code>. En esta primer caso recibimos la nota y <code>laravel</code> por inyección de modelo la busca por nosotros y en el segundo caso recibimos el ID y buscamos la nota nosotros.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>&lt;?php
+<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>public function
+<a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>show($id)
+<a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>{
+<a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>$note =
+<a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a>Note::findOrFail($
+<a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a>return
+<a id="__codelineno-45-8" name="__codelineno-45-8" href="#__codelineno-45-8"></a>view('notes.show'
+<a id="__codelineno-45-9" name="__codelineno-45-9" href="#__codelineno-45-9"></a>compact('note'));
+<a id="__codelineno-45-10" name="__codelineno-45-10" href="#__codelineno-45-10"></a>}
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>&lt;?php
+<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>public function
+<a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>show(Note $note)
+<a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>{
+<a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>return
+<a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a>view('notes.show'
+<a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a>compact('note'));
+<a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a>}
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>@extends('layouts
+<a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>
+<a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>@section('title'
+<a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a>'Detalle de Nota
+<a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a>
+<a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a>@section('content
+<a id="__codelineno-47-7" name="__codelineno-47-7" href="#__codelineno-47-7"></a>&lt;h2&gt;{{ $note
+<a id="__codelineno-47-8" name="__codelineno-47-8" href="#__codelineno-47-8"></a>}}&lt;/h2&gt;
+<a id="__codelineno-47-9" name="__codelineno-47-9" href="#__codelineno-47-9"></a>&lt;p&gt;{{ $note-
+<a id="__codelineno-47-10" name="__codelineno-47-10" href="#__codelineno-47-10"></a>&gt;description }}&lt;/
+<a id="__codelineno-47-11" name="__codelineno-47-11" href="#__codelineno-47-11"></a>&lt;p&gt;Fecha: {{
+<a id="__codelineno-47-12" name="__codelineno-47-12" href="#__codelineno-47-12"></a>&gt;date }}&lt;/p&gt;
+<a id="__codelineno-47-13" name="__codelineno-47-13" href="#__codelineno-47-13"></a>&lt;p&gt;Estado: {{
+<a id="__codelineno-47-14" name="__codelineno-47-14" href="#__codelineno-47-14"></a>$note-&gt;done ?
+<a id="__codelineno-47-15" name="__codelineno-47-15" href="#__codelineno-47-15"></a>'Completada':
+<a id="__codelineno-47-16" name="__codelineno-47-16" href="#__codelineno-47-16"></a>'Pendiente' }}&lt;/p
+<a id="__codelineno-47-17" name="__codelineno-47-17" href="#__codelineno-47-17"></a>&lt;a href="{{
+<a id="__codelineno-47-18" name="__codelineno-47-18" href="#__codelineno-47-18"></a>route('note.index
+<a id="__codelineno-47-19" name="__codelineno-47-19" href="#__codelineno-47-19"></a>}}"&gt;Volver&lt;/a&gt;
+<a id="__codelineno-47-20" name="__codelineno-47-20" href="#__codelineno-47-20"></a>@endsection
+</code></pre></div>
+<h3 id="eliminar-una-nota">Eliminar una Nota<a class="headerlink" href="#eliminar-una-nota" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>&lt;?php
+<a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>Route::delete('/note/
+<a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>destroy/{note}',
+<a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a>[NoteController::class,
+<a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a>'destroy'])-
+<a id="__codelineno-48-6" name="__codelineno-48-6" href="#__codelineno-48-6"></a>&gt;name('note.destroy');
+</code></pre></div>
+<p>Como en los casos anteriores, tenemos dos formas de recibir el parámetro <code>Note</code> <code>$note</code>. En esta primer caso recibimos la nota y <code>laravel</code> por inyección de modelo la busca por nosotros y en el segundo caso recibimos el ID y buscamos la nota nosotros.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>&lt;?php
+<a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>public function
+<a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a>destroy($id)
+<a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a>{
+<a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a>$note =
+<a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a>Note::findOrFail($
+<a id="__codelineno-49-7" name="__codelineno-49-7" href="#__codelineno-49-7"></a>$note-&gt;delete
+<a id="__codelineno-49-8" name="__codelineno-49-8" href="#__codelineno-49-8"></a>return redirec
+<a id="__codelineno-49-9" name="__codelineno-49-9" href="#__codelineno-49-9"></a>&gt;route('note.index
+<a id="__codelineno-49-10" name="__codelineno-49-10" href="#__codelineno-49-10"></a>}
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>&lt;?php
+<a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>public function
+<a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a>destroy(Note $note
+<a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a>{
+<a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a>$note-&gt;delete
+<a id="__codelineno-50-6" name="__codelineno-50-6" href="#__codelineno-50-6"></a>return
+<a id="__codelineno-50-7" name="__codelineno-50-7" href="#__codelineno-50-7"></a>redirect()-
+<a id="__codelineno-50-8" name="__codelineno-50-8" href="#__codelineno-50-8"></a>&gt;route('note.index
+<a id="__codelineno-50-9" name="__codelineno-50-9" href="#__codelineno-50-9"></a>}
+</code></pre></div>
+<ul>
+<li>El método <code>delete()</code> elimina el registro de la base de datos.</li>
+</ul>
+<h3 id="prueba-completa-del-crud">Prueba completa del CRUD<a class="headerlink" href="#prueba-completa-del-crud" title="Permanent link">&para;</a></h3>
+<p>Ahora vamos probar todas las funcionalidades del CRUD</p>
+<p>Al no utilizar nada de CSS, el aspecto es muy básico. En un proyecto real, se debería aplicar estilos CSS para mejorar la apariencia y usabilidad.</p>
+<ol>
+<li>
+<p><strong>Listar Notas</strong>: Accede a la ruta <code>/</code> para ver el listado de notas.</p>
+</li>
+<li>
+<p><strong>Crear Nota</strong>: Haz clic en "Crear Nota", rellena el formulario y envíalo.</p>
+</li>
+</ol>
+<p>Al hacer click en "Crear Nota" se accede a <code>/note/create</code>:</p>
+<p>Una vez rellenado el formulario lo enviamos al servidor (ruta <code>/note/</code> <code>store</code>) y volvemos al listado de notas.</p>
+<p>Podemos ver la nota creada y como aparecen los enlaces para editar y eliminar.</p>
+<ol>
+<li><strong>Editar Nota</strong>: Haz clic en "Editar" junto a una nota, modifica los datos y envía el formulario.</li>
+</ol>
+<p>Al hacer click en "Editar" se accede a <code>/note/edit/{id}</code>:</p>
+<p>Una vez modificado el formulario lo enviamos al servidor (ruta <code>/note/</code></p>
+<p><code>update/{id}</code>) que actualiza la nota y nos redirecciona al listado de notas.</p>
+<ol>
+<li><strong>Mostrar Nota</strong>: Haz clic en el título de una nota para ver sus detalles.</li>
+</ol>
+<p>Al hacer click en el título de una nota se accede a <code>/note/show/{id}</code>:</p>
+<p>Una vez vista pulsamos volver y nos redirecciona al listado de notas.</p>
+<ol>
+<li><strong>Eliminar Nota</strong>: Haz clic en "Eliminar" junto a una nota. Al hacer click en "Eliminar" se envía un formulario con método <code>DELETE</code> a la ruta <code>/note/</code> <code>destroy/{id}</code> que elimina la nota y nos redirecciona al listado de notas.</li>
+</ol>
+<p>En un proyecto real, es recomendable añadir una confirmación antes de eliminar una nota para evitar eliminaciones accidentales.</p>
+<h3 id="tipado-en-los-metodos-del-controlador">Tipado en los métodos del controlador<a class="headerlink" href="#tipado-en-los-metodos-del-controlador" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>&lt;?php
+<a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>public function
+<a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a>update(
+<a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a>Request
+<a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a>$request,
+<a id="__codelineno-51-6" name="__codelineno-51-6" href="#__codelineno-51-6"></a>Note
+<a id="__codelineno-51-7" name="__codelineno-51-7" href="#__codelineno-51-7"></a>$note
+<a id="__codelineno-51-8" name="__codelineno-51-8" href="#__codelineno-51-8"></a>):
+<a id="__codelineno-51-9" name="__codelineno-51-9" href="#__codelineno-51-9"></a>RedirectResponse
+<a id="__codelineno-51-10" name="__codelineno-51-10" href="#__codelineno-51-10"></a>{
+<a id="__codelineno-51-11" name="__codelineno-51-11" href="#__codelineno-51-11"></a>$note-
+<a id="__codelineno-51-12" name="__codelineno-51-12" href="#__codelineno-51-12"></a>&gt;update($request-
+<a id="__codelineno-51-13" name="__codelineno-51-13" href="#__codelineno-51-13"></a>&gt;all());
+<a id="__codelineno-51-14" name="__codelineno-51-14" href="#__codelineno-51-14"></a>return
+<a id="__codelineno-51-15" name="__codelineno-51-15" href="#__codelineno-51-15"></a>redirect()-
+<a id="__codelineno-51-16" name="__codelineno-51-16" href="#__codelineno-51-16"></a>&gt;route('note.index')
+<a id="__codelineno-51-17" name="__codelineno-51-17" href="#__codelineno-51-17"></a>}
+</code></pre></div>
+<ul>
+<li>
+<p>Tipar los parámetros mejora la legibilidad y control de errores.</p>
+</li>
+<li>
+<p>Tipar el tipo de retorno ayuda a Laravel a validar internamente las respuestas.</p>
+</li>
+<li>
+<p><code>View</code> para devolver vistas. <code>use</code> Illuminate\View\View</p>
+</li>
+<li>
+<p><code>RedirectResponse</code> para redirecciones. <code>use</code> Illuminate\Http\RedirectRes ponse</p>
+</li>
+<li>
+<p><code>JsonResponse</code> para APIs. <code>use</code> Illuminate\Http\JsonRespons e</p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      IES JUAN DE GARAY - 2º DWES · Curso original de Beteta adaptado por Eva María Gómez Abad
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

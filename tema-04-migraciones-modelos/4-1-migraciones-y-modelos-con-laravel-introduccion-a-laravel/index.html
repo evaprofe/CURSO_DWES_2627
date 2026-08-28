@@ -1,0 +1,3460 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Apuntes de Desarrollo Web en Entorno Servidor">
+      
+      
+        <meta name="author" content="Eva María Gómez Abad">
+      
+      
+        <link rel="canonical" href="https://evaprofe.github.io/CURSO_DWES_2627/tema-04-migraciones-modelos/4-1-migraciones-y-modelos-con-laravel-introduccion-a-laravel/">
+      
+      
+        <link rel="prev" href="../../tema-03-vistas-blade/3-2-actividad-del-tema-3-introduccion-a-laravel/">
+      
+      
+        <link rel="next" href="../4-2-actividad-del-tema-4-introduccion-a-laravel/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>4.1 Migraciones y Modelos en Laravel - Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#migraciones-y-modelos-en-laravel" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-header__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4.1 Migraciones y Modelos en Laravel
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Activar modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Activar modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-nav__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introducción al Desarrollo Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1. Introducción al Desarrollo Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/introduccion-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1 Desarrollo Web en el Servidor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2 Patrón Modelo-Vista-Controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.3 Protocolo HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 1 · MVC y HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Frameworks y Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2. Frameworks y Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1 Introducción a los Frameworks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-2-configuracion-del-entorno-de-trabajo-con-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.2 Entorno de Trabajo con Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-3-instalacion-y-puesta-en-marcha-de-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.3 Instalación y Puesta en Marcha
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-4-estructura-y-elementos-de-un-proyecto-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.4 Estructura de un Proyecto Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-5-actividad-del-tema-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 2 · Introducción a Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/anexos-tailwind-css/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anexo · Tailwind CSS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/instrucciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía del Entorno
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tema-02-frameworks-laravel/proyecto-github/docs/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🚀 Proyecto Guiado · Entorno Laravel
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🚀 Proyecto Guiado · Entorno Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/requisitos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso1-preparacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 1 · Preparación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso7-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 7 · Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso9-mysql-cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 9 · MySQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso10-xdebug/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 10 · Xdebug
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/instrucciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instrucciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/conclusion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conclusión
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. Vistas con Blade
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-03-vistas-blade/3-1-vistas-con-blade-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Creación de Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-03-vistas-blade/3-2-actividad-del-tema-3-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 3 · Agencia de Viajes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4. Migraciones y Modelos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 Migraciones y Modelos en Laravel
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 Migraciones y Modelos en Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion-a-las-migraciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción a las Migraciones
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuracion-de-la-base-de-datos-en-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuración de la Base de Datos en Laravel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bases-de-datos-soportadas-por-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bases de Datos soportadas por Laravel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migraciones-por-defecto-en-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migraciones por Defecto en Laravel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-una-base-de-datos-y-ejecutar-migraciones-iniciales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear una Base de Datos y Ejecutar Migraciones Iniciales
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#la-tabla-migrations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La tabla migrations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-una-nueva-migracion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        * Crear una nueva migración
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#definir-la-estructura-de-una-tabla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Definir la Estructura de una tabla
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejemplo-practico-crear-tabla-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo Práctico: Crear Tabla notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-eliminar-una-migracion-funcion-down" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo Eliminar una Migración (función down())
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modificar-una-tabla-existente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modificar una Tabla Existente
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5612-comandos-de-migraciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6.12 Comandos de Migraciones
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-una-migracion-para-actualizar-una-tabla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear una Migración para actualizar una tabla
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion-a-los-modelos-en-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción a los Modelos en Laravel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#carpeta-appmodels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Carpeta app/Models
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-un-modelo-para-la-tabla-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear un Modelo para la Tabla notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#asociar-el-modelo-a-una-tabla-personalizada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        * Asociar el Modelo a una tabla personalizada
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-una-nueva-nota-con-eloquent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear una nueva Nota con Eloquent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#propiedades-importantes-en-modelos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Propiedades importantes en Modelos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relacion-entre-modelos-y-migraciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relación entre Modelos y Migraciones
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-2-actividad-del-tema-4-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 4 · Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Controladores de Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5. Controladores de Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/5-1-controladores-de-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Controladores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/unidad-5-2-relaciones-uno-a-muchos-en-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.2 Relaciones Uno a Muchos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/actividad-del-tema-5-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 5 · Controladores y Rutas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Desarrollo CRUD Completo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. Desarrollo CRUD Completo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-06-crud-completo/6-1-desarrollo-de-un-crud-completo-en-laravel-parte-1-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1 Desarrollo de un CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-06-crud-completo/6-2-actividad-del-tema-6-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 6 · CRUD de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-07-validaciones-rutas-mensajes/7-1-validaciones-rutas-resource-y-mensajes-del-sistema-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.1 Validaciones y Rutas Resource
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-07-validaciones-rutas-mensajes/actividad-del-tema-7-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 7 · Validaciones del CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. API REST
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    8. API REST
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-1-apis-restful-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.1 Creación de API REST
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-2-apis-con-sanctum-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.2 API con Sanctum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-3-actividad-del-tema-8-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 8 · API de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Seeders, Factories y Faker
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    9. Seeders, Factories y Faker
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-09-seeders-factories-faker/9-1-creacion-de-datos-iniciales-y-de-prueba-seeders-factories-y-faker-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9.1 Datos Iniciales y de Prueba
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-09-seeders-factories-faker/actividad-del-tema-9-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 9 · Generación de Datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-1-introduccion-al-despliegue-de-aplicaciones-web-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.1 Introducción al Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-2-aplicacion-simple-con-estructura-precaria-php-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.2 Aplicación PHP Sencilla
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-3-aplicacion-completa-con-estructura-de-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.3 Aplicación Laravel Completa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-4-despliegue-en-paas-render-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.4 Despliegue en Render
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-5-actividad-del-tema-10-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 10 · Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion-a-las-migraciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción a las Migraciones
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuracion-de-la-base-de-datos-en-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuración de la Base de Datos en Laravel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bases-de-datos-soportadas-por-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bases de Datos soportadas por Laravel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migraciones-por-defecto-en-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migraciones por Defecto en Laravel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-una-base-de-datos-y-ejecutar-migraciones-iniciales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear una Base de Datos y Ejecutar Migraciones Iniciales
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#la-tabla-migrations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La tabla migrations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-una-nueva-migracion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        * Crear una nueva migración
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#definir-la-estructura-de-una-tabla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Definir la Estructura de una tabla
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejemplo-practico-crear-tabla-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo Práctico: Crear Tabla notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-eliminar-una-migracion-funcion-down" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo Eliminar una Migración (función down())
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modificar-una-tabla-existente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modificar una Tabla Existente
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5612-comandos-de-migraciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6.12 Comandos de Migraciones
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-una-migracion-para-actualizar-una-tabla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear una Migración para actualizar una tabla
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion-a-los-modelos-en-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción a los Modelos en Laravel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#carpeta-appmodels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Carpeta app/Models
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-un-modelo-para-la-tabla-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear un Modelo para la Tabla notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#asociar-el-modelo-a-una-tabla-personalizada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        * Asociar el Modelo a una tabla personalizada
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-una-nueva-nota-con-eloquent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear una nueva Nota con Eloquent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#propiedades-importantes-en-modelos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Propiedades importantes en Modelos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relacion-entre-modelos-y-migraciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relación entre Modelos y Migraciones
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="migraciones-y-modelos-en-laravel">Migraciones y Modelos en Laravel<a class="headerlink" href="#migraciones-y-modelos-en-laravel" title="Permanent link">&para;</a></h1>
+<h2 id="introduccion-a-las-migraciones">Introducción a las Migraciones<a class="headerlink" href="#introduccion-a-las-migraciones" title="Permanent link">&para;</a></h2>
+<p>Las <strong>migraciones</strong> son una forma de controlar la estructura de la base de datos de tu aplicación a través de archivos PHP versionados. Permiten crear, modificar o eliminar tablas de forma organizada y controlada.</p>
+<p>Las migraciones funcionan como un "control de versiones" para la base de datos, similar a Git pero para el esquema de datos.</p>
+<p>Hay que evitar modificar la base de datos directamente. En su lugar, se deben crear migraciones para reflejar los cambios. De esta forma, se mantiene un historial de cambios y se facilita la colaboración entre desarrolladores. Cualquier cambio en la estructura de la base de datos debe ser reflejado en una migración.</p>
+<h2 id="configuracion-de-la-base-de-datos-en-laravel">Configuración de la Base de Datos en Laravel<a class="headerlink" href="#configuracion-de-la-base-de-datos-en-laravel" title="Permanent link">&para;</a></h2>
+<p>Laravel utiliza el archivo <code>.env</code> para definir los datos de conexión a la base de datos.</p>
+<p>Parámetros principales:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>DB_CONNECTION=mysql
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>DB_HOST=127.0.0.1
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>DB_PORT=3306
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>DB_DATABASE=nombre_b
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>DB_USERNAME=usuario
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>DB_PASSWORD=contrase
+</code></pre></div>
+<p>DB_CONNECTION Tipo de base de datos (mysql, pgsql, sqlite, etc.)</p>
+<p>DB_HOST Dirección del servidor de base de datos</p>
+<p>DB_PORT Puerto de conexión a la base de datos</p>
+<p>DB_DATABASE Nombre de la base de datos</p>
+<p>DB_USERNAME Usuario para conectarse a la base de datos</p>
+<p>DB_PASSWORD Contraseña del usuario Cada vez que modifiques <code>.env</code>, debes reiniciar los contenedores Docker para aplicar cambios. Este fichero está en la raíz del proyecto y no debe ser compartido públicamente, ya que contiene información sensible. Tampoco se almacena en el repositorio de Git, ya que está en el <code>.gitignore</code>. Para compartir la configuración, se puede crear un archivo <code>.env.example</code> con los parámetros necesarios, pero sin datos sensibles. Este archivo sirve como plantilla para que otros desarrolladores creen su propio <code>.env</code>. De esta manera evitamos compartir información sensible y mantenemos la seguridad del proyecto.</p>
+<p>Recuerda, antes de tocar el fichero <code>.env</code>, hacer una copia del mismo como <code>.env.example</code> para que otros desarrolladores puedan usarlo como plantilla. Así, cada uno podrá crear su propio <code>.env</code> con sus credenciales y configuraciones específicas.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cp.env.env.example
+</code></pre></div>
+<p>Esto crea una copia del archivo <code>.env</code> como <code>.env.example</code>. Este último puede ser compartido en el repositorio, pero no debe contener información sensible. Puedes añadir comentarios en el <code>.env.example</code> para explicar cada parámetro.</p>
+<p>Luego, cada desarrollador puede copiar el <code>.env.example</code> a <code>.env</code> y modificarlo según sus necesidades.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>cp.env.example.env
+</code></pre></div>
+<p>Esto crea un nuevo archivo <code>.env</code> basado en el ejemplo. Asegúrate de que el <code>.env</code> no se suba al repositorio, ya que contiene información sensible como contraseñas y claves de API.</p>
+<h2 id="bases-de-datos-soportadas-por-laravel">Bases de Datos soportadas por Laravel<a class="headerlink" href="#bases-de-datos-soportadas-por-laravel" title="Permanent link">&para;</a></h2>
+<p>Por defecto, Laravel soporta:</p>
+<ul>
+<li>
+<p>MySQL / MariaDB</p>
+</li>
+<li>
+<p>PostgreSQL</p>
+</li>
+<li>
+<p>SQLite</p>
+</li>
+<li>
+<p>SQL Server</p>
+</li>
+</ul>
+<p>Para proyectos educativos y sencillos, SQLite es muy recomendable por su facilidad de configuración. Es la base de datos que utilizará por defecto.</p>
+<p>Para este curso usaremos <code>mysql</code> como base de datos. Si has seguido los temas anteriores ya debes tener acceso a una base de datos MySQL, dentro del <code>docker-compose</code> creado anteriormente. Asegúrate de que los parámetros de conexión en el archivo <code>.env</code> sean los siguientes:</p>
+<p>Asegúrate de que los parámetros de conexión en el archivo <code>.env</code> sean los siguientes:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>DB_CONNECTION=mysql
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>DB_HOST=mysql
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>DB_PORT=3306
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>DB_DATABASE=laravel
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>DB_USERNAME=alumno
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>DB_PASSWORD=alumno
+</code></pre></div>
+<p>Normalmente aquí tendremos la IP del servidor de base de datos. En nuestro caso, como estamos trabajando con contenedores docker dentro de un docker-compose, el valor será <code>mysql</code>, que es el nombre del servicio definido en el <code>docker-compose.yml</code>. En el caso de tener un contenedor independiente, el valor será la IP del contenedor o <code>host.docker.internal</code> si la base de datos está en el mismo host.</p>
+<p>Podemos utilizar cualquier herramienta para gestionar la base de datos, como DBeaver, Adminer, MySQL Workbench, etc. En este curso vamos utilizar una extensión de VSCode llamada <code>MySQL</code> de <code>Database Client</code>. Esta extensión permite conectarse a bases de datos MySQL y realizar consultas directamente desde el editor. Esto nos permite no tener que salir de VSCode cuando tengamos que interactuar con las bases de datos.</p>
+<p>Creamos la base de datos <code>laravel</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>CREATE DATABASE
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>`laravel`
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>DEFAULT SET =
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>'utf8mb4';
+</code></pre></div>
+<p>Puedes comprobar <code>SHOW DATABASES;</code> para ver que la base de datos ha sido creada correctamente.</p>
+<p>Es probable que al intentar crear la base de datos obtengas un error de permisos.</p>
+<p>Access denied for user 'alumno'@'%' to database 'laravel'</p>
+<p>Esto es porque al inciciar el contenedor de MySQL, hemos creado un usuario <code>alumno</code> con permisos limitados. Para solucionar este problema, podemos conectarnos a MySQL como <code>root</code> y completar los permisos del usuario <code>alumno</code>. Para ello, ejecuta los siguientes comandos:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker compose exec
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>mysql mysql -u root -
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>p # password
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>`administrador`
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>GRANT ALL PRIVILEGES
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>ON *.* TO
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>'alumno'@'%'
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>IDENTIFIED BY
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>'alumno' WITH GRANT
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>OPTION;
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>FLUSH PRIVILEGES;
+</code></pre></div>
+<p>Ahora puedes volver a crear la base de datos <code>Laravel</code> sin problemas.</p>
+<h2 id="migraciones-por-defecto-en-laravel">Migraciones por Defecto en Laravel<a class="headerlink" href="#migraciones-por-defecto-en-laravel" title="Permanent link">&para;</a></h2>
+<p>Ahora que hemos creado la nueva base de datos con la que trabajará <code>laravel</code>, y hemos modificado el fichero <code>.env</code> para que <code>laravel</code> se conecte a la base de datos, vamos a ver las migraciones que vienen por defecto en <code>laravel</code> y que necesitamos ejecutar antes de empezar a trabajar con <code>laravel</code>.</p>
+<p>Cuando creamos un proyecto Laravel, ya existen tres migraciones iniciales:</p>
+<p><code>create_users_t</code> Crea la tabla <code>users</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>able.php
+</code></pre></div>
+<p><code>create_jobs_ta</code> Crea la tabla <code>jobs</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ble.php
+</code></pre></div>
+<p><code>create_cache_t</code> Crea la tabla <code>cache</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>able.php
+</code></pre></div>
+<p>Podemos encontrar estas migraciones en la carpeta <code>database/migrations/</code>. Cada archivo tiene un nombre que incluye una marca de tiempo y una descripción de la migración. La marca de tiempo asegura que las migraciones se apliquen en el orden correcto.</p>
+<h2 id="crear-una-base-de-datos-y-ejecutar-migraciones-iniciales">Crear una Base de Datos y Ejecutar Migraciones Iniciales<a class="headerlink" href="#crear-una-base-de-datos-y-ejecutar-migraciones-iniciales" title="Permanent link">&para;</a></h2>
+<p>Si no lo hiciste anteriormente es el momento de crear la base de datos <code>Laravel</code> en MySQL.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>CREATE DATABASE
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>`laravel`
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>DEFAULT CHARACTER
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>SET = 'utf8mb4';
+</code></pre></div>
+<p>Recueda que en nuestro entorno para ejecutar comandos de Artisan, debes entrar en el contenedor de PHP. Para ello, ejecuta:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker exec -it
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>nombre_contenedor_php
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>bash # uno de los dos
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>comandos
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>docker compose exec
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>nombre_servicio bash #
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>uno de los dos comandos
+</code></pre></div>
+<p>Donde <code>nombre_contenedor_php</code> es el nombre del contenedor PHP que has creado. Puedes encontrarlo con el comando <code>docker ps</code>, y el <code>nombre_servicio</code> es el nombre dado en docker-compose al contenedor de MySql.</p>
+<p>Para nuestro caso:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker exec -it
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>dk_php bash #
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>elegir uno de estos
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>dos comandos
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>docker compose exec
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>php bash
+</code></pre></div>
+<p>Vamos a comenzar por ejecutar las migraciones por defecto. Para ello, ejecuta el siguiente comando:</p>
+<p>Ejecuta el siguiente comando para ejecutar las migraciones por defecto:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>php artisan migrate
+</code></pre></div>
+<p>Esto ejecutará todas las migraciones que aún no se han aplicado. Si todo va bien, deberías ver un mensaje indicando que las migraciones se han ejecutado correctamente. Esto creará las tablas <code>users</code>, <code>jobs</code> y <code>cache</code> en la base de datos <code>laravel</code>. Puedes verificarlo conectándote a la base de datos con tu herramienta preferida y comprobando que las tablas han sido creadas correctamente.</p>
+<p>Si todo ha ido bien debemos encontrar las siguientes tablas en la base de datos:</p>
+<p><code>users</code> Tabla de usuarios.</p>
+<p><code>jobs</code> Tabla de trabajos en cola.</p>
+<p><code>cache</code> Tabla de caché.</p>
+<p><code>cache_lock</code> Tabla de bloqueos de caché.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>s
+</code></pre></div>
+<p><code>migrations</code> Tabla de migraciones.</p>
+<p><code>failed_job</code> Tabla de trabajos fallidos.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>s
+</code></pre></div>
+<p><code>password_r</code> Tabla de restablecimiento de</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>esets
+</code></pre></div>
+<p>contraseñas.</p>
+<p><code>personal_a</code> Tabla de tokens de acceso personal.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>ccess_toke
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>ns
+</code></pre></div>
+<p><code>sessions</code> Tabla de sesiones.</p>
+<p>La mayoría de las tablas son necesarias para el funcionamiento de <code>laravel</code> y algunas de ellas las veremos en este curso, otras se quedan fuera ya que el contenido del curso no nos alcanza. De momento nos importa la tabla <code>migrations</code>, donde se irán anotando cada una de las migraciones que se realizan con tal de que <code>laravel</code> pueda llevar un control de las mismas. La estudiamos en profundidad en el punto siguiente,</p>
+<h2 id="la-tabla-migrations">La tabla migrations<a class="headerlink" href="#la-tabla-migrations" title="Permanent link">&para;</a></h2>
+<p>Hechemos un vistazo a la tabla <code>migrations</code> para ver cómo funciona. Vamos a ver los campos que tiene:</p>
+<ul>
+<li>
+<p><code>id</code>: Identificador único de la migración.</p>
+</li>
+<li>
+<p><code>migration</code>: Nombre de la migración.</p>
+</li>
+<li>
+<p><code>batch</code>: Número de lote al que pertenece la migración. Este número se incrementa cada vez que se ejecuta una migración. Esto permite agrupar migraciones y revertirlas todas a la vez si es necesario.</p>
+</li>
+</ul>
+<p>Y qué registros tiene:</p>
+<p>1 2023_10_01_000000_create_users_tabl</p>
+<p>2 2023_10_01_000000_create_jobs_table</p>
+<p>3 2023_10_01_000000_create_cache_tab</p>
+<p>Aquí podemos ver que las tres migraciones iniciales pertenecen al mismo lote (batch 1. Esto significa que se ejecutaron todas juntas. Si ejecutamos una nueva migración, se creará un nuevo lote (batch 2) y así sucesivamente.</p>
+<p>Cada vez que corres <code>php artisan</code></p>
+<p><code>migrate</code>, Laravel revisa esta tabla para decidir qué migraciones necesita aplicar. También sirve para saber qué migraciones ya se han ejecutado y cuáles no. Esto es útil para mantener un control de las migraciones y evitar que se apliquen varias veces. Podemos volver a ejecutar el comando <code>php artisan migrate</code> y ver que no se aplican las migraciones que ya están en la tabla <code>migrations</code>. Esto es porque Laravel revisa esta tabla antes de aplicar las migraciones y solo aplica las que no están en la tabla. El resultado será algo como esto:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>INFO: Nothing to
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>migrate.
+</code></pre></div>
+<h2 id="crear-una-nueva-migracion">* Crear una nueva migración<a class="headerlink" href="#crear-una-nueva-migracion" title="Permanent link">&para;</a></h2>
+<p>Es importante seguir la convención de nombres para las migraciones. El nombre de la migración debe comenzar por la acción ( <code>create</code>, <code>update</code>, <code>delete</code>, etc.)y luego el nombre del componente. Esto asegura que las migraciones se apliquen en el orden correcto. Por ejemplo, si creamos una migración para crear una tabla <code>notes</code>, el nombre del fichero será algo como <code>create_notes_table.php</code>. Laravel añadirá automáticamente la marca de tiempo al nombre del fichero. El nombre del fichero será algo como <code>2025_10_01_000000_create_notes_t</code> <code>able.php</code>. Esto asegura que las migraciones se apliquen en el orden correcto. La marca de tiempo es importante porque Laravel utiliza esta información para determinar el orden en que se deben aplicar las migraciones. Si no seguimos esta convención, podríamos tener problemas al aplicar las migraciones.</p>
+<p>Fijemonos que el nombre de la entidad que queremos crear está en mínusculas y en plural <code>.notes.</code>.</p>
+<p>Para crear una nueva migración primero dbemos crear el fichero de migración. Para ello, usamos el comando:</p>
+<p>Usa el siguiente comando para crear una nueva migración:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>php artisan
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>make:migration
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>create_notes_table
+</code></pre></div>
+<p>Esto crea el archivo <code>2025_10_01_000000_create_notes_t</code> <code>able.php</code> en <code>database/migrations/</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>INFO Migration [database/
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>migrations/2025_10_06_14344
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>created successfully.
+</code></pre></div>
+<p>Para crear la mayoría de los componentes de <code>laravel</code> (migraciones, modelos, controladores, etc.) se utiliza el comando <code>php</code> <code>artisan make:componente</code>, donde <code>componente</code> es el tipo de componente que queremos crear. <strong>NUNCA</strong> debemos crear estos componentes manualmente, ya que <code>laravel</code> nos proporciona una forma rápida y sencilla de crearlos.</p>
+<h2 id="definir-la-estructura-de-una-tabla">Definir la Estructura de una tabla<a class="headerlink" href="#definir-la-estructura-de-una-tabla" title="Permanent link">&para;</a></h2>
+<p>Ahora vamos a analizar el contenido del archivo de migración que acabamos de crear. Este archivo contiene dos métodos: <code>up()</code> y <code>down()</code>.</p>
+<ul>
+<li>
+<p>El método <code>up()</code> se utiliza para definir la estructura de la tabla que queremos crear</p>
+</li>
+<li>
+<p>El método <code>down()</code> se utiliza para revertir los cambios realizados por el método <code>up()</code>.</p>
+</li>
+</ul>
+<p>Podemos comenzar por observar los <code>use</code> al principio del archivo:</p>
+<p><code>Illuminate\D</code> Clase base para las migraciones.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>atabase\Migr
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>ations\Migra
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>tion
+</code></pre></div>
+<p><code>Illuminate\D</code> Clase para definir la estructura de la tabla.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>atabase\Sche
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>ma\Blueprint
+</code></pre></div>
+<p><code>Illuminate\S</code> Clase para interactuar con el</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>upport\Facad
+</code></pre></div>
+<p>esquema de la base</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>es\Schema
+</code></pre></div>
+<p>de datos.</p>
+<p>Dentro del método <code>up()</code>, defines la estructura de la tabla.</p>
+<p>Ejemplo:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>&lt;?php
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>public function u
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>void
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>{
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>Schema::create('n
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>function (Bluepri
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>$table) {
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>$table-&gt;i
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>$table-
+<a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>&gt;string('title',
+<a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>&gt;notNullable();
+<a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>$table-
+<a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>&gt;text('descriptio
+<a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>255)-&gt;notNullable
+<a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a>$table-
+<a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a>&gt;boolean('done')
+<a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a>&gt;default(false);
+<a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a>$table-
+<a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a>&gt;timestamps();
+<a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a>});
+<a id="__codelineno-25-22" name="__codelineno-25-22" href="#__codelineno-25-22"></a>}
+</code></pre></div>
+<p>Campos especiales:</p>
+<p><strong>id()</strong> Crea una clave primaria autoincremental.</p>
+<p><strong>timestamps()</strong> Crea los campos <code>created_at</code> y</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>updated_at
+</code></pre></div>
+<p>automáticamente.</p>
+<p>Tipos comunes de campos:</p>
+<p><code>strin</code> Cadena de Parámetros: texto. <code>(nombre,</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>g
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>longitud
+</code></pre></div>
+<p><code>)</code>. Longitud opcional, por defecto 255. El valor de longitud debe estar entre 0 y</p>
+<ol>
+<li></li>
+</ol>
+<p><code>text</code> Texto largo. Parámetros:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>(nombre,
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>longitud
+</code></pre></div>
+<p><code>)</code>. Longitud opcional, por defecto</p>
+<ol>
+<li>El valor de longitud debe estar entre 0 y</li>
+</ol>
+<p>65535.</p>
+<p><code>integ</code> Número Parámetros: entero. <code>(nombre,</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>er
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>longitud
+</code></pre></div>
+<p><code>)</code>. Longitud opcional, por defecto 11. El valor de longitud debe estar entre 2147483648 y 2147483647.</p>
+<p><code>boole</code> Valor Parámetros: booleano. <code>(nombre)</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>an
+</code></pre></div>
+<p>. No requiere longitud. Los valores posibles son 0 o 1.</p>
+<p><code>date</code> Fecha. Parámetros:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>(nombre)
+</code></pre></div>
+<p>. No requiere longitud. Formato por defecto:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>YYYY-MM-
+</code></pre></div>
+<p><code>DD</code>.</p>
+<p><code>enum</code> Enum, para Parámetros: definir un <code>(nombre,</code> conjunto de</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>longitud
+</code></pre></div>
+<p>valores <code>)</code>. Longitud posibles. opcional, por defecto 255.</p>
+<p>El valor de longitud debe estar entre 0 y</p>
+<ol>
+<li></li>
+</ol>
+<p><code>float</code> Número de Parámetros: punto <code>(nombre,</code> flotante.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>precisió
+</code></pre></div>
+<p><code>n)</code>. Precisión opcional, por defecto 8. La precisión determina el número total de dígitos.</p>
+<p><code>doubl</code> Número de Parámetros: punto <code>(nombre,</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>e
+</code></pre></div>
+<p>flotante de</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>precisió
+</code></pre></div>
+<p>doble <code>n)</code>. precisión. Precisión opcional, por defecto 8. La precisión determina el número total de dígitos.</p>
+<p><code>decim</code> Número Parámetros: decimal. <code>(nombre,</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>al
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>precisió
+<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>n,
+</code></pre></div>
+<p><code>escala)</code>. La precisión es el número total de dígitos, y la escala es el número de dígitos a la derecha del punto decimal.</p>
+<p><code>json</code> Campo para Parámetros: almacenar <code>(nombre,</code> datos en</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>longitud
+</code></pre></div>
+<p>formato <code>)</code>. Longitud JSON. opcional, por defecto</p>
+<ol>
+<li>
+<p>El valor de longitud debe estar entre 0 y</p>
+</li>
+<li></li>
+</ol>
+<p>Modificadores de Campos</p>
+<p><code>nullable()</code> Permite que el campo sea nulo.</p>
+<p><code>default(va</code> Establece un valor por defecto.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>lue)
+</code></pre></div>
+<p><code>unique()</code> Establece el campo como único.</p>
+<p><code>index()</code> Crea un índice para el campo.</p>
+<p><code>foreign()</code> Define una clave foránea.</p>
+<p><code>unsigned()</code> Establece el campo como sin signo.</p>
+<p><code>after(colu</code> Coloca el campo después de otro campo.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>mn)
+</code></pre></div>
+<p><code>before(col</code> Coloca el campo antes de otro campo.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>umn)
+</code></pre></div>
+<p><code>primary()</code> Establece el campo como clave primaria.</p>
+<p>Los modificadores se pueden combinar. Por ejemplo:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>&lt;?php
+<a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>$table-&gt;string('title',
+<a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>255)-&gt;notNullable()-
+<a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>&gt;unique();
+</code></pre></div>
+<p>Esto crea un campo <code>title</code> de tipo <code>string</code> con una longitud máxima de 255 caracteres, que no puede ser nulo y debe ser único en la tabla.</p>
+<h2 id="ejemplo-practico-crear-tabla-notes">Ejemplo Práctico: Crear Tabla notes<a class="headerlink" href="#ejemplo-practico-crear-tabla-notes" title="Permanent link">&para;</a></h2>
+<p>Creamos la tabla <code>notes</code> con los campos:</p>
+<ul>
+<li>
+<p>id</p>
+</li>
+<li>
+<p>title</p>
+</li>
+<li>
+<p>description</p>
+</li>
+<li>
+<p>done</p>
+</li>
+<li>
+<p>created_at y updated_at (timestamps)</p>
+</li>
+</ul>
+<p>Usando el código mostrado en el apartado anterior.</p>
+<p>Una vez tengamos el fichero de migración creado, podemos ejecutarlo con el siguiente comando:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>php artisan migrate
+</code></pre></div>
+<p>Esto ejecutará la migración y creará la tabla <code>notes</code> en la base de datos. Puedes verificarlo conectándote a la base de datos con tu herramienta preferida y comprobando que la tabla ha sido creada correctamente.</p>
+<h2 id="como-eliminar-una-migracion-funcion-down">Cómo Eliminar una Migración (función down())<a class="headerlink" href="#como-eliminar-una-migracion-funcion-down" title="Permanent link">&para;</a></h2>
+<p>Si en un momento queremos eliminar la tabla <code>notes</code>, podemos hacerlo en el método <code>down()</code> de la migración. <strong>No</strong> debes eliminar la tabla directamente desde la base de datos, ya que esto no actualizará la tabla <code>migrations</code> y podrías tener problemas al aplicar o revertir migraciones en el futuro.</p>
+<p>Primero implementamos el método <code>down()</code> en la migración. Si creamos el fichero siguiendo la convención de nombres, el método <code>down()</code> debería verse así:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>&lt;?php
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>Schema::dropIfExists('notes
+</code></pre></div>
+<p>Ahora, ejecutamos los siguientes comandos:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>php artisan migrate #
+<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>comprobar que la
+<a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>tabla ha sido creada.
+<a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>php artisan
+<a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>migrate:rollback #
+<a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a>comprobar que la
+<a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a>tabla ha sido
+<a id="__codelineno-45-8" name="__codelineno-45-8" href="#__codelineno-45-8"></a>eliminada.
+<a id="__codelineno-45-9" name="__codelineno-45-9" href="#__codelineno-45-9"></a>php artisan migrate #
+<a id="__codelineno-45-10" name="__codelineno-45-10" href="#__codelineno-45-10"></a>comprobar que la
+<a id="__codelineno-45-11" name="__codelineno-45-11" href="#__codelineno-45-11"></a>tabla ha sido creada
+<a id="__codelineno-45-12" name="__codelineno-45-12" href="#__codelineno-45-12"></a>de nuevo.
+</code></pre></div>
+<h2 id="modificar-una-tabla-existente">Modificar una Tabla Existente<a class="headerlink" href="#modificar-una-tabla-existente" title="Permanent link">&para;</a></h2>
+<p>Supongamos que queremos añadir un campo <code>deadline</code>:</p>
+<p>Pasos para modificar una tabla existente:</p>
+<ol>
+<li><strong>1</strong>. Ejecutar rollback:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>php artisan
+<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>migrate:rollback
+</code></pre></div>
+<ol>
+<li><strong>1</strong>. Modificar la migración anterior agregando:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>&lt;?php
+<a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>$table-
+<a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>&gt;date('deadline')-
+<a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a>&gt;nullable();
+</code></pre></div>
+<ol>
+<li><strong>1</strong>. Ejecutar de nuevo:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>php artisan migrate
+</code></pre></div>
+<p><strong>Nunca</strong> debes modificar directamente las tablas en producción. Es mejor crear una nueva migración para alterar la tabla.</p>
+<h2 id="5612-comandos-de-migraciones">5.6.12 Comandos de Migraciones<a class="headerlink" href="#5612-comandos-de-migraciones" title="Permanent link">&para;</a></h2>
+<p><code>php artisan</code> Ejecuta migraciones pendientes.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>migrate
+</code></pre></div>
+<p><code>php artisan</code> Deshace la última migración ejecutada.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>migrate:rol
+<a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>lback
+</code></pre></div>
+<p><code>php artisan</code> Revierte todas las migraciones.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>migrate:res
+<a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>et
+</code></pre></div>
+<p><code>php artisan</code> Resetea y vuelve a ejecutar todas las</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>migrate:ref
+</code></pre></div>
+<p>migraciones.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>resh
+</code></pre></div>
+<p><code>php artisan</code> Borra todas las tablas y ejecuta todas las</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>migrate:fre
+</code></pre></div>
+<p>migraciones.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>sh
+</code></pre></div>
+<p>Parámetros comunes:</p>
+<ul>
+<li>
+<p><code>php artisan migrate:rollback</code></p>
+</li>
+<li>
+<p><code>--step=N</code> para revertir N migraciones.</p>
+</li>
+<li>
+<p><code>php artisan migrate --batch=N</code> para ejecutar migraciones de un lote específico.</p>
+</li>
+<li>
+<p><code>php artisan migrate --path=/</code> <code>ruta/a/migracion</code> para ejecutar una migración específica.</p>
+</li>
+<li>
+<p><code>php artisan migrate --pretend</code> para simular la ejecución de migraciones sin aplicarlas.</p>
+</li>
+</ul>
+<h2 id="crear-una-migracion-para-actualizar-una-tabla">Crear una Migración para actualizar una tabla<a class="headerlink" href="#crear-una-migracion-para-actualizar-una-tabla" title="Permanent link">&para;</a></h2>
+<p>En el ejemplo anterior hemos modificado una tabla añadiento un campo <code>deadline</code>. Pero lo hemos hecho modificando la migración original. Pero esto no siempre es posible y por tanto no es una buena práctica. Imaginemos por un momento que la tabla <code>notes</code> ya está en producción y tiene datos. Si modificamos la migración original y ejecutamos <code>php artisan</code> <code>migrate:refresh</code>, perderemos todos los datos de la tabla. Por tanto, lo correcto es crear una nueva migración para modificar la tabla.</p>
+<p>El <code>truco</code> de borrar la tabla y volver a crearla solo es válido en entornos de desarrollo, nunca en producción. <strong>Cuando eliminamos la tabla y la</strong></p>
+<p><strong>habia en la tabla</strong>. Esto no es aceptable en un entorno de producción, ya que los datos son valiosos y no se pueden perder. En un entorno de desarrollo, esto puede ser aceptable si estamos probando cosas y no nos importa perder los datos. Pero en producción, esto es inaceptable y debemos crear una nueva migración para modificar la tabla sin perder los datos.</p>
+<p>En este punto vamos a crear una nueva migración para añadir un campo <code>author</code> a la tabla <code>notes</code>. El campo será de tipo <code>string</code> y podrá ser nulo. Y En este caso vamos a modificar la tabla sin necesidad de hacer rollback, ya que la tabla <code>notes</code> ya está creada y tiene datos.</p>
+<p>Puedes poblar la tabla <code>notes</code> con algunos datos de prueba si quieres comprobar que los datos no se pierden al ejecutar la migración.</p>
+<p>Creamos una nueva migración:</p>
+<p>Usa el siguiente comando para crear una nueva migración para actualizar la tabla <code>notes</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>php artisan
+<a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>make:migration
+<a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a>update_notes_table
+</code></pre></div>
+<p>En el método <code>up()</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>&lt;?php
+<a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>Schema::table('notes',
+<a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a>function (Blueprint
+<a id="__codelineno-57-4" name="__codelineno-57-4" href="#__codelineno-57-4"></a>$table) {
+<a id="__codelineno-57-5" name="__codelineno-57-5" href="#__codelineno-57-5"></a>$table-
+<a id="__codelineno-57-6" name="__codelineno-57-6" href="#__codelineno-57-6"></a>&gt;string('author')-
+<a id="__codelineno-57-7" name="__codelineno-57-7" href="#__codelineno-57-7"></a>&gt;after('description')-
+<a id="__codelineno-57-8" name="__codelineno-57-8" href="#__codelineno-57-8"></a>&gt;nullable();
+<a id="__codelineno-57-9" name="__codelineno-57-9" href="#__codelineno-57-9"></a>});
+</code></pre></div>
+<p>En el <code>down()</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>&lt;?php
+<a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>Schema::table('notes',
+<a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a>function (Blueprint
+<a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a>$table) {
+<a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a>$table-
+<a id="__codelineno-58-6" name="__codelineno-58-6" href="#__codelineno-58-6"></a>&gt;dropColumn('author');
+<a id="__codelineno-58-7" name="__codelineno-58-7" href="#__codelineno-58-7"></a>});
+</code></pre></div>
+<p>Para ejecutar la migración:</p>
+<p>Ejecuta el siguiente comando para ejecutar la migración:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>php artisan migrate
+</code></pre></div>
+<p>Puedes comprobar que existe un nuevo campo <code>author</code> en la tabla <code>notes</code>. Y que está en la posición correcta.</p>
+<p>Para deshacer la migración, ejecuta:</p>
+<p>Ejecuta el siguiente comando para deshacer la migración:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>php artisan
+<a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>migrate:rollback
+</code></pre></div>
+<p>Esto revertirá la migración y eliminará el campo <code>author</code> de la tabla <code>notes</code>. Puedes verificarlo conectándote a la base de datos y comprobando que el campo ha sido eliminado correctamente.</p>
+<h2 id="introduccion-a-los-modelos-en-laravel">Introducción a los Modelos en Laravel<a class="headerlink" href="#introduccion-a-los-modelos-en-laravel" title="Permanent link">&para;</a></h2>
+<p>Los <strong>modelos</strong> son una parte fundamental de Laravel y nos permiten trabajar con la base de datos de forma más ágil. Cada modelo representa una tabla en la base de datos y nos permite interactuar con ella de forma sencilla mediante <code>Eloquent ORM</code>. Esto significa que podemos realizar operaciones CRUD Crear, Leer, Actualizar, Eliminar) en la base de datos sin necesidad de escribir consultas SQL complejas. Los ficheros se encuentran en la carpeta <code>app/Models</code>. Por defecto, Laravel crea un modelo para cada tabla en la base de datos. Sin embargo, también podemos crear modelos personalizados para tablas específicas o para representar relaciones entre tablas.</p>
+<h2 id="carpeta-appmodels">Carpeta app/Models<a class="headerlink" href="#carpeta-appmodels" title="Permanent link">&para;</a></h2>
+<p>Aquí se almacenan todos los modelos de la aplicación.</p>
+<p>Por convenciones:</p>
+<ul>
+<li>
+<p>El modelo <code>Note</code> representa la tabla <code>notes</code>.</p>
+</li>
+<li>
+<p>El modelo <code>User</code> representa la tabla <code>users</code>.</p>
+</li>
+</ul>
+<p>Los modelos deben seguir la convención de nombres de Laravel. Por ejemplo, el modelo <code>Note</code> debe estar en un archivo llamado <code>Note.php</code> y debe estar en la carpeta <code>app/Models</code>. El nombre del modelo debe ser singular, mientras que el nombre de la tabla debe ser plural. Esto es importante porque Laravel utiliza esta convención para relacionar los modelos con las tablas de la base de datos.</p>
+<h2 id="crear-un-modelo-para-la-tabla-notes">Crear un Modelo para la Tabla notes<a class="headerlink" href="#crear-un-modelo-para-la-tabla-notes" title="Permanent link">&para;</a></h2>
+<p>Usamos el comando:</p>
+<p>Usa el siguiente comando para crear un nuevo modelo:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>php artisan
+<a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>make:model Note
+</code></pre></div>
+<p>Esto crea <code>app/Models/Note.php</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>&lt;?php
+<a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>
+<a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a>namespace App\Mod
+<a id="__codelineno-62-4" name="__codelineno-62-4" href="#__codelineno-62-4"></a>
+<a id="__codelineno-62-5" name="__codelineno-62-5" href="#__codelineno-62-5"></a>use
+<a id="__codelineno-62-6" name="__codelineno-62-6" href="#__codelineno-62-6"></a>Illuminate\Databa
+<a id="__codelineno-62-7" name="__codelineno-62-7" href="#__codelineno-62-7"></a>
+<a id="__codelineno-62-8" name="__codelineno-62-8" href="#__codelineno-62-8"></a>class Note extend
+<a id="__codelineno-62-9" name="__codelineno-62-9" href="#__codelineno-62-9"></a>{
+<a id="__codelineno-62-10" name="__codelineno-62-10" href="#__codelineno-62-10"></a>//
+<a id="__codelineno-62-11" name="__codelineno-62-11" href="#__codelineno-62-11"></a>}
+</code></pre></div>
+<p>El modelo <code>Note</code> extiende la clase <code>Model</code>, que es la clase base para todos los modelos en Laravel. Esto nos permite utilizar todas las funcionalidades de <code>Eloquent ORM</code> en nuestro modelo <code>Note</code>. La clase <code>Model</code> proporciona métodos para interactuar con la base de datos, como <code>save()</code>, <code>delete()</code>, <code>find()</code>, entre otros.</p>
+<h2 id="asociar-el-modelo-a-una-tabla-personalizada">* Asociar el Modelo a una tabla personalizada<a class="headerlink" href="#asociar-el-modelo-a-una-tabla-personalizada" title="Permanent link">&para;</a></h2>
+<p>Si hemos seguido las convenciones de Laravel, el modelo <code>Note</code> se asociará automáticamente a la tabla <code>notes</code>. Sin embargo, si la tabla tiene un nombre diferente, debemos especificarlo en el modelo. Por ejemplo, si la tabla se llama <code>app_notas</code>, el modelo debe verse así:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>&lt;?php
+<a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>namespace App\Models
+<a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a>use
+<a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a>Illuminate\Database\
+<a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a>class Note extends M
+<a id="__codelineno-63-6" name="__codelineno-63-6" href="#__codelineno-63-6"></a>{
+<a id="__codelineno-63-7" name="__codelineno-63-7" href="#__codelineno-63-7"></a>// Especificar e
+<a id="__codelineno-63-8" name="__codelineno-63-8" href="#__codelineno-63-8"></a>tabla
+<a id="__codelineno-63-9" name="__codelineno-63-9" href="#__codelineno-63-9"></a>protected $table
+<a id="__codelineno-63-10" name="__codelineno-63-10" href="#__codelineno-63-10"></a>}
+</code></pre></div>
+<h2 id="crear-una-nueva-nota-con-eloquent">Crear una nueva Nota con Eloquent<a class="headerlink" href="#crear-una-nueva-nota-con-eloquent" title="Permanent link">&para;</a></h2>
+<p>Este sería el código para crear una nueva nota:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>&lt;?php
+<a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a>$note = new
+<a id="__codelineno-64-3" name="__codelineno-64-3" href="#__codelineno-64-3"></a>Note();
+<a id="__codelineno-64-4" name="__codelineno-64-4" href="#__codelineno-64-4"></a>$note-&gt;title =
+<a id="__codelineno-64-5" name="__codelineno-64-5" href="#__codelineno-64-5"></a>'Mi primer nota';
+<a id="__codelineno-64-6" name="__codelineno-64-6" href="#__codelineno-64-6"></a>$note-
+<a id="__codelineno-64-7" name="__codelineno-64-7" href="#__codelineno-64-7"></a>&gt;description =
+<a id="__codelineno-64-8" name="__codelineno-64-8" href="#__codelineno-64-8"></a>'Descripción de
+<a id="__codelineno-64-9" name="__codelineno-64-9" href="#__codelineno-64-9"></a>la nota';
+<a id="__codelineno-64-10" name="__codelineno-64-10" href="#__codelineno-64-10"></a>$note-&gt;done =
+<a id="__codelineno-64-11" name="__codelineno-64-11" href="#__codelineno-64-11"></a>false;
+<a id="__codelineno-64-12" name="__codelineno-64-12" href="#__codelineno-64-12"></a>$note-&gt;save();
+</code></pre></div>
+<p>Podemos observar que no hemos utilizado <code>sql</code>, estamos utilizando la clase <code>Model</code> de Laravel para interactuar con la base de datos. Esto es posible gracias a Eloquent ORM, que nos permite trabajar con la base de datos de forma más sencilla y rápida. Si analizamos el <code>use</code> podemos ver:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>&lt;?php
+<a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a>use
+<a id="__codelineno-65-3" name="__codelineno-65-3" href="#__codelineno-65-3"></a>Illuminate\Database\Eloquen
+</code></pre></div>
+<p>Esto significa que estamos utlizando <code>Eloquent</code>, que es el ORM de Laravel. Eloquent nos permite interactuar con la base de datos de forma más sencilla y rápida, utilizando objetos en lugar de consultas SQL. Esto hace que el código sea más legible y fácil de mantener.</p>
+<p>Lo iremos ampliando durante el curso, pero por ahora es suficiente.</p>
+<p>Puedes probar a crear una nota y eliminarla:</p>
+<p>Pero la antes, <code>¿Dónde ponemos este</code> <code>código?</code>, si aún no hemos visto los controladores. Hay varias opciones:</p>
+<ul>
+<li>
+<p>Puedes crear un carchivo php y ejecutarlo desde la línea de comandos.</p>
+</li>
+<li>
+<p>Puedes crear una ruta temporal en <code>routes/web.php</code> y ejecutar el código desde ahí.</p>
+</li>
+</ul>
+<p>Vamos a tomar la seguna opción, por tanto iermos a <code>routes/web.php</code> y añadimos la siguiente ruta:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>&lt;?php
+<a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a>use
+<a id="__codelineno-66-3" name="__codelineno-66-3" href="#__codelineno-66-3"></a>App\Models\Note;
+<a id="__codelineno-66-4" name="__codelineno-66-4" href="#__codelineno-66-4"></a>Route::get('/
+<a id="__codelineno-66-5" name="__codelineno-66-5" href="#__codelineno-66-5"></a>crear-nota',
+<a id="__codelineno-66-6" name="__codelineno-66-6" href="#__codelineno-66-6"></a>function () {
+<a id="__codelineno-66-7" name="__codelineno-66-7" href="#__codelineno-66-7"></a>$note = new
+<a id="__codelineno-66-8" name="__codelineno-66-8" href="#__codelineno-66-8"></a>Note();
+<a id="__codelineno-66-9" name="__codelineno-66-9" href="#__codelineno-66-9"></a>$note-&gt;title
+<a id="__codelineno-66-10" name="__codelineno-66-10" href="#__codelineno-66-10"></a>= 'Mi primer
+<a id="__codelineno-66-11" name="__codelineno-66-11" href="#__codelineno-66-11"></a>nota';
+<a id="__codelineno-66-12" name="__codelineno-66-12" href="#__codelineno-66-12"></a>$note-
+<a id="__codelineno-66-13" name="__codelineno-66-13" href="#__codelineno-66-13"></a>&gt;description =
+<a id="__codelineno-66-14" name="__codelineno-66-14" href="#__codelineno-66-14"></a>'Descripción de
+<a id="__codelineno-66-15" name="__codelineno-66-15" href="#__codelineno-66-15"></a>la nota';
+<a id="__codelineno-66-16" name="__codelineno-66-16" href="#__codelineno-66-16"></a>$note-&gt;done
+<a id="__codelineno-66-17" name="__codelineno-66-17" href="#__codelineno-66-17"></a>= false;
+<a id="__codelineno-66-18" name="__codelineno-66-18" href="#__codelineno-66-18"></a>$note-
+<a id="__codelineno-66-19" name="__codelineno-66-19" href="#__codelineno-66-19"></a>&gt;save();
+<a id="__codelineno-66-20" name="__codelineno-66-20" href="#__codelineno-66-20"></a>return 'Nota
+<a id="__codelineno-66-21" name="__codelineno-66-21" href="#__codelineno-66-21"></a>creada';
+<a id="__codelineno-66-22" name="__codelineno-66-22" href="#__codelineno-66-22"></a>});
+</code></pre></div>
+<p>Ahora, si accedemos a <code>http://</code> <code>localhost:8080/crear-nota</code>, se ejecutará el código y se creará una nueva nota en la base de datos. Puedes verificarlo conectándote a la base de datos y comprobando que la nota ha sido creada correctamente.</p>
+<p>Ahora podemos eliminar la nota creada. Para ello, añadimos otra ruta temporal en <code>routes/web.php</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>&lt;?php
+<a id="__codelineno-67-2" name="__codelineno-67-2" href="#__codelineno-67-2"></a>use
+<a id="__codelineno-67-3" name="__codelineno-67-3" href="#__codelineno-67-3"></a>App\Models\Note;
+<a id="__codelineno-67-4" name="__codelineno-67-4" href="#__codelineno-67-4"></a>Route::get('/
+<a id="__codelineno-67-5" name="__codelineno-67-5" href="#__codelineno-67-5"></a>eliminar-nota',
+<a id="__codelineno-67-6" name="__codelineno-67-6" href="#__codelineno-67-6"></a>function () {
+<a id="__codelineno-67-7" name="__codelineno-67-7" href="#__codelineno-67-7"></a>$note =
+<a id="__codelineno-67-8" name="__codelineno-67-8" href="#__codelineno-67-8"></a>Note::first();
+<a id="__codelineno-67-9" name="__codelineno-67-9" href="#__codelineno-67-9"></a>// Suponiendo
+<a id="__codelineno-67-10" name="__codelineno-67-10" href="#__codelineno-67-10"></a>que es la
+<a id="__codelineno-67-11" name="__codelineno-67-11" href="#__codelineno-67-11"></a>primera nota
+<a id="__codelineno-67-12" name="__codelineno-67-12" href="#__codelineno-67-12"></a>creada
+<a id="__codelineno-67-13" name="__codelineno-67-13" href="#__codelineno-67-13"></a>/** $note =
+<a id="__codelineno-67-14" name="__codelineno-67-14" href="#__codelineno-67-14"></a>Note::find(3);
+<a id="__codelineno-67-15" name="__codelineno-67-15" href="#__codelineno-67-15"></a>Si queremos
+<a id="__codelineno-67-16" name="__codelineno-67-16" href="#__codelineno-67-16"></a>acceder a un ID
+<a id="__codelineno-67-17" name="__codelineno-67-17" href="#__codelineno-67-17"></a>concreto */
+<a id="__codelineno-67-18" name="__codelineno-67-18" href="#__codelineno-67-18"></a>if ($note) {
+<a id="__codelineno-67-19" name="__codelineno-67-19" href="#__codelineno-67-19"></a>$note-
+<a id="__codelineno-67-20" name="__codelineno-67-20" href="#__codelineno-67-20"></a>&gt;delete();
+<a id="__codelineno-67-21" name="__codelineno-67-21" href="#__codelineno-67-21"></a>return
+<a id="__codelineno-67-22" name="__codelineno-67-22" href="#__codelineno-67-22"></a>'Nota eliminada
+<a id="__codelineno-67-23" name="__codelineno-67-23" href="#__codelineno-67-23"></a>con éxito';
+<a id="__codelineno-67-24" name="__codelineno-67-24" href="#__codelineno-67-24"></a>}
+<a id="__codelineno-67-25" name="__codelineno-67-25" href="#__codelineno-67-25"></a>return 'No
+<a id="__codelineno-67-26" name="__codelineno-67-26" href="#__codelineno-67-26"></a>hay notas para
+<a id="__codelineno-67-27" name="__codelineno-67-27" href="#__codelineno-67-27"></a>eliminar';
+<a id="__codelineno-67-28" name="__codelineno-67-28" href="#__codelineno-67-28"></a>});
+</code></pre></div>
+<p>Ahora, si accedemos a <code>http://</code> <code>localhost:8080/eliminar-nota</code>, se ejecutará el código y se eliminará la nota con ID 3 de la base de datos. Puedes verificarlo conectándote a la base de datos y comprobando que la nota ha sido eliminada correctamente.</p>
+<h2 id="propiedades-importantes-en-modelos">Propiedades importantes en Modelos<a class="headerlink" href="#propiedades-importantes-en-modelos" title="Permanent link">&para;</a></h2>
+<p>Una vez hemos creado el modelo, podemos utilizar algunas propiedades importantes para definir su comportamiento. Estas propiedades nos permiten personalizar el modelo y adaptarlo a nuestras necesidades. Con estas propiedades podemos definir qué campos se pueden asignar masivamente, qué campos se deben ocultar en las respuestas JSON, y cómo se deben convertir los tipos de datos.</p>
+<p><code>$filla</code> Lista de campos que pueden ser asignados masivamente.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>ble
+</code></pre></div>
+<p><code>$guard</code> Lista de campos que <strong>no</strong> pueden ser asignados.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a>ed
+</code></pre></div>
+<p><code>$casts</code> Convierte automáticamente tipos de campos (ej: booleanos, fechas).</p>
+<p><code>$hidde</code> Campos que no se deben mostrar en JSON.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a>n
+</code></pre></div>
+<p>Por ejemplo en nuestra tabla <code>notes</code> podemos definir los campos que se pueden asignar masivamente:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a>&lt;?php
+<a id="__codelineno-71-2" name="__codelineno-71-2" href="#__codelineno-71-2"></a>protected
+<a id="__codelineno-71-3" name="__codelineno-71-3" href="#__codelineno-71-3"></a>$fillable =
+<a id="__codelineno-71-4" name="__codelineno-71-4" href="#__codelineno-71-4"></a>['title',
+<a id="__codelineno-71-5" name="__codelineno-71-5" href="#__codelineno-71-5"></a>'description',
+<a id="__codelineno-71-6" name="__codelineno-71-6" href="#__codelineno-71-6"></a>'done',
+<a id="__codelineno-71-7" name="__codelineno-71-7" href="#__codelineno-71-7"></a>'deadline'];
+<a id="__codelineno-71-8" name="__codelineno-71-8" href="#__codelineno-71-8"></a>protected $hidden
+<a id="__codelineno-71-9" name="__codelineno-71-9" href="#__codelineno-71-9"></a>= ['created_at',
+<a id="__codelineno-71-10" name="__codelineno-71-10" href="#__codelineno-71-10"></a>'updated_at'];
+<a id="__codelineno-71-11" name="__codelineno-71-11" href="#__codelineno-71-11"></a>protected $casts
+<a id="__codelineno-71-12" name="__codelineno-71-12" href="#__codelineno-71-12"></a>= [
+<a id="__codelineno-71-13" name="__codelineno-71-13" href="#__codelineno-71-13"></a>'done' =&gt;
+<a id="__codelineno-71-14" name="__codelineno-71-14" href="#__codelineno-71-14"></a>'boolean',
+<a id="__codelineno-71-15" name="__codelineno-71-15" href="#__codelineno-71-15"></a>'deadline' =&gt;
+<a id="__codelineno-71-16" name="__codelineno-71-16" href="#__codelineno-71-16"></a>'date',
+<a id="__codelineno-71-17" name="__codelineno-71-17" href="#__codelineno-71-17"></a>];
+<a id="__codelineno-71-18" name="__codelineno-71-18" href="#__codelineno-71-18"></a>protected
+<a id="__codelineno-71-19" name="__codelineno-71-19" href="#__codelineno-71-19"></a>$guarded =
+<a id="__codelineno-71-20" name="__codelineno-71-20" href="#__codelineno-71-20"></a>['id'];
+</code></pre></div>
+<p>Esto significa que los campos <code>title</code>, <code>description</code>, <code>done</code> y <code>deadline</code> pueden ser asignados masivamente, mientras que el campo <code>id</code> no puede ser asignado. Además, los campos <code>created_at</code> y <code>updated_at</code> no se mostrarán en las respuestas JSON. El campo <code>done</code> se convertirá automáticamente a un booleano y el campo <code>deadline</code> se convertirá automáticamente a una fecha.</p>
+<p>Esto es útil para proteger los campos que no queremos que sean modificados directamente, como el campo <code>id</code>. De esta manera los campos no pueden ser modificados directamente, sino que deben ser asignados a través de los métodos del modelo. Esto ayuda a mantener la integridad de los datos y evita errores al modificar los campos.</p>
+<p>La propiedad <code>$casts</code> nos permite definir cómo se deben convertir los tipos de datos. Por ejemplo, si tenemos un campo <code>fecha</code> que es un date, podemos definirlo así:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a>&lt;?php
+<a id="__codelineno-72-2" name="__codelineno-72-2" href="#__codelineno-72-2"></a>protected $casts
+<a id="__codelineno-72-3" name="__codelineno-72-3" href="#__codelineno-72-3"></a>= [
+<a id="__codelineno-72-4" name="__codelineno-72-4" href="#__codelineno-72-4"></a>'fecha' =&gt;
+<a id="__codelineno-72-5" name="__codelineno-72-5" href="#__codelineno-72-5"></a>'date',
+<a id="__codelineno-72-6" name="__codelineno-72-6" href="#__codelineno-72-6"></a>];
+</code></pre></div>
+<p>Esto significa que el campo <code>fecha</code> se convertirá automáticamente a un objeto <code>Carbon</code>, que es una biblioteca de PHP para trabajar con fechas y horas. Esto nos permite trabajar con fechas de forma más sencilla y rápida, utilizando métodos como <code>format()</code>, <code>addDays()</code>, entre otros.</p>
+<p>Si la clave primaria no es <code>id</code>, podemos especificar el nombre de la clave primaria:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a>&lt;?php
+<a id="__codelineno-73-2" name="__codelineno-73-2" href="#__codelineno-73-2"></a>protected
+<a id="__codelineno-73-3" name="__codelineno-73-3" href="#__codelineno-73-3"></a>$primaryKey =
+<a id="__codelineno-73-4" name="__codelineno-73-4" href="#__codelineno-73-4"></a>'note_id';
+</code></pre></div>
+<p>Esto es útil si estamos utilizando una clave primaria diferente a la convencional. Por ejemplo, si estamos utilizando una clave primaria compuesta o si estamos utilizando un campo diferente como clave primaria. En este caso, debemos especificar el nombre de la clave primaria en el modelo para que Laravel pueda identificarla correctamente.</p>
+<p>Un ejemplo de clave compuesta sería:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a>&lt;?php
+<a id="__codelineno-74-2" name="__codelineno-74-2" href="#__codelineno-74-2"></a>protected
+<a id="__codelineno-74-3" name="__codelineno-74-3" href="#__codelineno-74-3"></a>$primaryKey =
+<a id="__codelineno-74-4" name="__codelineno-74-4" href="#__codelineno-74-4"></a>['note_id',
+<a id="__codelineno-74-5" name="__codelineno-74-5" href="#__codelineno-74-5"></a>'user_id'];
+</code></pre></div>
+<h2 id="relacion-entre-modelos-y-migraciones">Relación entre Modelos y Migraciones<a class="headerlink" href="#relacion-entre-modelos-y-migraciones" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>Cada <strong>modelo</strong> representa una tabla.</p>
+</li>
+<li>
+<p>Cada modifica la estructura de una tabla.</p>
+</li>
+<li>
+<p>Puedes crear modelo y migración a la vez:</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-75-1" name="__codelineno-75-1" href="#__codelineno-75-1"></a>php artisan make:model
+<a id="__codelineno-75-2" name="__codelineno-75-2" href="#__codelineno-75-2"></a>Nombre -m
+</code></pre></div>
+<p>Para comprobarlo vamos a crear un nuevo modelo <code>new Note</code> y su migración correspondiente:</p>
+<p>Usa el siguiente comando para crear un nuevo modelo y su migración correspondiente:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-76-1" name="__codelineno-76-1" href="#__codelineno-76-1"></a>php artisan
+<a id="__codelineno-76-2" name="__codelineno-76-2" href="#__codelineno-76-2"></a>make:model NewNote -m
+</code></pre></div>
+<p>Debemos obtener una salida similar a esta:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-77-1" name="__codelineno-77-1" href="#__codelineno-77-1"></a>root@f35b7095cb41:/var/www/
+<a id="__codelineno-77-2" name="__codelineno-77-2" href="#__codelineno-77-2"></a>NewNote -m
+<a id="__codelineno-77-3" name="__codelineno-77-3" href="#__codelineno-77-3"></a>
+<a id="__codelineno-77-4" name="__codelineno-77-4" href="#__codelineno-77-4"></a>INFO Model [app/Models/
+<a id="__codelineno-77-5" name="__codelineno-77-5" href="#__codelineno-77-5"></a>successfully.
+<a id="__codelineno-77-6" name="__codelineno-77-6" href="#__codelineno-77-6"></a>
+<a id="__codelineno-77-7" name="__codelineno-77-7" href="#__codelineno-77-7"></a>INFO Migration [databas
+<a id="__codelineno-77-8" name="__codelineno-77-8" href="#__codelineno-77-8"></a>migrations/2025_10_06_16094
+<a id="__codelineno-77-9" name="__codelineno-77-9" href="#__codelineno-77-9"></a>created successfully.
+</code></pre></div>
+<p>Esto creará el modelo <code>NewNote</code> y la migración correspondiente para crear la tabla <code>new_notes</code>. Puedes verificarlo en la carpeta <code>app/Models</code> y en la carpeta <code>database/migrations</code>. Esto es útil para crear un nuevo modelo y su migración correspondiente de forma rápida y sencilla. Recuerda que si ya existe el modelo o la migración, Laravel te mostrará un error indicando que ya existe. Esto es útil para crear un nuevo modelo y su migración correspondiente de forma rápida y sencilla. Recuerda que si ya existe el modelo o la migración, Laravel te mostrará un error indicando que ya existe.</p>
+<p>Fíjate que el nombre del modelo está en <code>CamelCase</code> y el nombre de la tabla está en <code>snake_case</code> y en plural. Esto es importante porque Laravel utiliza estas convenciones para relacionar los modelos con las tablas de la base de datos.</p>
+<p>No siempre que creamos una migración creamos un modelo, pero siempre que trabajamos con un modelo debemos tener su tabla correspondiente.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      IES JUAN DE GARAY - 2º DWES · Curso original de Beteta adaptado por Eva María Gómez Abad
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

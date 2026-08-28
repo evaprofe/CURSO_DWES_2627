@@ -1,0 +1,3227 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Apuntes de Desarrollo Web en Entorno Servidor">
+      
+      
+        <meta name="author" content="Eva María Gómez Abad">
+      
+      
+        <link rel="canonical" href="https://evaprofe.github.io/CURSO_DWES_2627/tema-09-seeders-factories-faker/9-1-creacion-de-datos-iniciales-y-de-prueba-seeders-factories-y-faker-introduccion-a-laravel/">
+      
+      
+        <link rel="prev" href="../../tema-08-api-rest/8-3-actividad-del-tema-8-introduccion-a-laravel/">
+      
+      
+        <link rel="next" href="../actividad-del-tema-9-introduccion-a-laravel/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>9.1 Datos Iniciales y de Prueba - Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#creacion-de-datos-iniciales-y-prueba-seeders-factories-y-faker" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-header__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              9.1 Datos Iniciales y de Prueba
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Activar modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Activar modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-nav__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introducción al Desarrollo Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1. Introducción al Desarrollo Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/introduccion-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1 Desarrollo Web en el Servidor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2 Patrón Modelo-Vista-Controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.3 Protocolo HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 1 · MVC y HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Frameworks y Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2. Frameworks y Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1 Introducción a los Frameworks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-2-configuracion-del-entorno-de-trabajo-con-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.2 Entorno de Trabajo con Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-3-instalacion-y-puesta-en-marcha-de-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.3 Instalación y Puesta en Marcha
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-4-estructura-y-elementos-de-un-proyecto-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.4 Estructura de un Proyecto Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-5-actividad-del-tema-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 2 · Introducción a Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/anexos-tailwind-css/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anexo · Tailwind CSS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/instrucciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía del Entorno
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tema-02-frameworks-laravel/proyecto-github/docs/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🚀 Proyecto Guiado · Entorno Laravel
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🚀 Proyecto Guiado · Entorno Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/requisitos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso1-preparacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 1 · Preparación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso7-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 7 · Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso9-mysql-cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 9 · MySQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso10-xdebug/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 10 · Xdebug
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/instrucciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instrucciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/conclusion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conclusión
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. Vistas con Blade
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-03-vistas-blade/3-1-vistas-con-blade-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Creación de Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-03-vistas-blade/3-2-actividad-del-tema-3-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 3 · Agencia de Viajes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4. Migraciones y Modelos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-04-migraciones-modelos/4-1-migraciones-y-modelos-con-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 Migraciones y Modelos en Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-04-migraciones-modelos/4-2-actividad-del-tema-4-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 4 · Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Controladores de Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5. Controladores de Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/5-1-controladores-de-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Controladores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/unidad-5-2-relaciones-uno-a-muchos-en-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.2 Relaciones Uno a Muchos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/actividad-del-tema-5-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 5 · Controladores y Rutas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Desarrollo CRUD Completo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. Desarrollo CRUD Completo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-06-crud-completo/6-1-desarrollo-de-un-crud-completo-en-laravel-parte-1-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1 Desarrollo de un CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-06-crud-completo/6-2-actividad-del-tema-6-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 6 · CRUD de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-07-validaciones-rutas-mensajes/7-1-validaciones-rutas-resource-y-mensajes-del-sistema-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.1 Validaciones y Rutas Resource
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-07-validaciones-rutas-mensajes/actividad-del-tema-7-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 7 · Validaciones del CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. API REST
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    8. API REST
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-1-apis-restful-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.1 Creación de API REST
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-2-apis-con-sanctum-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.2 API con Sanctum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-3-actividad-del-tema-8-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 8 · API de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Seeders, Factories y Faker
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    9. Seeders, Factories y Faker
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9.1 Datos Iniciales y de Prueba
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9.1 Datos Iniciales y de Prueba
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparacion-del-entorno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preparación del Entorno
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Preparación del Entorno">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-la-tabla-y-el-modelo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear la tabla y el modelo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlador-ruta-y-vista" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Controlador, ruta y vista
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#seeders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Seeders
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Seeders">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introduccion-a-seeders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción a Seeders
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-y-registrar-un-seeder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear y registrar un seeder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejecutar-un-seeder-especifico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejecutar un seeder específico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vista-de-los-productos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vista de los productos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#factories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Factories
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Factories">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introduccion-a-factories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción a Factories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-una-factory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        = Crear una factory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usar-factory-en-un-seeder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usar factory en un seeder
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#faker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Faker
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Faker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introduccion-a-faker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción a Faker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tabla-de-metodos-utiles-de-faker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tabla de métodos útiles de Faker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aplicar-faker-a-productfactory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aplicar Faker a ProductFactory
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusiones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusiones
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../actividad-del-tema-9-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 9 · Generación de Datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-1-introduccion-al-despliegue-de-aplicaciones-web-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.1 Introducción al Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-2-aplicacion-simple-con-estructura-precaria-php-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.2 Aplicación PHP Sencilla
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-3-aplicacion-completa-con-estructura-de-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.3 Aplicación Laravel Completa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-4-despliegue-en-paas-render-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.4 Despliegue en Render
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-5-actividad-del-tema-10-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 10 · Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparacion-del-entorno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preparación del Entorno
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Preparación del Entorno">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-la-tabla-y-el-modelo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear la tabla y el modelo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlador-ruta-y-vista" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Controlador, ruta y vista
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#seeders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Seeders
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Seeders">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introduccion-a-seeders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción a Seeders
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-y-registrar-un-seeder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear y registrar un seeder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejecutar-un-seeder-especifico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejecutar un seeder específico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vista-de-los-productos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vista de los productos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#factories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Factories
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Factories">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introduccion-a-factories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción a Factories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-una-factory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        = Crear una factory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usar-factory-en-un-seeder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usar factory en un seeder
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#faker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Faker
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Faker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introduccion-a-faker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción a Faker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tabla-de-metodos-utiles-de-faker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tabla de métodos útiles de Faker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aplicar-faker-a-productfactory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aplicar Faker a ProductFactory
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusiones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusiones
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="creacion-de-datos-iniciales-y-prueba-seeders-factories-y-faker">Creación de datos iniciales y prueba: Seeders, Factories y Faker<a class="headerlink" href="#creacion-de-datos-iniciales-y-prueba-seeders-factories-y-faker" title="Permanent link">&para;</a></h1>
+<h2 id="introduccion">Introducción<a class="headerlink" href="#introduccion" title="Permanent link">&para;</a></h2>
+<p>En los temas anteriores aprendimos a crear tablas con migraciones y a manipular datos manualmente. Sin embargo, en muchos proyectos reales necesitamos:</p>
+<ul>
+<li>
+<p>Crear <strong>datos iniciales</strong>, como usuarios, roles o productos básicos.</p>
+</li>
+<li>
+<p>Generar <strong>datos masivos de prueba</strong> para desarrollo y pruebas funcionales.</p>
+</li>
+</ul>
+<p>Laravel nos ofrece tres herramientas clave para ello:</p>
+<ul>
+<li>
+<p><strong>Seeders</strong>: para insertar datos conocidos y permanentes.</p>
+</li>
+<li>
+<p><strong>Factories</strong>: para generar datos aleatorios.</p>
+</li>
+<li>
+<p><strong>Faker</strong>: para crear contenido realista de forma automática.</p>
+</li>
+</ul>
+<p>Utilizaremos la base de datos <code>laravel</code> y actualizaremos el archivo <code>.env</code> para garantizar la conexión correcta.</p>
+<h2 id="preparacion-del-entorno">Preparación del Entorno<a class="headerlink" href="#preparacion-del-entorno" title="Permanent link">&para;</a></h2>
+<p>vamos a comenzar desde un proyecto Laravel nuevo y la base de datos también nueva. La base de datos podemos eliminar la que teníamos <code>drop database</code> <code>laravel;</code> y crear una nueva <code>create</code> <code>database laravel;</code>.</p>
+<p>Para el proyecto Laravel:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>composer create-project
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>laravel/laravel example-
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>app
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>cd example-app
+</code></pre></div>
+<p>o podemosusar el proyecto que teníamos eliminando todos los archivos, controladores, migraciones recursos, vistas etc, que hemos creado en los temas anteriores. De esta manera evitamos conflictos con los archivos que vamos a crear en este tema.</p>
+<p>Una vez creado o limpiado el proyecto, editamos el archivo <code>.env</code> para configurar la conexión a la base de datos:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>DB_CONNECTION=mysql
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>DB_HOST=mysql
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>DB_PORT=3306
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>DB_DATABASE=laravel
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>DB_USERNAME=alumno
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>DB_PASSWORD=alumno
+</code></pre></div>
+<p>Luego hacemos la migración inicial:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>php artisan migrate
+</code></pre></div>
+<h3 id="crear-la-tabla-y-el-modelo">Crear la tabla y el modelo<a class="headerlink" href="#crear-la-tabla-y-el-modelo" title="Permanent link">&para;</a></h3>
+<p><code>Product</code></p>
+<p>En este tema vamos manejar una tabla de productos. Creamos la migración y el modelo:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>php artisan make:model
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Product -m
+</code></pre></div>
+<p>Este comando crea el modelo <code>Product.php</code> en <code>app/Models</code> y la migración en <code>database/migrations</code>.</p>
+<p>Editamos la migración:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>&lt;?php
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Schema::create('p
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>function (Blueprin
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>{
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>$table-&gt;id();
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>$table-&gt;string
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>50);
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>$table-
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>&gt;string('short_des
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>200);
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>$table-
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>&gt;string('descripti
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>$table-&gt;float
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>&gt;default(20);
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>$table-&gt;timest
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>});
+</code></pre></div>
+<p>Editamos el modelo <code>Product.php</code> para permitir asignación masiva:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>&lt;?php
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>class Product
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>extends Model
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>{
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>protected
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>$guarded = [];
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>}
+</code></pre></div>
+<p>Ejecutamos la migración:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>php artisan migrate
+</code></pre></div>
+<h3 id="controlador-ruta-y-vista">Controlador, ruta y vista<a class="headerlink" href="#controlador-ruta-y-vista" title="Permanent link">&para;</a></h3>
+<p>Ahora que ya tenemos la tabla y el modelo, vamos a crear el circuito completo para mostrar los productos en una vista.</p>
+<p>Creamos el controlador:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>php artisan
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>make:controller
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>ProductController
+</code></pre></div>
+<p>Ruta en <code>web.php</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>&lt;?php
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>use
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>App\Http\Controlle
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>Route::get('/produ
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>[ProductControlle
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>&gt;name('product.ind
+</code></pre></div>
+<p>Método <code>index()</code> en el controlador:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>&lt;?php
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>use
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>App\Models\Product
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>use
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>Illuminate\View\Vi
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>public function
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>index(): View
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>{
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>$products =
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>Product::all();
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>return
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>view('products.ind
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>compact('products
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>}
+</code></pre></div>
+<p>Antes de crear la vista vamos a crear el layout <code>layouts/app.blade.php</code> para que todas las vistas tengan un diseño común.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>&lt;!DOCTYPE html&gt;
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>&lt;html lang="es"&gt;
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>&lt;head&gt;
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>&lt;meta
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>charset="UTF-8"&gt;
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>&lt;meta
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>name="viewport"
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>content="width=de
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>width, initial-
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>scale=1.0"&gt;
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>&lt;title&gt;@yield('ti
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>'Mi Aplicación')&lt;
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>title&gt;
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>&lt;/head&gt;
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>&lt;body&gt;
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>&lt;header&gt;
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>&lt;h1&gt;Mi
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>Tienda&lt;/h1&gt;
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>&lt;!-- Aquí
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>podría ir una ba
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>navegación --&gt;
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>&lt;/header&gt;
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>&lt;main&gt;
+<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>@yield('content'
+<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>&lt;/main&gt;
+<a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a>
+<a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a>&lt;footer&gt;
+<a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a>&lt;p&gt;&amp;copy
+<a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a>date('Y') }} Mi
+<a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a>Tienda&lt;/p&gt;
+<a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a>&lt;/footer&gt;
+<a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a>&lt;/body&gt;
+<a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a>&lt;/html&gt;
+</code></pre></div>
+<p>Ahora que ya tenemos el layout, podemos crear la vista <code>index.blade.php</code> para listar los productos. Creamos la carpeta <code>products</code> dentro de <code>resources/views</code> y dentro de ella el archivo <code>index.blade.php</code>.</p>
+<p>Creamos <code>resources/views/products/</code> <code>index.blade.php</code>:</p>
+<p>En este caso la vista es sencilla, solo muestra una lista de productos, en forma de <code>cards</code>. Más adelante con CSS ya le cambiaremos el aspecto. Utilizamos <code>@forelse</code> para mostrar un mensaje si no hay productos.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>@extends
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>('layouts.app')
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>@section('title'
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>'Products')
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>@section('content
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>&lt;div
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>class="product-
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>container"&gt;
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>@forelse
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>($products as
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>$product)
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>&lt;div
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>class="card"&gt;
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>&lt;h2&gt;{{ $product-
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>&gt;name }}&lt;/h2&gt;
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>&lt;p&gt;{{ $product-
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>&gt;short_descriptio
+<a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>}}&lt;/p&gt;
+<a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a>
+<a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a>&lt;p&gt;&lt;strong&gt;${{
+<a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a>$product-&gt;price }
+<a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a>&lt;/strong&gt;&lt;/p&gt;
+<a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a>&lt;/div
+<a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a>@empty
+<a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a>&lt;p&gt;No
+<a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a>hay productos
+<a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a>disponibles.&lt;/p&gt;
+<a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a>@endforel
+<a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a>&lt;/div&gt;
+<a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a>@endsection
+</code></pre></div>
+<p>Añadimos un par de reglas CSS en <code>public/assets/css/app.css</code> para mejorar la presentación de la vista:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>.product-
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>container {
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>display:
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>flex;
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>flex-wrap:
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>wrap;
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>gap: 20px;
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>}
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>.card {
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>border: 1px
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>solid #ccc;
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>padding:
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>15px;
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>width:
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>200px;
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>box-shadow:
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>2px 2px 10px
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>rgba(0,0,0,0.1);
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>}
+</code></pre></div>
+<p>Nos falta añadir el CSS a la vista. Editamos el layout <code>app.blade.php</code> para incluir el CSS</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>&lt;head&gt;
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>...
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>&lt;link
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>rel="stylesheet"
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>href="{{
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>asset('css/
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>app.css') }}"&gt;
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>...
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>&lt;/head&gt;
+</code></pre></div>
+<p>De momento esta es la vista, sin datos. Vamos a crear datos iniciales y de prueba para que se vea mejor.</p>
+<h2 id="seeders">Seeders<a class="headerlink" href="#seeders" title="Permanent link">&para;</a></h2>
+<h3 id="introduccion-a-seeders">Introducción a Seeders<a class="headerlink" href="#introduccion-a-seeders" title="Permanent link">&para;</a></h3>
+<p>Los <strong>seeders</strong> permiten poblar la base de datos con datos iniciales que queremos tener siempre disponibles.</p>
+<h3 id="crear-y-registrar-un-seeder">Crear y registrar un seeder<a class="headerlink" href="#crear-y-registrar-un-seeder" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>php artisan make:seeder
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>ProductSeeder
+</code></pre></div>
+<p>En el seeder:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>&lt;?php
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>namespace Databas
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>use
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>Illuminate\Databa
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>use Illuminate\Da
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>use App\Models\P
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>class ProductSeed
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>{
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>/**
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>* Run the dat
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>*/
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>public functi
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>{
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>// Vamos
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>Product:
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>'name
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>'sho
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>producto 1',
+<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a>'desc
+<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a>producto 1',
+<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a>'pric
+<a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a>]);
+<a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a>Product:
+<a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a>'name
+<a id="__codelineno-15-28" name="__codelineno-15-28" href="#__codelineno-15-28"></a>'sho
+<a id="__codelineno-15-29" name="__codelineno-15-29" href="#__codelineno-15-29"></a>producto 2',
+<a id="__codelineno-15-30" name="__codelineno-15-30" href="#__codelineno-15-30"></a>'desc
+<a id="__codelineno-15-31" name="__codelineno-15-31" href="#__codelineno-15-31"></a>producto 2',
+<a id="__codelineno-15-32" name="__codelineno-15-32" href="#__codelineno-15-32"></a>'pric
+<a id="__codelineno-15-33" name="__codelineno-15-33" href="#__codelineno-15-33"></a>]);
+<a id="__codelineno-15-34" name="__codelineno-15-34" href="#__codelineno-15-34"></a>Product:
+<a id="__codelineno-15-35" name="__codelineno-15-35" href="#__codelineno-15-35"></a>'name
+<a id="__codelineno-15-36" name="__codelineno-15-36" href="#__codelineno-15-36"></a>'sho
+<a id="__codelineno-15-37" name="__codelineno-15-37" href="#__codelineno-15-37"></a>producto 3',
+<a id="__codelineno-15-38" name="__codelineno-15-38" href="#__codelineno-15-38"></a>'desc
+<a id="__codelineno-15-39" name="__codelineno-15-39" href="#__codelineno-15-39"></a>producto 3',
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>p,
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>'pric
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>]);
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>Product:
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>'name
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>'sho
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>producto 4',
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>'desc
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>producto 4',
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>'pric
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>]);
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>}
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>}
+</code></pre></div>
+<p>Editamos <code>DatabaseSeeder.php</code> para incluirlo:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>&lt;?php
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>public function run
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>{
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>$this-
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>&gt;call(ProductSeeder:
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>}
+</code></pre></div>
+<p>Ejecutamos:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>php artisan db:seed
+</code></pre></div>
+<p>Ahora ya tenemos productos en la base de datos y se muestran en la vista. Puedes comprobar que esxisten en la base de datos con <code>select *</code> <code>from products;</code>.</p>
+<h3 id="ejecutar-un-seeder-especifico">Ejecutar un seeder específico<a class="headerlink" href="#ejecutar-un-seeder-especifico" title="Permanent link">&para;</a></h3>
+<p>Si en alguna ocasión queremos ejecutar un seeder específico, podemos usar:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>php artisan db:seed --
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>class=ProductSeeder
+</code></pre></div>
+<h3 id="vista-de-los-productos">Vista de los productos<a class="headerlink" href="#vista-de-los-productos" title="Permanent link">&para;</a></h3>
+<p>Vamos al navegador, accedemos a http:// localhost:8080/products y vemos la lista de productos que hemos creado con el seeder.</p>
+<p>Ahora ya tenemos productos en la base de datos y se muestran en la vista.</p>
+<h2 id="factories">Factories<a class="headerlink" href="#factories" title="Permanent link">&para;</a></h2>
+<h3 id="introduccion-a-factories">Introducción a Factories<a class="headerlink" href="#introduccion-a-factories" title="Permanent link">&para;</a></h3>
+<p>Al probar su aplicación o sembrar su base de datos, es posible que necesites insertar algunos registros en ella. En lugar de especificar manualmente el valor de cada columna, <code>Laravel</code> te permite definir un conjunto de atributos predeterminados para cada uno de sus modelos <code>Eloquent</code> mediante fábricas de modelos.</p>
+<p>Una <strong>factory</strong> es una clase que define un modelo y cómo generar datos de prueba para ese modelo. Las <strong>factories</strong> permiten generar muchos datos automáticamente para pruebas y desarrollo.</p>
+<h3 id="crear-una-factory">= Crear una factory<a class="headerlink" href="#crear-una-factory" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>php artisan make:factory
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>ProductFactory --
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>model=Product
+</code></pre></div>
+<p>Este comando debe crear el archivo <code>database/factories/</code> <code>ProductFactory.php</code>.</p>
+<p>Definición simple:</p>
+<p>Antes de modificar la función hay que importar <code>Str</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>&lt;?php
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>use
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>Illuminate\Support\Str;
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>&lt;?php
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>public function
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>definition(): ar
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>{
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>return [
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>'name' =&gt;
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>Str::random(10),
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>'short_descriptio
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>=&gt; Str::random(30
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>'description' =&gt;
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>Str::random(50),
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>'price' =
+<a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>random_int(5, 100
+<a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>];
+<a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a>}
+</code></pre></div>
+<p>Es necesario modificar el modelo para que use la factory.</p>
+<p>Primero importamos <code>HasFactory</code>, y luego modificamos la clase para usar el trait <code>HasFactory</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>&lt;?php
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>use
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>Illuminate\Database\Eloq
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>&lt;?php
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>class Product
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>extends Model
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>{
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>use
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>HasFactory;
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>protected
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>$guarded = [];
+<a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>}
+</code></pre></div>
+<h3 id="usar-factory-en-un-seeder">Usar factory en un seeder<a class="headerlink" href="#usar-factory-en-un-seeder" title="Permanent link">&para;</a></h3>
+<p>Modificamos el contenido del seeder <code>ProductSeeder.php</code> para usar la factory. En la función <code>run()</code> quitamos los prodcutos que habíamos creado manualmente y añadimos la factory.</p>
+<p>Primero agregamos la importación del modelo <code>Product</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>&lt;?php
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>use
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>App\Models\Product;
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>&lt;?php
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>public function
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>run(): void
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>{
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>// Crear 10
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>productos usando l
+<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>factory
+<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>
+<a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>Product::factory(
+<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>&gt;count(10)-
+<a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a>&gt;create();
+<a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a>}
+</code></pre></div>
+<p>Ahora como no tenemos nada importante en la base de datos vamos a ejecutar las migraciones de nuevo, para eliminar los datos que teníamos y crear la tabla de nuevo:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>php artisan
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>migrate:fresh
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>php artisan db:seed
+</code></pre></div>
+<p>Esto nos borrará todos los datos y creará la tabla de nuevo, luego ejecutará el seeder que a su vez usará la factory para crear 10 productos con datos aleatorios.</p>
+<p>Si vamos a la base de datos veremos que tenemos 10 productos con datos aleatorios:</p>
+<p>Hemos conseguido tener 10 productos en la base de datos con datos aleatorios en segundos. Pero los datos no son muy realistas, ya que son cadenas aleatorias. Para conseguir unos datos más realistas veremos Faker en el siguiente apartado.</p>
+<h2 id="faker">Faker<a class="headerlink" href="#faker" title="Permanent link">&para;</a></h2>
+<h3 id="introduccion-a-faker">Introducción a Faker<a class="headerlink" href="#introduccion-a-faker" title="Permanent link">&para;</a></h3>
+<p><strong>Faker</strong> genera datos aleatorios que parecen reales (nombres, direcciones, textos.). Laravel lo usa integrado en <code>Factory</code>.</p>
+<h3 id="tabla-de-metodos-utiles-de-faker">Tabla de métodos útiles de Faker<a class="headerlink" href="#tabla-de-metodos-utiles-de-faker" title="Permanent link">&para;</a></h3>
+<p><code>name(</code> Nombre Juan Pérez completo</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>)
+</code></pre></div>
+<p><code>email</code> Email juan@mail.com realista</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>()
+</code></pre></div>
+<p><code>sente</code> Frase con Lorem ipsum <code>n</code> palabras dolor sit amet.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>nce(n
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>)
+</code></pre></div>
+<p><code>parag</code> Párrafo de Lorem ipsum texto dolor sit</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>raph(
+</code></pre></div>
+<p>amet.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>)
+</code></pre></div>
+<p><code>text(</code> Texto de Texto aleatorio longitud <code>n</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>n)
+</code></pre></div>
+<p><code>word(</code> Una palabra laptop aleatoria</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>)
+</code></pre></div>
+<p><code>numbe</code> Número 47 entre <code>a</code> y</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>rBetw
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>b
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>een(a
+<a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>, b)
+</code></pre></div>
+<p><code>rando</code> Valor de un 'IT' array</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>mElem
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>ent([
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>...])
+</code></pre></div>
+<p><code>boole</code> true o false true aleatorio</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>an()
+</code></pre></div>
+<p><code>date(</code> Fecha 2023 01 15 aleatoria</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>)
+</code></pre></div>
+<p><code>compa</code> Nombre de Grupo Pérez empresa SL</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>ny()
+</code></pre></div>
+<h3 id="aplicar-faker-a-productfactory">Aplicar Faker a ProductFactory<a class="headerlink" href="#aplicar-faker-a-productfactory" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>&lt;?php
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>public function
+<a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>definition(): ar
+<a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>{
+<a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>return [
+<a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>'name' =&gt;
+<a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a>$this-&gt;faker-
+<a id="__codelineno-40-8" name="__codelineno-40-8" href="#__codelineno-40-8"></a>&gt;word(),
+<a id="__codelineno-40-9" name="__codelineno-40-9" href="#__codelineno-40-9"></a>
+<a id="__codelineno-40-10" name="__codelineno-40-10" href="#__codelineno-40-10"></a>'short_descriptio
+<a id="__codelineno-40-11" name="__codelineno-40-11" href="#__codelineno-40-11"></a>=&gt; $this-&gt;faker-
+<a id="__codelineno-40-12" name="__codelineno-40-12" href="#__codelineno-40-12"></a>&gt;sentence(5),
+<a id="__codelineno-40-13" name="__codelineno-40-13" href="#__codelineno-40-13"></a>
+<a id="__codelineno-40-14" name="__codelineno-40-14" href="#__codelineno-40-14"></a>'description' =&gt;
+<a id="__codelineno-40-15" name="__codelineno-40-15" href="#__codelineno-40-15"></a>$this-&gt;faker-
+<a id="__codelineno-40-16" name="__codelineno-40-16" href="#__codelineno-40-16"></a>&gt;paragraph(),
+<a id="__codelineno-40-17" name="__codelineno-40-17" href="#__codelineno-40-17"></a>'price' =
+<a id="__codelineno-40-18" name="__codelineno-40-18" href="#__codelineno-40-18"></a>$this-&gt;faker-
+<a id="__codelineno-40-19" name="__codelineno-40-19" href="#__codelineno-40-19"></a>&gt;numberBetween(10
+<a id="__codelineno-40-20" name="__codelineno-40-20" href="#__codelineno-40-20"></a>100)
+<a id="__codelineno-40-21" name="__codelineno-40-21" href="#__codelineno-40-21"></a>];
+<a id="__codelineno-40-22" name="__codelineno-40-22" href="#__codelineno-40-22"></a>}
+</code></pre></div>
+<p>Ahora, al igual que en el punto anterior como no tenemos nada importante en la base de datos vamos a ejecutar las migraciones de nuevo, para eliminar los datos que teníamos y crear la tabla de nuevo, esta vez lo hacemos en un solo comando:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>php artisan
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>migrate:fresh --seed
+</code></pre></div>
+<p>Siguen siendo datos aleatorios, pero ahora son más realistas. Y a la hora de ver cómo quedan en una vista, para un prototipo, es mucho mejor.</p>
+<p>Comprobamos la vista: http:// localhost:8080/products, vamos a ver los productos con datos más realistas:</p>
+<h2 id="conclusiones">Conclusiones<a class="headerlink" href="#conclusiones" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>Los <strong>seeders</strong> son útiles para poblar la base de datos con datos estáticos.</p>
+</li>
+<li>
+<p>Las <strong>factories</strong> permiten generar cientos de registros en segundos.</p>
+</li>
+<li>
+<p><strong>Faker</strong> mejora la calidad de los datos de prueba.</p>
+</li>
+<li>
+<p>Todo esto acelera y mejora el desarrollo realista de tu aplicación.</p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      IES JUAN DE GARAY - 2º DWES · Curso original de Beteta adaptado por Eva María Gómez Abad
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

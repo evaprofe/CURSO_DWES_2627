@@ -1,0 +1,3995 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Apuntes de Desarrollo Web en Entorno Servidor">
+      
+      
+        <meta name="author" content="Eva María Gómez Abad">
+      
+      
+        <link rel="canonical" href="https://evaprofe.github.io/CURSO_DWES_2627/tema-08-api-rest/8-1-apis-restful-introduccion-a-laravel/">
+      
+      
+        <link rel="prev" href="../../tema-07-validaciones-rutas-mensajes/actividad-del-tema-7-introduccion-a-laravel/">
+      
+      
+        <link rel="next" href="../8-2-apis-con-sanctum-introduccion-a-laravel/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>8.1 Creación de API REST - Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#creacion-de-apis-rest-en-laravel" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-header__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              8.1 Creación de API REST
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Activar modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Activar modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-nav__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introducción al Desarrollo Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1. Introducción al Desarrollo Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/introduccion-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1 Desarrollo Web en el Servidor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2 Patrón Modelo-Vista-Controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.3 Protocolo HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 1 · MVC y HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Frameworks y Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2. Frameworks y Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1 Introducción a los Frameworks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-2-configuracion-del-entorno-de-trabajo-con-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.2 Entorno de Trabajo con Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-3-instalacion-y-puesta-en-marcha-de-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.3 Instalación y Puesta en Marcha
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-4-estructura-y-elementos-de-un-proyecto-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.4 Estructura de un Proyecto Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-5-actividad-del-tema-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 2 · Introducción a Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/anexos-tailwind-css/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anexo · Tailwind CSS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/instrucciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía del Entorno
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tema-02-frameworks-laravel/proyecto-github/docs/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🚀 Proyecto Guiado · Entorno Laravel
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🚀 Proyecto Guiado · Entorno Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/requisitos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso1-preparacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 1 · Preparación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso7-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 7 · Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso9-mysql-cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 9 · MySQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso10-xdebug/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 10 · Xdebug
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/instrucciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instrucciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/conclusion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conclusión
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. Vistas con Blade
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-03-vistas-blade/3-1-vistas-con-blade-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Creación de Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-03-vistas-blade/3-2-actividad-del-tema-3-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 3 · Agencia de Viajes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4. Migraciones y Modelos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-04-migraciones-modelos/4-1-migraciones-y-modelos-con-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 Migraciones y Modelos en Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-04-migraciones-modelos/4-2-actividad-del-tema-4-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 4 · Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Controladores de Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5. Controladores de Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/5-1-controladores-de-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Controladores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/unidad-5-2-relaciones-uno-a-muchos-en-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.2 Relaciones Uno a Muchos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/actividad-del-tema-5-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 5 · Controladores y Rutas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Desarrollo CRUD Completo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. Desarrollo CRUD Completo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-06-crud-completo/6-1-desarrollo-de-un-crud-completo-en-laravel-parte-1-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1 Desarrollo de un CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-06-crud-completo/6-2-actividad-del-tema-6-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 6 · CRUD de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-07-validaciones-rutas-mensajes/7-1-validaciones-rutas-resource-y-mensajes-del-sistema-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.1 Validaciones y Rutas Resource
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-07-validaciones-rutas-mensajes/actividad-del-tema-7-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 7 · Validaciones del CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. API REST
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    8. API REST
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.1 Creación de API REST
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.1 Creación de API REST
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rutas-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rutas API
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rutas API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#activar-el-sistema-de-rutas-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Activar el sistema de rutas API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#donde-se-registra-esta-configuracion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Dónde se registra esta configuración?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#definir-rutas-de-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Definir Rutas de API
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Definir Rutas de API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ficheros-de-rutas-y-su-organizacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ficheros de rutas y su organización
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#middleware-aplicado-a-las-rutas-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Middleware aplicado a las rutas API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#control-de-errores-en-la-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Control de errores en la API
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-controlador-para-la-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear Controlador para la API
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Crear Controlador para la API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generar-un-controlador-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generar un controlador API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-las-rutas-api-para-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        = Crear las rutas API para Notes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementar-el-crud-api-para-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementar el CRUD API para Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementar el CRUD API para Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modelo-note" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        = Modelo Note
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#codigos-de-estado-http-en-apis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Códigos de Estado HTTP en APIs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementar-metodos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementar métodos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#del-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        del controlador
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="del controlador">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#metodo-index-listar-notas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método index() – Listar notas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eh-metodo-show-mostrar-una-nota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EH Método show() – Mostrar una nota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-store-crear-una-nota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método store() – Crear una nota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-update-modificar-nota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método update() – Modificar nota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-destroy-eliminar-nota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método destroy() – Eliminar nota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-de-la-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing de la API
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Resources
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-un-api-resource" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear un API Resource
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#personalizar-la-transformacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Personalizar la transformación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usar-el-recurso-en-el-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usar el recurso en el controlador
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validacion-de-los-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validación de los datos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejemplos-de-peticiones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplos de peticiones
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusiones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusiones
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8-2-apis-con-sanctum-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.2 API con Sanctum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8-3-actividad-del-tema-8-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 8 · API de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Seeders, Factories y Faker
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    9. Seeders, Factories y Faker
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-09-seeders-factories-faker/9-1-creacion-de-datos-iniciales-y-de-prueba-seeders-factories-y-faker-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9.1 Datos Iniciales y de Prueba
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-09-seeders-factories-faker/actividad-del-tema-9-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 9 · Generación de Datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-1-introduccion-al-despliegue-de-aplicaciones-web-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.1 Introducción al Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-2-aplicacion-simple-con-estructura-precaria-php-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.2 Aplicación PHP Sencilla
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-3-aplicacion-completa-con-estructura-de-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.3 Aplicación Laravel Completa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-4-despliegue-en-paas-render-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.4 Despliegue en Render
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-5-actividad-del-tema-10-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 10 · Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rutas-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rutas API
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rutas API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#activar-el-sistema-de-rutas-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Activar el sistema de rutas API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#donde-se-registra-esta-configuracion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Dónde se registra esta configuración?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#definir-rutas-de-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Definir Rutas de API
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Definir Rutas de API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ficheros-de-rutas-y-su-organizacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ficheros de rutas y su organización
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#middleware-aplicado-a-las-rutas-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Middleware aplicado a las rutas API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#control-de-errores-en-la-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Control de errores en la API
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-controlador-para-la-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear Controlador para la API
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Crear Controlador para la API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generar-un-controlador-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generar un controlador API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-las-rutas-api-para-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        = Crear las rutas API para Notes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementar-el-crud-api-para-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementar el CRUD API para Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementar el CRUD API para Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modelo-note" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        = Modelo Note
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#codigos-de-estado-http-en-apis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Códigos de Estado HTTP en APIs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementar-metodos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementar métodos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#del-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        del controlador
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="del controlador">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#metodo-index-listar-notas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método index() – Listar notas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eh-metodo-show-mostrar-una-nota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EH Método show() – Mostrar una nota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-store-crear-una-nota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método store() – Crear una nota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-update-modificar-nota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método update() – Modificar nota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-destroy-eliminar-nota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método destroy() – Eliminar nota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-de-la-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing de la API
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Resources
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-un-api-resource" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear un API Resource
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#personalizar-la-transformacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Personalizar la transformación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usar-el-recurso-en-el-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usar el recurso en el controlador
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validacion-de-los-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validación de los datos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejemplos-de-peticiones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplos de peticiones
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusiones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusiones
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="creacion-de-apis-rest-en-laravel">Creación de APIs REST en Laravel<a class="headerlink" href="#creacion-de-apis-rest-en-laravel" title="Permanent link">&para;</a></h1>
+<h2 id="rutas-api">Rutas API<a class="headerlink" href="#rutas-api" title="Permanent link">&para;</a></h2>
+<p>En <strong>Laravel 12</strong>, a diferencia de versiones anteriores, el archivo <code>routes/api.php</code> <strong>no viene incluido por defecto</strong>. Laravel ahora permite habilitarlo opcionalmente para mantener la aplicación más ligera si no vas a construir una API.</p>
+<h3 id="activar-el-sistema-de-rutas-api">Activar el sistema de rutas API<a class="headerlink" href="#activar-el-sistema-de-rutas-api" title="Permanent link">&para;</a></h3>
+<p>Para trabajar con rutas API, primero debemos ejecutar el siguiente comando Artisan:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>php artisan
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>install:api
+</code></pre></div>
+<p>Este comando:</p>
+<ul>
+<li>
+<p>Crea automáticamente el archivo <code>routes/api.php</code>.</p>
+</li>
+<li>
+<p>Registra el archivo en el sistema de rutas.</p>
+</li>
+<li>
+<p>Aplica el middleware <code>api</code> a las rutas definidas allí.</p>
+</li>
+<li>
+<p>Añade el prefijo <code>/api</code> a todas las rutas de ese archivo.</p>
+</li>
+</ul>
+<p>En el proceso nos pude pedir crear una nueva migración para la tabla <code>api_tokens</code>, podemos decir que sí aunque de momento no la vamos a utilizar ya que no hemos visto la autenticación.</p>
+<h3 id="donde-se-registra-esta-configuracion">¿Dónde se registra esta configuración?<a class="headerlink" href="#donde-se-registra-esta-configuracion" title="Permanent link">&para;</a></h3>
+<p>Laravel configura los archivos de rutas en <code>bootstrap/app.php</code>. Una vez activadas, podrás ver una línea como esta:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&lt;?php
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>-&gt;withRouting(
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>api:
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>__DIR__.'/../
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>routes/
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>api.php',
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>apiPrefix:
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>'api',
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>//...
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>)
+</code></pre></div>
+<p>Laravel no añade este prefijo automáticamente, pero su valor por defecto es <code>api</code>. Por tanto añadir esta línea o no es equivalente. Pero yo recomiendo ponerla explícitamente para tener claro que las rutas de <code>api.php</code> van con el prefijo <code>/api</code>.</p>
+<p>Si quieres cambiar el prefijo, por ejemplo a <code>api/admin</code>, puedes modificar la clave <code>apiPrefix</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>&lt;?php
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>-&gt;withRouting(
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>api:
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>__DIR__.'/../
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>routes/
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>api.php',
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>apiPrefix:
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>'api/admin',
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>)
+</code></pre></div>
+<p>A partir de este momento, cualquier ruta definida en <code>routes/api.php</code> responderá a URLs que empiecen por <code>/api/</code> (o el prefijo que hayas definido).</p>
+<p>El archivo <code>web.php</code> sigue existiendo por defecto y está pensado para rutas que devuelven vistas HTML. Por tanto, recuerda usar <code>api.php</code> exclusivamente para tu API REST.</p>
+<p>Laravel carga cada archivo de rutas con su configuración correspondiente desde <code>bootstrap/app.php</code>:</p>
+<ul>
+<li>
+<p><code>routes/web.php</code> <strong>-</strong> grupo de middleware <code>web</code></p>
+</li>
+<li>
+<p><code>routes/api.php</code> grupo de middleware <code>api</code> y prefijo <code>/api</code></p>
+</li>
+</ul>
+<h2 id="introduccion">Introducción<a class="headerlink" href="#introduccion" title="Permanent link">&para;</a></h2>
+<p>Una <strong>API</strong> Application Programming Interface) permite a aplicaciones diferentes comunicarse entre sí, intercambiando datos en formatos como JSON. Las APIs REST usan los verbos HTTP GET, POST, PUT, DELETE) para definir operaciones sobre recursos.</p>
+<p>Laravel ofrece todas las herramientas necesarias para construir APIs modernas, organizadas y seguras. En este tema construiremos paso a paso una API para el recurso <code>Note</code>, que ya conocemos de los temas anteriores.</p>
+<h2 id="definir-rutas-de-api">Definir Rutas de API<a class="headerlink" href="#definir-rutas-de-api" title="Permanent link">&para;</a></h2>
+<h3 id="ficheros-de-rutas-y-su-organizacion">Ficheros de rutas y su organización<a class="headerlink" href="#ficheros-de-rutas-y-su-organizacion" title="Permanent link">&para;</a></h3>
+<p>Laravel separa las rutas para aplicación web y API</p>
+<p><code>routes/</code> Rutas para la interfaz web HTML</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>web.php
+</code></pre></div>
+<p><code>routes/</code> Rutas para la API, normalmente consumidas</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>api.php
+</code></pre></div>
+<p>por clientes que esperan JSON</p>
+<p>Estas rutas se cargan mediante la configuración definida en <code>bootstrap/</code> <code>app.php</code>.</p>
+<p>Cuando activamos el soporte para API con <code>php artisan install:api</code>, Laravel registra el archivo <code>routes/api.php</code>, le aplica el prefijo <code>/api</code> y asocia estas rutas al grupo de middleware <code>api</code>.</p>
+<p>Este grupo está pensado para rutas <strong>stateless</strong> (sin sesión ni CSRF) y permite, entre otras cosas, la resolución automática de parámetros de ruta a modelos mediante <code>SubstituteBindings</code>.</p>
+<p>Por defecto, este grupo incluye la resolución de route model binding mediante <code>SubstituteBindings</code>. Si además queremos limitación de peticiones ( <code>throttle</code>) u otros middlewares, podemos añadirlos explícitamente en la configuración de middleware o en las rutas.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>&lt;?php
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>Route::get('/
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>notes',
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>function () {
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>return
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>['mensaje' =&gt;
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>'Esta es la API
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>de notas'];
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>});
+</code></pre></div>
+<p>Accediendo a <code>http://</code> <code>localhost:8000/api/notes</code>, obtendrás: <code>{ "mensaje": "Esta es</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>la API de notas" }
+</code></pre></div>
+<p>Hay que fijarse que no es necesario añadir <code>/api</code> en la ruta, Laravel lo añade automáticamente. Pero sí hay que ponerlo en las peticiones.</p>
+<h3 id="middleware-aplicado-a-las-rutas-api">Middleware aplicado a las rutas API<a class="headerlink" href="#middleware-aplicado-a-las-rutas-api" title="Permanent link">&para;</a></h3>
+<p>Las rutas definidas en <code>routes/api.php</code> quedan asociadas automáticamente al grupo de middleware <code>api</code>.</p>
+<p>En la estructura moderna de Laravel, este grupo se configura en <code>bootstrap/</code> <code>app.php</code>.</p>
+<p>Por ejemplo, si definimos una ruta como:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>&lt;?php
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Route::get('/notes/
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>{note}',
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>[NoteController::class,
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>'show']);
+</code></pre></div>
+<p>y en el controlador usamos:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>&lt;?php
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>public function
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>show(Note $note):
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>JsonResponse
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>{
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>return response()-
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>&gt;json([
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>'success' =&gt;
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>true,
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>'data' =&gt; $note
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>], 200);
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>}
+</code></pre></div>
+<p>Este comportamiento se basa en el route model binding de Laravel, que permite convertir automáticamente los parámetros de la URL en modelos de Eloquent.</p>
+<p>Laravel intentará buscar automáticamente la nota por su identificador. Si no existe, devolverá un error 404.</p>
+<p>Si queremos añadir limitación de peticiones ( <code>throttle</code>) al grupo <code>api</code>, podemos hacerlo explícitamente en la configuración de middleware o en rutas concretas.</p>
+<h3 id="control-de-errores-en-la-api">Control de errores en la API<a class="headerlink" href="#control-de-errores-en-la-api" title="Permanent link">&para;</a></h3>
+<p>En una API REST es importante devolver siempre respuestas en formato JSON, también cuando ocurre un error.</p>
+<p>Uso de route model binding</p>
+<p>Cuando usamos parámetros tipados en el controlador:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>&lt;?php
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>public function
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>show(Note $note):
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>JsonResponse
+</code></pre></div>
+<p>Laravel resuelve automáticamente el modelo. Si no existe, devuelve un error <strong>404 Not Found</strong>.</p>
+<p>Este mismo comportamiento se aplica en métodos como <code>update()</code> y <code>destroy()</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>&lt;?php
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>public function
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>update(NoteRequest
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>$request, Note
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>$note):
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>JsonResponse
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>{
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>$note-
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>&gt;update($request-
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>&gt;validated());
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>return
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>response()-&gt;json([
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>'success'
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>=&gt; true,
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>'message'
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>=&gt; 'Nota
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>actualizada
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>correctamente.',
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>'data' =&gt;
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>$note
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>], 200);
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>}
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>
+<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>public function
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>destroy(Note
+<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>$note):
+<a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a>JsonResponse
+<a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a>{
+<a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a>$note-
+<a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a>&gt;delete();
+<a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a>
+<a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a>return
+<a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a>response()-&gt;json([
+<a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a>'success'
+<a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a>=&gt; true,
+<a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a>'message'
+<a id="__codelineno-10-38" name="__codelineno-10-38" href="#__codelineno-10-38"></a>=&gt; 'Nota eliminada
+<a id="__codelineno-10-39" name="__codelineno-10-39" href="#__codelineno-10-39"></a>correctamente.'
+<a id="__codelineno-10-40" name="__codelineno-10-40" href="#__codelineno-10-40"></a>])
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>], 200);
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>}
+</code></pre></div>
+<p>Uso alternativo con findOrFail</p>
+<p>También podemos usar:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>&lt;?php
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>$note =
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>Note::findOrFail($id);
+</code></pre></div>
+<p>Si no existe, Laravel lanza una excepción y devuelve un 404.</p>
+<p>Asegurar respuestas JSON en errores</p>
+<p>En clientes como REST Client, Postman o frontend, es recomendable enviar:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Accept: application/json
+</code></pre></div>
+<p>Además, podemos forzar que todas las rutas de la API devuelvan JSON configurando <code>bootstrap/app.php</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>&lt;?php
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>-&gt;withExceptions(fun
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>(Exceptions $excepti
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>{
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>$exceptions-
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>&gt;shouldRenderJsonWhe
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>(Request $request, T
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>$e) {
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>return $requ
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>&gt;is('api/*') || $req
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>&gt;expectsJson();
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>});
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>})
+</code></pre></div>
+<p>Conclusión</p>
+<ul>
+<li>
+<p>Usar <strong>route model binding</strong> es la opción más limpia.</p>
+</li>
+<li>
+<p>Laravel devuelve automáticamente <strong>404</strong> si el recurso no existe.</p>
+</li>
+<li>
+<p>No es necesario usar <code>try-catch</code> en cada método.</p>
+</li>
+<li>
+<p>La mejor práctica es centralizar el formato JSON de errores.</p>
+</li>
+</ul>
+<h2 id="crear-controlador-para-la-api">Crear Controlador para la API<a class="headerlink" href="#crear-controlador-para-la-api" title="Permanent link">&para;</a></h2>
+<p>Antes de generar el controlador, debemos asegurarnos de que existe la tabla <code>notes</code></p>
+<p>en nuestra base de datos.En caso de no tenerla, podemos crearla con el siguiente comando:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>php artisan
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>make:migration
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>create_notes_table
+</code></pre></div>
+<p>Esto generará un archivo de migración en <code>database/migrations</code> que podemos editar para definir la estructura de la tabla <code>notes</code>.</p>
+<p>Asegúrate de que la migración tenga el siguiente contenido:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>&lt;?php
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>use
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>Illuminate\Databa
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>use Illuminate\Da
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>use Illuminate\Su
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>class CreateNotes
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>{
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>public functi
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>{
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>Schema::c
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>(Blueprint $table
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>$tabl
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>$tabl
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>$tabl
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>$tabl
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>$tabl
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>&gt;default(false);
+<a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a>$tabl
+<a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>});
+<a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a>}
+<a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a>
+<a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a>public functi
+<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a>{
+<a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a>Schema::d
+<a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a>}
+<a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a>}
+</code></pre></div>
+<p>Después de editar la migración, ejecuta el siguiente comando para crear la tabla:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>php artisan migrate
+</code></pre></div>
+<p>Esto creará la tabla <code>notes</code> en tu base de datos.</p>
+<p>También podemos crear el modelo <code>Note</code> con el siguiente comando:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>php artisan make:model
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>Note
+</code></pre></div>
+<p>Esto generará el modelo <code>Note</code> en <code>app/</code> <code>Models/Note.php</code>.</p>
+<h3 id="generar-un-controlador-api">Generar un controlador API<a class="headerlink" href="#generar-un-controlador-api" title="Permanent link">&para;</a></h3>
+<p>Usamos el flag <code>--api</code> para generar un controlador que sólo incluye los métodos necesarios para una API CRUD</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>php artisan
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>make:controller Api/
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>NoteController --api
+</code></pre></div>
+<p>Esto creará el archivo en <code>app/Http/</code> <code>Controllers/Api/</code> <code>NoteController.php</code> con los métodos: <code>index</code>, <code>store</code>, <code>show</code>, <code>update</code>, <code>destroy</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>&lt;?php
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>namespace
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>App\Http\Controll
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>use
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>App\Http\Controll
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>use App\Models\No
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>use
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>Illuminate\Http\J
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>use Illuminate\Ht
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>class NoteControl
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>Controller
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>{
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>public functi
+<a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>JsonResponse
+<a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>{
+<a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>// Lista
+<a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>notas
+<a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>}
+<a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>
+<a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a>public functi
+<a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a>$note): JsonRespo
+<a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a>{
+<a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a>// Mostra
+<a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a>ID
+<a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a>}
+<a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a>
+<a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a>public functi
+<a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a>store(Request $re
+<a id="__codelineno-20-29" name="__codelineno-20-29" href="#__codelineno-20-29"></a>JsonResponse
+<a id="__codelineno-20-30" name="__codelineno-20-30" href="#__codelineno-20-30"></a>{
+<a id="__codelineno-20-31" name="__codelineno-20-31" href="#__codelineno-20-31"></a>// Crear
+<a id="__codelineno-20-32" name="__codelineno-20-32" href="#__codelineno-20-32"></a>}
+<a id="__codelineno-20-33" name="__codelineno-20-33" href="#__codelineno-20-33"></a>
+<a id="__codelineno-20-34" name="__codelineno-20-34" href="#__codelineno-20-34"></a>public functi
+<a id="__codelineno-20-35" name="__codelineno-20-35" href="#__codelineno-20-35"></a>update(Request $
+<a id="__codelineno-20-36" name="__codelineno-20-36" href="#__codelineno-20-36"></a>$note): JsonRespo
+<a id="__codelineno-20-37" name="__codelineno-20-37" href="#__codelineno-20-37"></a>{
+<a id="__codelineno-20-38" name="__codelineno-20-38" href="#__codelineno-20-38"></a>// Actual
+<a id="__codelineno-20-39" name="__codelineno-20-39" href="#__codelineno-20-39"></a>existente
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>}
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>public functi
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>$note): JsonRespo
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>{
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>// Elimin
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>}
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>}
+</code></pre></div>
+<p>El controlador <code>NoteController</code> extiende de <code>Controller</code> y usa el modelo <code>Note</code> para interactuar con la base de datos.</p>
+<h3 id="crear-las-rutas-api-para-notes">= Crear las rutas API para Notes<a class="headerlink" href="#crear-las-rutas-api-para-notes" title="Permanent link">&para;</a></h3>
+<p>En <code>routes/api.php</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>&lt;?php
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>use
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>App\Http\Controlle
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>Route::apiResource
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>NoteController::cl
+</code></pre></div>
+<p>Por seguridad, podemos utilizar <code>only()</code> para definir las rutas que queremos habilitar:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>&lt;?php
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>Route::apiResource('notes',
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>NoteController::class)-
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>&gt;only([
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>'index', 'show',
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>'store', 'update',
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>'destroy'
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>]);
+</code></pre></div>
+<p>Esto generará automáticamente las rutas necesarias para el controlador <code>NoteController</code> usando el método <code>apiResource</code>. Laravel se encarga de crear las rutas RESTful para los métodos del controlador.</p>
+<p>Esto define rutas como:</p>
+<ul>
+<li>
+<p>GET <code>/api/notes</code></p>
+</li>
+<li>
+<p>GET <code>/api/notes/{note}</code></p>
+</li>
+<li>
+<p>POST <code>/api/notes</code></p>
+</li>
+<li>
+<p>PUT/PATCH <code>/api/notes/{note}</code></p>
+</li>
+<li>
+<p>DELETE <code>/api/notes/{note}</code></p>
+</li>
+</ul>
+<p>Puedes comprobarlas con:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>php artisan route:list
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>--path=api/notes
+</code></pre></div>
+<h2 id="implementar-el-crud-api-para-notes">Implementar el CRUD API para Notes<a class="headerlink" href="#implementar-el-crud-api-para-notes" title="Permanent link">&para;</a></h2>
+<h3 id="modelo-note">= Modelo Note<a class="headerlink" href="#modelo-note" title="Permanent link">&para;</a></h3>
+<p>Asegúrate de que el modelo <code>Note</code> está correctamente definido con <code>$fillable</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>&lt;?php
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>class Note
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>extends Model
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>{
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>protected
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>$fillable =
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>['title',
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>'description',
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>'date',
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>'done'];
+<a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>}
+</code></pre></div>
+<h2 id="codigos-de-estado-http-en-apis">Códigos de Estado HTTP en APIs<a class="headerlink" href="#codigos-de-estado-http-en-apis" title="Permanent link">&para;</a></h2>
+<p>En una API REST, es importante devolver <strong>cédigos de estado HTTP apropiados</strong> para indicar si la operación fue exitosa o si ocurrió un error.</p>
+<p>A continuación, una tabla con los códigos más comunes y su uso recomendado:</p>
+<p><code>200 OK</code> Éxito La petición fue exitosa (por ejemplo, GET, PUT, DELETE</p>
+<p><code>201</code> Recurso Se ha creado creado un nuevo</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>Create
+</code></pre></div>
+<p>recurso</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>d
+</code></pre></div>
+<p>correctamente (por ejemplo, POST</p>
+<p><code>204 No</code> Sin La petición fue contenido exitosa pero no</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>Conten
+</code></pre></div>
+<p>se devuelve</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>t
+</code></pre></div>
+<p>ningún contenido (opcional tras DELETE</p>
+<p><code>400</code> Petición Cuando el incorrecta cliente envía</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>Bad
+</code></pre></div>
+<p>datos inválidos</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>Reques
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>t
+</code></pre></div>
+<p><code>401</code> No Cuando el autorizado usuario no está</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>Unauth
+</code></pre></div>
+<p>autenticado</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>orized
+</code></pre></div>
+<p><code>403</code> Prohibido El usuario está autenticado</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>Forbid
+</code></pre></div>
+<p>pero no tiene</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>den
+</code></pre></div>
+<p>permisos <code>404</code> No El recurso encontrado solicitado no</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>Not
+</code></pre></div>
+<p>existe</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>Found
+</code></pre></div>
+<p><code>422</code> Entidad no Validaciones procesable fallidas en los</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>Unproc
+</code></pre></div>
+<p>datos enviados</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>essabl
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>e
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>Entity
+</code></pre></div>
+<p><code>500</code> Error del Error servidor inesperado en</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>Intern
+</code></pre></div>
+<p>el servidor</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>al
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>Server
+<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>Error
+</code></pre></div>
+<ul>
+<li>
+<p>Usamos <strong>200 OK</strong> en respuestas normales donde devolvemos datos GET, PUT, DELETE.</p>
+</li>
+<li>
+<p>Usamos <strong>201 Created</strong> al crear un recurso con POST para indicar que se creó exitosamente.</p>
+</li>
+<li>
+<p>Usaríamos <strong>204 No Content</strong> si quisiéramos responder a un DELETE sin mensaje (aunque aquí devolvemos mensaje con 200.</p>
+</li>
+</ul>
+<h2 id="implementar-metodos">Implementar métodos<a class="headerlink" href="#implementar-metodos" title="Permanent link">&para;</a></h2>
+<h2 id="del-controlador">del controlador<a class="headerlink" href="#del-controlador" title="Permanent link">&para;</a></h2>
+<p>Antes de implementar los métodos del controlador, asegúrate de importar las clases necesarias:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>&lt;?php
+<a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>use
+<a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>Illuminate\Http\Js
+<a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>use Illuminate\Htt
+</code></pre></div>
+<h3 id="metodo-index-listar-notas">Método index() – Listar notas<a class="headerlink" href="#metodo-index-listar-notas" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>&lt;?php
+<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>public function
+<a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>index():
+<a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>JsonResponse
+<a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>{
+<a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a>return
+<a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a>response()-
+<a id="__codelineno-43-8" name="__codelineno-43-8" href="#__codelineno-43-8"></a>&gt;json([
+<a id="__codelineno-43-9" name="__codelineno-43-9" href="#__codelineno-43-9"></a>
+<a id="__codelineno-43-10" name="__codelineno-43-10" href="#__codelineno-43-10"></a>'success' =&gt;
+<a id="__codelineno-43-11" name="__codelineno-43-11" href="#__codelineno-43-11"></a>true,
+<a id="__codelineno-43-12" name="__codelineno-43-12" href="#__codelineno-43-12"></a>'data'
+<a id="__codelineno-43-13" name="__codelineno-43-13" href="#__codelineno-43-13"></a>=&gt; Note::all()
+<a id="__codelineno-43-14" name="__codelineno-43-14" href="#__codelineno-43-14"></a>], 200);
+<a id="__codelineno-43-15" name="__codelineno-43-15" href="#__codelineno-43-15"></a>}
+</code></pre></div>
+<h3 id="eh-metodo-show-mostrar-una-nota">EH Método show() – Mostrar una nota<a class="headerlink" href="#eh-metodo-show-mostrar-una-nota" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>&lt;?php
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>public function
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>show(Note
+<a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>$note):
+<a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>JsonResponse
+<a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>{
+<a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a>return
+<a id="__codelineno-44-8" name="__codelineno-44-8" href="#__codelineno-44-8"></a>response()-
+<a id="__codelineno-44-9" name="__codelineno-44-9" href="#__codelineno-44-9"></a>&gt;json([
+<a id="__codelineno-44-10" name="__codelineno-44-10" href="#__codelineno-44-10"></a>
+<a id="__codelineno-44-11" name="__codelineno-44-11" href="#__codelineno-44-11"></a>'success' =&gt;
+<a id="__codelineno-44-12" name="__codelineno-44-12" href="#__codelineno-44-12"></a>true,
+<a id="__codelineno-44-13" name="__codelineno-44-13" href="#__codelineno-44-13"></a>'data'
+<a id="__codelineno-44-14" name="__codelineno-44-14" href="#__codelineno-44-14"></a>=&gt; $note
+<a id="__codelineno-44-15" name="__codelineno-44-15" href="#__codelineno-44-15"></a>], 200);
+<a id="__codelineno-44-16" name="__codelineno-44-16" href="#__codelineno-44-16"></a>}
+</code></pre></div>
+<h3 id="metodo-store-crear-una-nota">Método store() – Crear una nota<a class="headerlink" href="#metodo-store-crear-una-nota" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>&lt;?php
+<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>public function
+<a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>store(Request
+<a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>$request):
+<a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>JsonResponse
+<a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a>{
+<a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a>$note =
+<a id="__codelineno-45-8" name="__codelineno-45-8" href="#__codelineno-45-8"></a>Note::create($req
+<a id="__codelineno-45-9" name="__codelineno-45-9" href="#__codelineno-45-9"></a>&gt;all());
+<a id="__codelineno-45-10" name="__codelineno-45-10" href="#__codelineno-45-10"></a>return respo
+<a id="__codelineno-45-11" name="__codelineno-45-11" href="#__codelineno-45-11"></a>&gt;json([
+<a id="__codelineno-45-12" name="__codelineno-45-12" href="#__codelineno-45-12"></a>'success
+<a id="__codelineno-45-13" name="__codelineno-45-13" href="#__codelineno-45-13"></a>true,
+<a id="__codelineno-45-14" name="__codelineno-45-14" href="#__codelineno-45-14"></a>'message
+<a id="__codelineno-45-15" name="__codelineno-45-15" href="#__codelineno-45-15"></a>'Nota creada
+<a id="__codelineno-45-16" name="__codelineno-45-16" href="#__codelineno-45-16"></a>correctamente.',
+<a id="__codelineno-45-17" name="__codelineno-45-17" href="#__codelineno-45-17"></a>'data' =&gt;
+<a id="__codelineno-45-18" name="__codelineno-45-18" href="#__codelineno-45-18"></a>$note
+<a id="__codelineno-45-19" name="__codelineno-45-19" href="#__codelineno-45-19"></a>], 201);
+<a id="__codelineno-45-20" name="__codelineno-45-20" href="#__codelineno-45-20"></a>}
+</code></pre></div>
+<h3 id="metodo-update-modificar-nota">Método update() – Modificar nota<a class="headerlink" href="#metodo-update-modificar-nota" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>&lt;?php
+<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>public function
+<a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>update(Request
+<a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>$request, Note
+<a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>$note):
+<a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a>JsonResponse
+<a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a>{
+<a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a>$note-
+<a id="__codelineno-46-9" name="__codelineno-46-9" href="#__codelineno-46-9"></a>&gt;update($request
+<a id="__codelineno-46-10" name="__codelineno-46-10" href="#__codelineno-46-10"></a>&gt;all());
+<a id="__codelineno-46-11" name="__codelineno-46-11" href="#__codelineno-46-11"></a>return
+<a id="__codelineno-46-12" name="__codelineno-46-12" href="#__codelineno-46-12"></a>response()-
+<a id="__codelineno-46-13" name="__codelineno-46-13" href="#__codelineno-46-13"></a>&gt;json([
+<a id="__codelineno-46-14" name="__codelineno-46-14" href="#__codelineno-46-14"></a>'success
+<a id="__codelineno-46-15" name="__codelineno-46-15" href="#__codelineno-46-15"></a>=&gt; true,
+<a id="__codelineno-46-16" name="__codelineno-46-16" href="#__codelineno-46-16"></a>'message
+<a id="__codelineno-46-17" name="__codelineno-46-17" href="#__codelineno-46-17"></a>=&gt; 'Nota
+<a id="__codelineno-46-18" name="__codelineno-46-18" href="#__codelineno-46-18"></a>actualizada
+<a id="__codelineno-46-19" name="__codelineno-46-19" href="#__codelineno-46-19"></a>correctamente.',
+<a id="__codelineno-46-20" name="__codelineno-46-20" href="#__codelineno-46-20"></a>'data' =&gt;
+<a id="__codelineno-46-21" name="__codelineno-46-21" href="#__codelineno-46-21"></a>$note
+<a id="__codelineno-46-22" name="__codelineno-46-22" href="#__codelineno-46-22"></a>], 200);
+<a id="__codelineno-46-23" name="__codelineno-46-23" href="#__codelineno-46-23"></a>}
+</code></pre></div>
+<h3 id="metodo-destroy-eliminar-nota">Método destroy() – Eliminar nota<a class="headerlink" href="#metodo-destroy-eliminar-nota" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>&lt;?php
+<a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>public function
+<a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>destroy(Note
+<a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a>$note):
+<a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a>JsonResponse
+<a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a>{
+<a id="__codelineno-47-7" name="__codelineno-47-7" href="#__codelineno-47-7"></a>$note-
+<a id="__codelineno-47-8" name="__codelineno-47-8" href="#__codelineno-47-8"></a>&gt;delete();
+<a id="__codelineno-47-9" name="__codelineno-47-9" href="#__codelineno-47-9"></a>return
+<a id="__codelineno-47-10" name="__codelineno-47-10" href="#__codelineno-47-10"></a>response()-
+<a id="__codelineno-47-11" name="__codelineno-47-11" href="#__codelineno-47-11"></a>&gt;json([
+<a id="__codelineno-47-12" name="__codelineno-47-12" href="#__codelineno-47-12"></a>
+<a id="__codelineno-47-13" name="__codelineno-47-13" href="#__codelineno-47-13"></a>'success' =&gt;
+<a id="__codelineno-47-14" name="__codelineno-47-14" href="#__codelineno-47-14"></a>true,
+<a id="__codelineno-47-15" name="__codelineno-47-15" href="#__codelineno-47-15"></a>
+<a id="__codelineno-47-16" name="__codelineno-47-16" href="#__codelineno-47-16"></a>'message' =&gt;
+<a id="__codelineno-47-17" name="__codelineno-47-17" href="#__codelineno-47-17"></a>'Nota eliminada
+<a id="__codelineno-47-18" name="__codelineno-47-18" href="#__codelineno-47-18"></a>correctamente.'
+<a id="__codelineno-47-19" name="__codelineno-47-19" href="#__codelineno-47-19"></a>], 200);
+<a id="__codelineno-47-20" name="__codelineno-47-20" href="#__codelineno-47-20"></a>}
+</code></pre></div>
+<h3 id="testing-de-la-api">Testing de la API<a class="headerlink" href="#testing-de-la-api" title="Permanent link">&para;</a></h3>
+<p>Para probar la API vamos a usar una extensión de Code llamada <code>REST</code> <code>Client</code> que permite hacer peticiones HTTP directamente desde el editor. También puedes usar herramientas como <code>Postman</code> o <code>Insomnia</code>.</p>
+<p>Para ello vamos a crear un archivo <code>notes.rest</code> en la raíz del proyecto por ejemplo.</p>
+<p>Vamos a escribir nuestra primera petición para listar todas las notas:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>###
+<a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>GET http://
+<a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>localhost:8080/
+<a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a>api/notes
+<a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a>Accept:
+<a id="__codelineno-48-6" name="__codelineno-48-6" href="#__codelineno-48-6"></a>application/
+<a id="__codelineno-48-7" name="__codelineno-48-7" href="#__codelineno-48-7"></a>json
+</code></pre></div>
+<p>Para lanzar la petición, sitúate en la línea <code>GET.</code> y pulsa el botón <code>Send</code> <code>Request</code> que aparece encima.</p>
+<p>Debes obtener una respuesta como esta:</p>
+<p>En este caso teníamos dos notas creadas previamente, de un tema anterior.</p>
+<p>Vamos a crear una nueva nota con el método <code>POST</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>###
+<a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>POST http://
+<a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a>localhost:8080/
+<a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a>api/notes
+<a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a>HTTP/1.1
+<a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a>Accept:
+<a id="__codelineno-49-7" name="__codelineno-49-7" href="#__codelineno-49-7"></a>application/
+<a id="__codelineno-49-8" name="__codelineno-49-8" href="#__codelineno-49-8"></a>json
+<a id="__codelineno-49-9" name="__codelineno-49-9" href="#__codelineno-49-9"></a>content-type:
+<a id="__codelineno-49-10" name="__codelineno-49-10" href="#__codelineno-49-10"></a>application/
+<a id="__codelineno-49-11" name="__codelineno-49-11" href="#__codelineno-49-11"></a>json
+<a id="__codelineno-49-12" name="__codelineno-49-12" href="#__codelineno-49-12"></a>
+<a id="__codelineno-49-13" name="__codelineno-49-13" href="#__codelineno-49-13"></a>{
+<a id="__codelineno-49-14" name="__codelineno-49-14" href="#__codelineno-49-14"></a>"title":
+<a id="__codelineno-49-15" name="__codelineno-49-15" href="#__codelineno-49-15"></a>"Nueva Nota",
+<a id="__codelineno-49-16" name="__codelineno-49-16" href="#__codelineno-49-16"></a>
+<a id="__codelineno-49-17" name="__codelineno-49-17" href="#__codelineno-49-17"></a>"description":
+<a id="__codelineno-49-18" name="__codelineno-49-18" href="#__codelineno-49-18"></a>"Descripción de
+<a id="__codelineno-49-19" name="__codelineno-49-19" href="#__codelineno-49-19"></a>la nueva nota",
+<a id="__codelineno-49-20" name="__codelineno-49-20" href="#__codelineno-49-20"></a>"date":
+<a id="__codelineno-49-21" name="__codelineno-49-21" href="#__codelineno-49-21"></a>"2023-10-01",
+<a id="__codelineno-49-22" name="__codelineno-49-22" href="#__codelineno-49-22"></a>"done":
+<a id="__codelineno-49-23" name="__codelineno-49-23" href="#__codelineno-49-23"></a>false
+<a id="__codelineno-49-24" name="__codelineno-49-24" href="#__codelineno-49-24"></a>}
+</code></pre></div>
+<p>Debemos recibir una respuesta como esta:</p>
+<p>En este código hay que observar varias cosas:</p>
+<p>La URL de la petición es <code>http://</code> <code>localhost:8080/api/notes</code>, que es la ruta que hemos definido en nuestro archivo de rutas. El método HTTP utilizado es <code>POST</code>, lo que indica que estamos creando un nuevo recurso.</p>
+<ol>
+<li>
+<p><strong>3</strong>. Hemos especificado la cabecera content-type: application/ <code>json</code> para indicar que el cuerpo de la petición es un JSON.</p>
+</li>
+<li>
+<p><strong>4</strong>. En el cuerpo de la petición, estamos enviando un objeto JSON con los datos de la nueva nota que queremos crear.</p>
+</li>
+<li>
+<p><strong>5</strong>. Hemos dejado una línea en blanco entre las cabeceras y el cuerpo de la petición, que es obligatorio en HTTP.</p>
+</li>
+</ol>
+<p>Ahora vamos a modificar la nota creada anteriormente con el método <code>PUT</code>. Pero antes necesitamos su ID, para ello repetimos la petición <code>GET</code> para listar todas las notas y ver el ID de la nota que acabamos de crear. En mi caso es la nota con ID 5.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>###
+<a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>PUT http://
+<a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a>localhost:8080/
+<a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a>api/notes/5
+<a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a>HTTP/1.1
+<a id="__codelineno-50-6" name="__codelineno-50-6" href="#__codelineno-50-6"></a>Accept:
+<a id="__codelineno-50-7" name="__codelineno-50-7" href="#__codelineno-50-7"></a>application/
+<a id="__codelineno-50-8" name="__codelineno-50-8" href="#__codelineno-50-8"></a>json
+<a id="__codelineno-50-9" name="__codelineno-50-9" href="#__codelineno-50-9"></a>content-type:
+<a id="__codelineno-50-10" name="__codelineno-50-10" href="#__codelineno-50-10"></a>application/
+<a id="__codelineno-50-11" name="__codelineno-50-11" href="#__codelineno-50-11"></a>json
+<a id="__codelineno-50-12" name="__codelineno-50-12" href="#__codelineno-50-12"></a>
+<a id="__codelineno-50-13" name="__codelineno-50-13" href="#__codelineno-50-13"></a>{
+<a id="__codelineno-50-14" name="__codelineno-50-14" href="#__codelineno-50-14"></a>"id": 5,
+<a id="__codelineno-50-15" name="__codelineno-50-15" href="#__codelineno-50-15"></a>"title":
+<a id="__codelineno-50-16" name="__codelineno-50-16" href="#__codelineno-50-16"></a>"Nota
+<a id="__codelineno-50-17" name="__codelineno-50-17" href="#__codelineno-50-17"></a>Modificada",
+<a id="__codelineno-50-18" name="__codelineno-50-18" href="#__codelineno-50-18"></a>
+<a id="__codelineno-50-19" name="__codelineno-50-19" href="#__codelineno-50-19"></a>"description":
+<a id="__codelineno-50-20" name="__codelineno-50-20" href="#__codelineno-50-20"></a>"Descripción de
+<a id="__codelineno-50-21" name="__codelineno-50-21" href="#__codelineno-50-21"></a>la nota
+<a id="__codelineno-50-22" name="__codelineno-50-22" href="#__codelineno-50-22"></a>modificada",
+<a id="__codelineno-50-23" name="__codelineno-50-23" href="#__codelineno-50-23"></a>"date":
+<a id="__codelineno-50-24" name="__codelineno-50-24" href="#__codelineno-50-24"></a>"2023-10-01",
+<a id="__codelineno-50-25" name="__codelineno-50-25" href="#__codelineno-50-25"></a>"done":
+<a id="__codelineno-50-26" name="__codelineno-50-26" href="#__codelineno-50-26"></a>true
+<a id="__codelineno-50-27" name="__codelineno-50-27" href="#__codelineno-50-27"></a>}
+</code></pre></div>
+<p>La estructura es similar a la petición <code>POST</code>, pero en este caso el método es <code>PUT</code> y la URL incluye el ID de la nota que queremos modificar.</p>
+<p>Debemos recibir una respuesta como esta:</p>
+<p>Finalmente vamos a eliminar la nota con ID 5 usando el método <code>DELETE</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>###
+<a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>DELETE http://
+<a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a>localhost:8080/
+<a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a>api/notes/5
+<a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a>Accept:
+<a id="__codelineno-51-6" name="__codelineno-51-6" href="#__codelineno-51-6"></a>application/
+<a id="__codelineno-51-7" name="__codelineno-51-7" href="#__codelineno-51-7"></a>json
+</code></pre></div>
+<p>La petición es muy sencilla, sólo necesitamos el método <code>DELETE</code> y la URL con el ID de la nota que queremos eliminar.</p>
+<p>Debemos recibir una respuesta como esta:</p>
+<p>Con esto hemos probado todas las operaciones CRUD de nuestra API REST para el recurso <code>Note</code>. En el siguiente apartado vamos a ver cómo mejorar la salida de los datos usando <code>API</code> <code>Resources</code>, podemos tomar el control del formato de los datos que devolvemos.</p>
+<h2 id="api-resources">API Resources<a class="headerlink" href="#api-resources" title="Permanent link">&para;</a></h2>
+<p>Laravel permite transformar la salida de tus APIs con clases Resource que te dan control sobre el formato.</p>
+<h3 id="crear-un-api-resource">Crear un API Resource<a class="headerlink" href="#crear-un-api-resource" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>php artisan
+<a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>make:resource
+<a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a>NoteResource
+</code></pre></div>
+<p>Crea el archivo en <code>App\Http\Resources\NoteResource.</code> <code>php</code></p>
+<h3 id="personalizar-la-transformacion">Personalizar la transformación<a class="headerlink" href="#personalizar-la-transformacion" title="Permanent link">&para;</a></h3>
+<p>Vamos a modificar la salida de los datos en <code>NoteResource.php</code>. Por ejemplo, podemos cambiar los nombres de los campos y añadir un campo calculado <code>estado</code> que indique si la nota está completada o pendiente:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>&lt;?php
+<a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>public function
+<a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a>toArray($request
+<a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a>{
+<a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a>return [
+<a id="__codelineno-53-6" name="__codelineno-53-6" href="#__codelineno-53-6"></a>'id' =&gt;
+<a id="__codelineno-53-7" name="__codelineno-53-7" href="#__codelineno-53-7"></a>$this-&gt;id,
+<a id="__codelineno-53-8" name="__codelineno-53-8" href="#__codelineno-53-8"></a>'titulo'
+<a id="__codelineno-53-9" name="__codelineno-53-9" href="#__codelineno-53-9"></a>=&gt; $this-&gt;title,
+<a id="__codelineno-53-10" name="__codelineno-53-10" href="#__codelineno-53-10"></a>
+<a id="__codelineno-53-11" name="__codelineno-53-11" href="#__codelineno-53-11"></a>'descripcion' =&gt;
+<a id="__codelineno-53-12" name="__codelineno-53-12" href="#__codelineno-53-12"></a>$this-
+<a id="__codelineno-53-13" name="__codelineno-53-13" href="#__codelineno-53-13"></a>&gt;description,
+<a id="__codelineno-53-14" name="__codelineno-53-14" href="#__codelineno-53-14"></a>'fecha'
+<a id="__codelineno-53-15" name="__codelineno-53-15" href="#__codelineno-53-15"></a>=&gt; $this-&gt;date,
+<a id="__codelineno-53-16" name="__codelineno-53-16" href="#__codelineno-53-16"></a>'estado'
+<a id="__codelineno-53-17" name="__codelineno-53-17" href="#__codelineno-53-17"></a>=&gt; $this-&gt;done ?
+<a id="__codelineno-53-18" name="__codelineno-53-18" href="#__codelineno-53-18"></a>'Completada':
+<a id="__codelineno-53-19" name="__codelineno-53-19" href="#__codelineno-53-19"></a>'Pendiente'
+<a id="__codelineno-53-20" name="__codelineno-53-20" href="#__codelineno-53-20"></a>];
+<a id="__codelineno-53-21" name="__codelineno-53-21" href="#__codelineno-53-21"></a>}
+</code></pre></div>
+<h3 id="usar-el-recurso-en-el-controlador">Usar el recurso en el controlador<a class="headerlink" href="#usar-el-recurso-en-el-controlador" title="Permanent link">&para;</a></h3>
+<p>Añadimos la importación al controlador <code>NoteController</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>&lt;?php
+<a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>use
+<a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a>App\Http\Resources\NoteR
+</code></pre></div>
+<p>Modificamos el método <code>index()</code> para devolver una colección de <code>NoteResource</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>&lt;?php
+<a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>return response()
+<a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a>'success' =&gt; t
+<a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a>'data' =&gt;
+<a id="__codelineno-55-5" name="__codelineno-55-5" href="#__codelineno-55-5"></a>NoteResource::coll
+<a id="__codelineno-55-6" name="__codelineno-55-6" href="#__codelineno-55-6"></a>], 200);
+</code></pre></div>
+<p>De esta manera, la respuesta incluirá el estado y el mensaje de éxito. Vamos a comprobarlo con una petición <code>GET</code> a <code>/</code> <code>api/notes</code>:</p>
+<p>En los demás métodos no devolvemos una colección sino un solo elemento. Por ello por ejemplo para el método <code>show()</code> podemos hacer lo siguiente:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>&lt;?php
+<a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>public function
+<a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a>show(Note $note):
+<a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a>JsonResponse
+<a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a>{
+<a id="__codelineno-56-6" name="__codelineno-56-6" href="#__codelineno-56-6"></a>return
+<a id="__codelineno-56-7" name="__codelineno-56-7" href="#__codelineno-56-7"></a>response()-&gt;json(
+<a id="__codelineno-56-8" name="__codelineno-56-8" href="#__codelineno-56-8"></a>'success'
+<a id="__codelineno-56-9" name="__codelineno-56-9" href="#__codelineno-56-9"></a>=&gt; true,
+<a id="__codelineno-56-10" name="__codelineno-56-10" href="#__codelineno-56-10"></a>'data' =&gt;
+<a id="__codelineno-56-11" name="__codelineno-56-11" href="#__codelineno-56-11"></a>new
+<a id="__codelineno-56-12" name="__codelineno-56-12" href="#__codelineno-56-12"></a>NoteResource($note
+<a id="__codelineno-56-13" name="__codelineno-56-13" href="#__codelineno-56-13"></a>], 200);
+<a id="__codelineno-56-14" name="__codelineno-56-14" href="#__codelineno-56-14"></a>}
+</code></pre></div>
+<p>Ahora sería aplicable a todos los métodos que devuelven un solo elemento, como <code>store()</code> y <code>update()</code>. Al <code>destroy()</code> no puesto que no devuelve los datos de la nota eliminada.</p>
+<h2 id="validacion-de-los-datos">Validación de los datos<a class="headerlink" href="#validacion-de-los-datos" title="Permanent link">&para;</a></h2>
+<p>Al igual que en los formularios, es importante validar los datos que recibimos en la API. <code>Laravel</code> ofrece un sistema de validación muy potente. Empezaremos por validar los datos en el método <code>store()</code> y <code>update()</code>. Para ello vamos a crear la clase <code>NoteRequest</code>:</p>
+<p>En el tema anterior creamos la clase <code>NoteRequest</code> para validar los datos del formulario. Si la tienes creada, elimínala para evitar conflictos.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>php artisan
+<a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>make:request
+<a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a>NoteRequest
+</code></pre></div>
+<p>Esto generará el archivo en <code>app/Http/</code> <code>Requests/NoteRequest.php</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>&lt;?php
+<a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>namespace App\Htt
+<a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a>use Illuminate\Fo
+<a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a>use Illuminate\Co
+<a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a>use
+<a id="__codelineno-58-6" name="__codelineno-58-6" href="#__codelineno-58-6"></a>Illuminate\Http\
+<a id="__codelineno-58-7" name="__codelineno-58-7" href="#__codelineno-58-7"></a>use Illuminate\Va
+<a id="__codelineno-58-8" name="__codelineno-58-8" href="#__codelineno-58-8"></a>
+<a id="__codelineno-58-9" name="__codelineno-58-9" href="#__codelineno-58-9"></a>class NoteRequest
+<a id="__codelineno-58-10" name="__codelineno-58-10" href="#__codelineno-58-10"></a>{
+<a id="__codelineno-58-11" name="__codelineno-58-11" href="#__codelineno-58-11"></a>public functi
+<a id="__codelineno-58-12" name="__codelineno-58-12" href="#__codelineno-58-12"></a>{
+<a id="__codelineno-58-13" name="__codelineno-58-13" href="#__codelineno-58-13"></a>return t
+<a id="__codelineno-58-14" name="__codelineno-58-14" href="#__codelineno-58-14"></a>}
+<a id="__codelineno-58-15" name="__codelineno-58-15" href="#__codelineno-58-15"></a>
+<a id="__codelineno-58-16" name="__codelineno-58-16" href="#__codelineno-58-16"></a>public functi
+<a id="__codelineno-58-17" name="__codelineno-58-17" href="#__codelineno-58-17"></a>{
+<a id="__codelineno-58-18" name="__codelineno-58-18" href="#__codelineno-58-18"></a>return [
+<a id="__codelineno-58-19" name="__codelineno-58-19" href="#__codelineno-58-19"></a>'titl
+<a id="__codelineno-58-20" name="__codelineno-58-20" href="#__codelineno-58-20"></a>'desc
+<a id="__codelineno-58-21" name="__codelineno-58-21" href="#__codelineno-58-21"></a>'date
+<a id="__codelineno-58-22" name="__codelineno-58-22" href="#__codelineno-58-22"></a>'done
+<a id="__codelineno-58-23" name="__codelineno-58-23" href="#__codelineno-58-23"></a>];
+<a id="__codelineno-58-24" name="__codelineno-58-24" href="#__codelineno-58-24"></a>}
+<a id="__codelineno-58-25" name="__codelineno-58-25" href="#__codelineno-58-25"></a>
+<a id="__codelineno-58-26" name="__codelineno-58-26" href="#__codelineno-58-26"></a>}
+</code></pre></div>
+<p>esta función al igual que en los formularios, define las reglas de validación. En este caso:</p>
+<ul>
+<li>
+<p><code>title</code>: requerido, cadena de texto, máximo 255 caracteres.</p>
+</li>
+<li>
+<p><code>description</code>: requerido, cadena de texto.</p>
+</li>
+<li>
+<p><code>date</code>: requerido, debe ser una fecha válida.</p>
+</li>
+<li>
+<p><code>done</code>: booleano (opcional).</p>
+</li>
+</ul>
+<p>En caso de error en la validación, Laravel devolverá automáticamente un error 422 con los detalles del error.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>{
+<a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>"message":
+<a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a>"The given data
+<a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a>was invalid.",
+<a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a>"errors": {
+<a id="__codelineno-59-6" name="__codelineno-59-6" href="#__codelineno-59-6"></a>
+<a id="__codelineno-59-7" name="__codelineno-59-7" href="#__codelineno-59-7"></a>"title": [
+<a id="__codelineno-59-8" name="__codelineno-59-8" href="#__codelineno-59-8"></a>
+<a id="__codelineno-59-9" name="__codelineno-59-9" href="#__codelineno-59-9"></a>"The title
+<a id="__codelineno-59-10" name="__codelineno-59-10" href="#__codelineno-59-10"></a>field is
+<a id="__codelineno-59-11" name="__codelineno-59-11" href="#__codelineno-59-11"></a>required."
+<a id="__codelineno-59-12" name="__codelineno-59-12" href="#__codelineno-59-12"></a>]
+<a id="__codelineno-59-13" name="__codelineno-59-13" href="#__codelineno-59-13"></a>}
+<a id="__codelineno-59-14" name="__codelineno-59-14" href="#__codelineno-59-14"></a>}
+</code></pre></div>
+<p>Podemos personalizar la respuesta de error en el método <code>failedValidation()</code> en la clase <code>NoteRequest</code>:</p>
+<p>Debemos añadir las importaciones necesarias al principio del archivo:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>&lt;?php
+<a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>use Illuminate\Co
+<a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a>use
+<a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a>Illuminate\Http\Ex
+<a id="__codelineno-60-5" name="__codelineno-60-5" href="#__codelineno-60-5"></a>use Illuminate\Val
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>&lt;?php
+<a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>protected function
+<a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a>failedValidation(V
+<a id="__codelineno-61-4" name="__codelineno-61-4" href="#__codelineno-61-4"></a>$validator)
+<a id="__codelineno-61-5" name="__codelineno-61-5" href="#__codelineno-61-5"></a>{
+<a id="__codelineno-61-6" name="__codelineno-61-6" href="#__codelineno-61-6"></a>throw new
+<a id="__codelineno-61-7" name="__codelineno-61-7" href="#__codelineno-61-7"></a>HttpResponseExcept
+<a id="__codelineno-61-8" name="__codelineno-61-8" href="#__codelineno-61-8"></a>&gt;json([
+<a id="__codelineno-61-9" name="__codelineno-61-9" href="#__codelineno-61-9"></a>'success'
+<a id="__codelineno-61-10" name="__codelineno-61-10" href="#__codelineno-61-10"></a>'message'
+<a id="__codelineno-61-11" name="__codelineno-61-11" href="#__codelineno-61-11"></a>validación',
+<a id="__codelineno-61-12" name="__codelineno-61-12" href="#__codelineno-61-12"></a>'errors' =
+<a id="__codelineno-61-13" name="__codelineno-61-13" href="#__codelineno-61-13"></a>&gt;errors()
+<a id="__codelineno-61-14" name="__codelineno-61-14" href="#__codelineno-61-14"></a>], 422, [],
+<a id="__codelineno-61-15" name="__codelineno-61-15" href="#__codelineno-61-15"></a>JSON_UNESCAPED_UN
+<a id="__codelineno-61-16" name="__codelineno-61-16" href="#__codelineno-61-16"></a>}
+</code></pre></div>
+<p>En los parámetros de <code>json()</code> podemos añadir el tercer parámetro <code>JSON_UNESCAPED_UNICODE</code> para evitar que los caracteres especiales se escapen. Esto es útil si estás trabajando con caracteres no ASCII. Sino los acentos y caracteres especiales se escaparán y no se verán correctamente en la respuesta.</p>
+<p>Ahora para que las validaciones funcionen debemos ajustar los métodos <code>store()</code> y <code>update()</code> del controlador para usar <code>NoteRequest</code> en lugar de <code>Request</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>&lt;?php
+<a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>use
+<a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a>App\Http\Requests\NoteRe
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>&lt;?php
+<a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>public function
+<a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a>store(NoteRequest
+<a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a>$request):
+<a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a>JsonResponse
+<a id="__codelineno-63-6" name="__codelineno-63-6" href="#__codelineno-63-6"></a>{
+<a id="__codelineno-63-7" name="__codelineno-63-7" href="#__codelineno-63-7"></a>$note =
+<a id="__codelineno-63-8" name="__codelineno-63-8" href="#__codelineno-63-8"></a>Note::create($req
+<a id="__codelineno-63-9" name="__codelineno-63-9" href="#__codelineno-63-9"></a>&gt;validated());
+<a id="__codelineno-63-10" name="__codelineno-63-10" href="#__codelineno-63-10"></a>return respo
+<a id="__codelineno-63-11" name="__codelineno-63-11" href="#__codelineno-63-11"></a>&gt;json([
+<a id="__codelineno-63-12" name="__codelineno-63-12" href="#__codelineno-63-12"></a>'success
+<a id="__codelineno-63-13" name="__codelineno-63-13" href="#__codelineno-63-13"></a>true,
+<a id="__codelineno-63-14" name="__codelineno-63-14" href="#__codelineno-63-14"></a>'message
+<a id="__codelineno-63-15" name="__codelineno-63-15" href="#__codelineno-63-15"></a>'Nota creada
+<a id="__codelineno-63-16" name="__codelineno-63-16" href="#__codelineno-63-16"></a>correctamente.',
+<a id="__codelineno-63-17" name="__codelineno-63-17" href="#__codelineno-63-17"></a>'data' =&gt;
+<a id="__codelineno-63-18" name="__codelineno-63-18" href="#__codelineno-63-18"></a>NoteResource($not
+<a id="__codelineno-63-19" name="__codelineno-63-19" href="#__codelineno-63-19"></a>], 201);
+<a id="__codelineno-63-20" name="__codelineno-63-20" href="#__codelineno-63-20"></a>}
+<a id="__codelineno-63-21" name="__codelineno-63-21" href="#__codelineno-63-21"></a>
+<a id="__codelineno-63-22" name="__codelineno-63-22" href="#__codelineno-63-22"></a>public function
+<a id="__codelineno-63-23" name="__codelineno-63-23" href="#__codelineno-63-23"></a>update(NoteReques
+<a id="__codelineno-63-24" name="__codelineno-63-24" href="#__codelineno-63-24"></a>$request, Note $n
+<a id="__codelineno-63-25" name="__codelineno-63-25" href="#__codelineno-63-25"></a>JsonResponse
+<a id="__codelineno-63-26" name="__codelineno-63-26" href="#__codelineno-63-26"></a>{
+<a id="__codelineno-63-27" name="__codelineno-63-27" href="#__codelineno-63-27"></a>$note-
+<a id="__codelineno-63-28" name="__codelineno-63-28" href="#__codelineno-63-28"></a>&gt;update($request
+<a id="__codelineno-63-29" name="__codelineno-63-29" href="#__codelineno-63-29"></a>&gt;validated());
+<a id="__codelineno-63-30" name="__codelineno-63-30" href="#__codelineno-63-30"></a>return respo
+<a id="__codelineno-63-31" name="__codelineno-63-31" href="#__codelineno-63-31"></a>&gt;json([
+<a id="__codelineno-63-32" name="__codelineno-63-32" href="#__codelineno-63-32"></a>'success
+<a id="__codelineno-63-33" name="__codelineno-63-33" href="#__codelineno-63-33"></a>true,
+<a id="__codelineno-63-34" name="__codelineno-63-34" href="#__codelineno-63-34"></a>'message
+<a id="__codelineno-63-35" name="__codelineno-63-35" href="#__codelineno-63-35"></a>'Nota actualizada
+<a id="__codelineno-63-36" name="__codelineno-63-36" href="#__codelineno-63-36"></a>correctamente.',
+<a id="__codelineno-63-37" name="__codelineno-63-37" href="#__codelineno-63-37"></a>'data' =&gt;
+<a id="__codelineno-63-38" name="__codelineno-63-38" href="#__codelineno-63-38"></a>NoteResource($not
+<a id="__codelineno-63-39" name="__codelineno-63-39" href="#__codelineno-63-39"></a>], 200);
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>],);
+<a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a>}
+</code></pre></div>
+<p>Se puede observar en los dos métodos que hemos cambiado <code>$request-&gt;all()</code> por <code>$request-&gt;validated()</code>. Esto asegura que sólo los datos que pasaron la validación se usan para crear o actualizar la nota.</p>
+<p>Por ejemplo, imaginemos que tenemos la siguiente validación, una clase que solo admite los campos <code>name</code> y <code>email</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>&lt;?php
+<a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a>class
+<a id="__codelineno-65-3" name="__codelineno-65-3" href="#__codelineno-65-3"></a>StoreUserRequest
+<a id="__codelineno-65-4" name="__codelineno-65-4" href="#__codelineno-65-4"></a>extends
+<a id="__codelineno-65-5" name="__codelineno-65-5" href="#__codelineno-65-5"></a>FormRequest
+<a id="__codelineno-65-6" name="__codelineno-65-6" href="#__codelineno-65-6"></a>{
+<a id="__codelineno-65-7" name="__codelineno-65-7" href="#__codelineno-65-7"></a>public
+<a id="__codelineno-65-8" name="__codelineno-65-8" href="#__codelineno-65-8"></a>function rules()
+<a id="__codelineno-65-9" name="__codelineno-65-9" href="#__codelineno-65-9"></a>{
+<a id="__codelineno-65-10" name="__codelineno-65-10" href="#__codelineno-65-10"></a>return [
+<a id="__codelineno-65-11" name="__codelineno-65-11" href="#__codelineno-65-11"></a>
+<a id="__codelineno-65-12" name="__codelineno-65-12" href="#__codelineno-65-12"></a>'name' =&gt;
+<a id="__codelineno-65-13" name="__codelineno-65-13" href="#__codelineno-65-13"></a>['required',
+<a id="__codelineno-65-14" name="__codelineno-65-14" href="#__codelineno-65-14"></a>'string'],
+<a id="__codelineno-65-15" name="__codelineno-65-15" href="#__codelineno-65-15"></a>
+<a id="__codelineno-65-16" name="__codelineno-65-16" href="#__codelineno-65-16"></a>'email' =&gt;
+<a id="__codelineno-65-17" name="__codelineno-65-17" href="#__codelineno-65-17"></a>['required',
+<a id="__codelineno-65-18" name="__codelineno-65-18" href="#__codelineno-65-18"></a>'email'],
+<a id="__codelineno-65-19" name="__codelineno-65-19" href="#__codelineno-65-19"></a>];
+<a id="__codelineno-65-20" name="__codelineno-65-20" href="#__codelineno-65-20"></a>}
+<a id="__codelineno-65-21" name="__codelineno-65-21" href="#__codelineno-65-21"></a>}
+</code></pre></div>
+<p>Ahora el cliente envía el siguiente JSON</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>{
+<a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a>"name": "John Do
+<a id="__codelineno-66-3" name="__codelineno-66-3" href="#__codelineno-66-3"></a>"email":
+<a id="__codelineno-66-4" name="__codelineno-66-4" href="#__codelineno-66-4"></a>"john.doe@example.co
+<a id="__codelineno-66-5" name="__codelineno-66-5" href="#__codelineno-66-5"></a>"role": "admin"
+<a id="__codelineno-66-6" name="__codelineno-66-6" href="#__codelineno-66-6"></a>}
+</code></pre></div>
+<p>El campo <code>role</code> no está definido en las reglas de validación, por lo que será ignorado cuando usemos <code>$request-</code></p>
+<p><code>&gt;validated()</code>. Esto ayuda a prevenir la asignación masiva de campos no deseados.</p>
+<p>En resumen:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>$request-&gt;validated(
+<a id="__codelineno-67-2" name="__codelineno-67-2" href="#__codelineno-67-2"></a>// =&gt; ['name' =&gt; 'Jo
+<a id="__codelineno-67-3" name="__codelineno-67-3" href="#__codelineno-67-3"></a>Doe', 'email' =&gt;
+<a id="__codelineno-67-4" name="__codelineno-67-4" href="#__codelineno-67-4"></a>'john.doe@example.co
+<a id="__codelineno-67-5" name="__codelineno-67-5" href="#__codelineno-67-5"></a>
+<a id="__codelineno-67-6" name="__codelineno-67-6" href="#__codelineno-67-6"></a>$request-&gt;all();
+<a id="__codelineno-67-7" name="__codelineno-67-7" href="#__codelineno-67-7"></a>// =&gt; ['name' =&gt; 'Jo
+<a id="__codelineno-67-8" name="__codelineno-67-8" href="#__codelineno-67-8"></a>Doe', 'email' =&gt;
+<a id="__codelineno-67-9" name="__codelineno-67-9" href="#__codelineno-67-9"></a>'john.doe@example.co
+<a id="__codelineno-67-10" name="__codelineno-67-10" href="#__codelineno-67-10"></a>'role' =&gt; 'admin']
+</code></pre></div>
+<p>Recordemos que si <code>role</code> no está en <code>$fillable</code> en el modelo, no se asignará de todas formas. Pero es una buena práctica usar <code>validated()</code> para asegurarnos de que sólo los datos permitidos se procesan.</p>
+<h2 id="ejemplos-de-peticiones">Ejemplos de peticiones<a class="headerlink" href="#ejemplos-de-peticiones" title="Permanent link">&para;</a></h2>
+<p>Si todo ha ido bien aquí tenemos una API REST completa para el recurso <code>Note</code> que podemos probar con herramientas como <code>Postman</code> o <code>RestClient</code>:</p>
+<p>GET api/notes POST api/notes</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>### listar
+<a id="__codelineno-68-2" name="__codelineno-68-2" href="#__codelineno-68-2"></a>todas las notas
+<a id="__codelineno-68-3" name="__codelineno-68-3" href="#__codelineno-68-3"></a>GET http://
+<a id="__codelineno-68-4" name="__codelineno-68-4" href="#__codelineno-68-4"></a>localhost:8080/
+<a id="__codelineno-68-5" name="__codelineno-68-5" href="#__codelineno-68-5"></a>api/notes
+<a id="__codelineno-68-6" name="__codelineno-68-6" href="#__codelineno-68-6"></a>Accept:
+<a id="__codelineno-68-7" name="__codelineno-68-7" href="#__codelineno-68-7"></a>application/
+<a id="__codelineno-68-8" name="__codelineno-68-8" href="#__codelineno-68-8"></a>json
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a>,
+<a id="__codelineno-69-2" name="__codelineno-69-2" href="#__codelineno-69-2"></a>"done":
+<a id="__codelineno-69-3" name="__codelineno-69-3" href="#__codelineno-69-3"></a>false
+<a id="__codelineno-69-4" name="__codelineno-69-4" href="#__codelineno-69-4"></a>}
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a>### Modificamos
+<a id="__codelineno-70-2" name="__codelineno-70-2" href="#__codelineno-70-2"></a>la primera nota
+<a id="__codelineno-70-3" name="__codelineno-70-3" href="#__codelineno-70-3"></a>PUT http://
+<a id="__codelineno-70-4" name="__codelineno-70-4" href="#__codelineno-70-4"></a>localhost:8080/
+<a id="__codelineno-70-5" name="__codelineno-70-5" href="#__codelineno-70-5"></a>api/notes/1
+<a id="__codelineno-70-6" name="__codelineno-70-6" href="#__codelineno-70-6"></a>HTTP/1.1
+<a id="__codelineno-70-7" name="__codelineno-70-7" href="#__codelineno-70-7"></a>Accept:
+<a id="__codelineno-70-8" name="__codelineno-70-8" href="#__codelineno-70-8"></a>application/
+<a id="__codelineno-70-9" name="__codelineno-70-9" href="#__codelineno-70-9"></a>json
+<a id="__codelineno-70-10" name="__codelineno-70-10" href="#__codelineno-70-10"></a>content-type:
+<a id="__codelineno-70-11" name="__codelineno-70-11" href="#__codelineno-70-11"></a>application/
+<a id="__codelineno-70-12" name="__codelineno-70-12" href="#__codelineno-70-12"></a>json
+<a id="__codelineno-70-13" name="__codelineno-70-13" href="#__codelineno-70-13"></a>
+<a id="__codelineno-70-14" name="__codelineno-70-14" href="#__codelineno-70-14"></a>{
+<a id="__codelineno-70-15" name="__codelineno-70-15" href="#__codelineno-70-15"></a>"id": 1,
+<a id="__codelineno-70-16" name="__codelineno-70-16" href="#__codelineno-70-16"></a>"title":
+<a id="__codelineno-70-17" name="__codelineno-70-17" href="#__codelineno-70-17"></a>"First Note",
+<a id="__codelineno-70-18" name="__codelineno-70-18" href="#__codelineno-70-18"></a>
+<a id="__codelineno-70-19" name="__codelineno-70-19" href="#__codelineno-70-19"></a>"description":
+<a id="__codelineno-70-20" name="__codelineno-70-20" href="#__codelineno-70-20"></a>"This is the
+<a id="__codelineno-70-21" name="__codelineno-70-21" href="#__codelineno-70-21"></a>first note,
+<a id="__codelineno-70-22" name="__codelineno-70-22" href="#__codelineno-70-22"></a>modified",
+<a id="__codelineno-70-23" name="__codelineno-70-23" href="#__codelineno-70-23"></a>"date":
+<a id="__codelineno-70-24" name="__codelineno-70-24" href="#__codelineno-70-24"></a>"2023-10-01",
+<a id="__codelineno-70-25" name="__codelineno-70-25" href="#__codelineno-70-25"></a>"done":
+<a id="__codelineno-70-26" name="__codelineno-70-26" href="#__codelineno-70-26"></a>true
+<a id="__codelineno-70-27" name="__codelineno-70-27" href="#__codelineno-70-27"></a>}
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a>api/notes/1
+<a id="__codelineno-71-2" name="__codelineno-71-2" href="#__codelineno-71-2"></a>Accept:
+<a id="__codelineno-71-3" name="__codelineno-71-3" href="#__codelineno-71-3"></a>application/
+<a id="__codelineno-71-4" name="__codelineno-71-4" href="#__codelineno-71-4"></a>json
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a>### Eliminar la
+<a id="__codelineno-72-2" name="__codelineno-72-2" href="#__codelineno-72-2"></a>nota con id 1
+<a id="__codelineno-72-3" name="__codelineno-72-3" href="#__codelineno-72-3"></a>DELETE http://
+<a id="__codelineno-72-4" name="__codelineno-72-4" href="#__codelineno-72-4"></a>localhost:8080/
+<a id="__codelineno-72-5" name="__codelineno-72-5" href="#__codelineno-72-5"></a>api/notes/1
+<a id="__codelineno-72-6" name="__codelineno-72-6" href="#__codelineno-72-6"></a>Accept:
+<a id="__codelineno-72-7" name="__codelineno-72-7" href="#__codelineno-72-7"></a>application/
+<a id="__codelineno-72-8" name="__codelineno-72-8" href="#__codelineno-72-8"></a>json
+</code></pre></div>
+<h2 id="conclusiones">Conclusiones<a class="headerlink" href="#conclusiones" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>Las <strong>APIs REST</strong> son ideales para aplicaciones SPA, móviles o integraciones.</p>
+</li>
+<li>
+<p>Laravel permite definir rutas específicas para API con <strong>prefijos</strong> <strong>automaticos</strong> y <strong>middleware</strong> personalizado.</p>
+</li>
+<li>
+<p>Los controladores API están enfocados a <strong>respuestas JSON</strong>.</p>
+</li>
+<li>
+<p><strong>ApiResource</strong> permite estructurar y controlar la salida de tus datos.</p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      IES JUAN DE GARAY - 2º DWES · Curso original de Beteta adaptado por Eva María Gómez Abad
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

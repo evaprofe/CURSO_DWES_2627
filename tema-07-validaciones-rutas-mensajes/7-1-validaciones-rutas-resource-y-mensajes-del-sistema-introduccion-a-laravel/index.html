@@ -1,0 +1,3464 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Apuntes de Desarrollo Web en Entorno Servidor">
+      
+      
+        <meta name="author" content="Eva María Gómez Abad">
+      
+      
+        <link rel="canonical" href="https://evaprofe.github.io/CURSO_DWES_2627/tema-07-validaciones-rutas-mensajes/7-1-validaciones-rutas-resource-y-mensajes-del-sistema-introduccion-a-laravel/">
+      
+      
+        <link rel="prev" href="../../tema-06-crud-completo/6-2-actividad-del-tema-6-introduccion-a-laravel/">
+      
+      
+        <link rel="next" href="../actividad-del-tema-7-introduccion-a-laravel/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>7.1 Validaciones y Rutas Resource - Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#validaciones-rutas-resource-y-mensajes-del-sistema" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-header__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              7.1 Validaciones y Rutas Resource
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Activar modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Activar modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-nav__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introducción al Desarrollo Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1. Introducción al Desarrollo Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/introduccion-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1 Desarrollo Web en el Servidor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2 Patrón Modelo-Vista-Controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.3 Protocolo HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 1 · MVC y HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Frameworks y Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2. Frameworks y Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1 Introducción a los Frameworks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-2-configuracion-del-entorno-de-trabajo-con-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.2 Entorno de Trabajo con Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-3-instalacion-y-puesta-en-marcha-de-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.3 Instalación y Puesta en Marcha
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-4-estructura-y-elementos-de-un-proyecto-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.4 Estructura de un Proyecto Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-5-actividad-del-tema-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 2 · Introducción a Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/anexos-tailwind-css/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anexo · Tailwind CSS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/instrucciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía del Entorno
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tema-02-frameworks-laravel/proyecto-github/docs/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🚀 Proyecto Guiado · Entorno Laravel
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🚀 Proyecto Guiado · Entorno Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/requisitos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso1-preparacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 1 · Preparación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso7-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 7 · Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso9-mysql-cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 9 · MySQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso10-xdebug/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 10 · Xdebug
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/instrucciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instrucciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/conclusion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conclusión
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. Vistas con Blade
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-03-vistas-blade/3-1-vistas-con-blade-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Creación de Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-03-vistas-blade/3-2-actividad-del-tema-3-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 3 · Agencia de Viajes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4. Migraciones y Modelos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-04-migraciones-modelos/4-1-migraciones-y-modelos-con-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 Migraciones y Modelos en Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-04-migraciones-modelos/4-2-actividad-del-tema-4-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 4 · Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Controladores de Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5. Controladores de Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/5-1-controladores-de-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Controladores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/unidad-5-2-relaciones-uno-a-muchos-en-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.2 Relaciones Uno a Muchos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/actividad-del-tema-5-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 5 · Controladores y Rutas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Desarrollo CRUD Completo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. Desarrollo CRUD Completo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-06-crud-completo/6-1-desarrollo-de-un-crud-completo-en-laravel-parte-1-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1 Desarrollo de un CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-06-crud-completo/6-2-actividad-del-tema-6-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 6 · CRUD de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.1 Validaciones y Rutas Resource
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.1 Validaciones y Rutas Resource
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#validacion-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validación de Datos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Validación de Datos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-es-la-validacion-y-por-que-es-necesaria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué es la validación y por qué es necesaria?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validar-desde-el-controlador-usando-request-validate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validar desde el controlador usando $request-&gt;validate()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-una-clase-de-validacion-personalizada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear una clase de validación personalizada
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-una-clase-formrequest-personalizada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear una clase FormRequest personalizada
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mostrar-errores-de-validacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mostrar Errores de Validación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mostrar Errores de Validación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mostrar-errores-en-el-formulario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mostrar errores en el formulario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resaltar-campos-con-error-css" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resaltar campos con error CSS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mostrar-todos-los-errores-juntos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mostrar todos los errores juntos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modificar-la-vista-de-edicion-como-lo-hicimos-en-la-de-creacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modificar la vista de edición como lo hicimos en la de creación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traducir-los-mensajes-de-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Traducir los mensajes de error
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mensajes-de-exito" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mensajes de Éxito
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mensajes de Éxito">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flash-de-sesion-con-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flash de sesión con with()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mostrar-el-mensaje-en-la-vista-por-ejemplo-en-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mostrar el mensaje en la vista (por ejemplo, en layout):
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rutas-resource" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rutas Resource
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rutas Resource">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-son" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué son?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acciones-generadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acciones generadas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#personalizacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Personalización
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ver-rutas-disponibles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ver rutas disponibles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-un-controlador-tipo-resource" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear un controlador tipo resource
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusiones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusiones
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../actividad-del-tema-7-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 7 · Validaciones del CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. API REST
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    8. API REST
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-1-apis-restful-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.1 Creación de API REST
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-2-apis-con-sanctum-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.2 API con Sanctum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-3-actividad-del-tema-8-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 8 · API de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Seeders, Factories y Faker
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    9. Seeders, Factories y Faker
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-09-seeders-factories-faker/9-1-creacion-de-datos-iniciales-y-de-prueba-seeders-factories-y-faker-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9.1 Datos Iniciales y de Prueba
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-09-seeders-factories-faker/actividad-del-tema-9-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 9 · Generación de Datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-1-introduccion-al-despliegue-de-aplicaciones-web-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.1 Introducción al Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-2-aplicacion-simple-con-estructura-precaria-php-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.2 Aplicación PHP Sencilla
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-3-aplicacion-completa-con-estructura-de-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.3 Aplicación Laravel Completa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-4-despliegue-en-paas-render-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.4 Despliegue en Render
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-5-actividad-del-tema-10-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 10 · Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#validacion-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validación de Datos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Validación de Datos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-es-la-validacion-y-por-que-es-necesaria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué es la validación y por qué es necesaria?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validar-desde-el-controlador-usando-request-validate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validar desde el controlador usando $request-&gt;validate()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-una-clase-de-validacion-personalizada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear una clase de validación personalizada
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-una-clase-formrequest-personalizada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear una clase FormRequest personalizada
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mostrar-errores-de-validacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mostrar Errores de Validación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mostrar Errores de Validación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mostrar-errores-en-el-formulario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mostrar errores en el formulario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resaltar-campos-con-error-css" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resaltar campos con error CSS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mostrar-todos-los-errores-juntos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mostrar todos los errores juntos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modificar-la-vista-de-edicion-como-lo-hicimos-en-la-de-creacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modificar la vista de edición como lo hicimos en la de creación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traducir-los-mensajes-de-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Traducir los mensajes de error
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mensajes-de-exito" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mensajes de Éxito
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mensajes de Éxito">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flash-de-sesion-con-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flash de sesión con with()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mostrar-el-mensaje-en-la-vista-por-ejemplo-en-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mostrar el mensaje en la vista (por ejemplo, en layout):
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rutas-resource" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rutas Resource
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rutas Resource">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-son" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué son?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acciones-generadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acciones generadas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#personalizacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Personalización
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ver-rutas-disponibles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ver rutas disponibles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-un-controlador-tipo-resource" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear un controlador tipo resource
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusiones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusiones
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="validaciones-rutas-resource-y-mensajes-del-sistema">Validaciones, Rutas Resource y Mensajes del Sistema<a class="headerlink" href="#validaciones-rutas-resource-y-mensajes-del-sistema" title="Permanent link">&para;</a></h1>
+<h2 id="validacion-de-datos">Validación de Datos<a class="headerlink" href="#validacion-de-datos" title="Permanent link">&para;</a></h2>
+<h3 id="que-es-la-validacion-y-por-que-es-necesaria">¿Qué es la validación y por qué es necesaria?<a class="headerlink" href="#que-es-la-validacion-y-por-que-es-necesaria" title="Permanent link">&para;</a></h3>
+<p>La validación es el proceso mediante el cual se verifica que los datos enviados por el usuario cumplen con unas reglas antes de ser almacenados en la base de datos.</p>
+<p>Laravel ofrece un sistema de validación muy robusto, que nos permite validar datos tanto desde el controlador como mediante clases personalizadas.</p>
+<p>Siempre debemos validar los datos <strong>antes de</strong> <strong>almacenarlos</strong> y <strong>antes de actualizarlos</strong>. Nunca debemos asumir que lo que llega del formulario es seguro o correcto.</p>
+<h3 id="validar-desde-el-controlador-usando-request-validate">Validar desde el controlador usando $request-&gt;validate()<a class="headerlink" href="#validar-desde-el-controlador-usando-request-validate" title="Permanent link">&para;</a></h3>
+<p>Aclaración sobre el campo <code>done</code></p>
+<p>En este caso vamos a utilizar un <code>checkbox</code> para marcar si la nota está completada o no. En el formulario, si el checkbox está marcado, se enviará <code>done=on</code>, y si no está marcado, no se enviará nada. Para evitar problemas con el <code>on</code> vamos a modificar la vista de creación y edición de notas para que el valor enviado sea <code>1</code> o <code>nada</code> en el caso de no estar marcado.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&lt;input
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>type="checkbox"
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>name="done"
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>value="1"&gt;
+</code></pre></div>
+<p>El método <code>$request-&gt;validate()</code> es una forma rápida y sencilla de validar los datos directamente en el controlador. Recibe un array con las reglas de validación para cada campo. Si la validación falla, Laravel redirige automáticamente al formulario anterior con los errores y los datos antiguos.</p>
+<p>Este método permite validar directamente dentro del método del controlador:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&lt;?php
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>public function
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>store(Request $re
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>{
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>$validated =
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>$request-&gt;validat
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>'title' =
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>'required|string
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>max:255',
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>'descript
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>'required|string
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>'date' =&gt;
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>'required|date',
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>'done' =&gt;
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>'nullable|boolean
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>]);
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Note::create($val
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>return redire
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>&gt;route('note.inde
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>&gt;with('success',
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>creada correctame
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>}
+</code></pre></div>
+<p>Cuando la validación falla, Laravel redirige automáticamente al formulario anterior. Una buena técnica es utilizar el método <code>old()</code> para recuperar el valor anterior del campos de manera que el usuario no tenga que volver a escribirlo.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>&lt;input name="title"
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>value="{{ old('title')
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>}}"&gt;
+</code></pre></div>
+<p>Haremos esto en todos los campos. Cuídado con los <code>textarea</code> que no tienen <code>value</code> y con los <code>checkbox</code>. Por ejemlo, para el <code>checkbox</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>&lt;input type="checkbox"
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>name="done" value="1" {{
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>old('done') ? 'checked'
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>: '' }}&gt;
+</code></pre></div>
+<p>Esto mostrará el checkbox marcado si el valor anterior era <code>1</code>.</p>
+<p>Reglas comunes de validación:</p>
+<p><code>require</code> El campo es obligatorio</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>d
+</code></pre></div>
+<p><code>string</code> Debe ser una cadena de texto</p>
+<p><code>min:n</code> Longitud mínima de caracteres</p>
+<p><code>max:n</code> Longitud máxima de caracteres <code>date</code> Debe ser una fecha válida</p>
+<p><code>boolean</code> true/false, 0/1, "yes"/"no"</p>
+<p><code>nullabl</code> El campo puede estar vacío</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>e
+</code></pre></div>
+<h3 id="crear-una-clase-de-validacion-personalizada">Crear una clase de validación personalizada<a class="headerlink" href="#crear-una-clase-de-validacion-personalizada" title="Permanent link">&para;</a></h3>
+<p>Aunque en la documentación oficial de Laravel podemos encontrar un sinfín de reglas de validación, a veces necesitamos una validación más compleja o personalizada. Para ello como ejemplo vamos a crear una vlase de validación para un DNI español, que tiene un formato específico de 8 dígitos seguidos de una letra mayúscula.</p>
+<ol>
+<li><strong>1</strong>. Primer paso, crear la clase de validación personalizada:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>php artisan make:rule
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>isDNI
+</code></pre></div>
+<p>Esto creará una clase en <code>app/Rules/</code> <code>isDNI.php</code>.</p>
+<p>Ahora vamos a ver cómo sería la implementación de esta clase para validar un DNI español:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>&lt;?php
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>namespace App\Rules
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>use Closure;
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>use
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>Illuminate\Contract
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>class isDNI impleme
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>{
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>public function
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>mixed $value, Closu
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>{
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>$value = st
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>if (!preg_m
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>$value)) {
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>$fail('
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>formato válido.');
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>return;
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>}
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>$numero = s
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>$letra = su
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>$letras = '
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>$letraCorre
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a>
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a>if ($letra
+<a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a>$fail('
+<a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a>válido.');
+<a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a>}
+<a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a>}
+<a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a>}
+</code></pre></div>
+<p>Ahora ya lo podemos usar en nuestras reglas de validación:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>&lt;?php
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>use
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>App\Rules\DniValido;
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>$request-&gt;validate([
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>'dni' =&gt;
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>['required', new
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>DniValido],
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>]);
+</code></pre></div>
+<h3 id="crear-una-clase-formrequest-personalizada">Crear una clase FormRequest personalizada<a class="headerlink" href="#crear-una-clase-formrequest-personalizada" title="Permanent link">&para;</a></h3>
+<p>Las clases <code>FormRequest</code> son una forma más estructurada de manejar la validación. Permiten separar la lógica de validación del controlador, lo que hace que el código sea más limpio y mantenible. Normalmente se crean para escenarios de validación compleja. Estas clases encapsulan la lógica de validación y autorización de una petición HTTP específica. Ahora, como ejemplo, vamos a crear una clase <code>NoteRequest</code> para manejar la validación de las notas.</p>
+<p>Comando:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>php artisan make:request
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>NoteRequest
+</code></pre></div>
+<p>Esto creará una clase en <code>app/Http/</code></p>
+<p><code>Requests/NoteRequest.php</code></p>
+<p>Este método define si el usuario tiene permiso para hacer esta petición. Para este curso lo dejaremos en <code>true</code>:</p>
+<p>Si este método devuelve <code>false</code>, la validación no se ejecutará y se lanzará un error 403 Forbidden).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>&lt;?php
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>public function
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>authorize()
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>{
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>return
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>true;
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>}
+</code></pre></div>
+<p>Ahora vamos a definir unas reglas de validación de ejmeplo para nuestro ejemplo de notas:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>&lt;?php
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>public
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>function
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>rules()
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>{
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>return [
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>'title' =&gt;
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>'required|
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>string|
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>max:255',
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>'description'
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>=&gt; 'required|
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>string|
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>min:10',
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>'date'
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>=&gt; 'required|
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>date',
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>'done'
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>=&gt; 'nullable|
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>boolean'
+<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>];
+<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>}
+</code></pre></div>
+<p>En el controlador, en lugar de usar <code>Request $request</code>, usaremos <code>NoteRequest $request</code>. Laravel se encargará de validar automáticamente los datos antes de ejecutar el método.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>&lt;?php
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>public function
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>store(NoteRequest
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>$request)
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>{
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>$data = $reque
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>&gt;all();
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>$data['done']
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>$request-&gt;has('don
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>? 1: 0; // Conve
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>checkbox to boolea
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>Note::create($data
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>return
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>redirect()-
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>&gt;route('note.index
+<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>}
+</code></pre></div>
+<p>Antes de modificar el <code>update()</code> recordar que en la vista de edición el checkbox se envía como <code>done=on</code> o no se envía nada. Hacemos en esta vista lo mismo que en la de creación:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>&lt;input type="checkbox"
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>name="done" value="1" {{
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>($note-&gt;done) ?
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>'checked': '' }}&gt;
+</code></pre></div>
+<p>Hacemos lo mismo para el método <code>update()</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>&lt;?php
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>public function
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>update(NoteRequest
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>$request, Note $no
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>{
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>$note-
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>&gt;update($request-
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>&gt;all());
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>return
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>redirect()-
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>&gt;route('note.index
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>}
+</code></pre></div>
+<h2 id="mostrar-errores-de-validacion">Mostrar Errores de Validación<a class="headerlink" href="#mostrar-errores-de-validacion" title="Permanent link">&para;</a></h2>
+<h3 id="mostrar-errores-en-el-formulario">Mostrar errores en el formulario<a class="headerlink" href="#mostrar-errores-en-el-formulario" title="Permanent link">&para;</a></h3>
+<p>Para el usuario es importante recibir feedback inmediato sobre los errores en el formulario. Laravel facilita esto con la variable <code>$errors</code> disponible en las vistas.</p>
+<p>Puedes mostrar un error específico junto a cada campo:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>&lt;input name="title"
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>value="{{
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>old('title') }}"&gt;
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>@error('title')
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>&lt;small
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>style="color:red"&gt;{{
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>$message }}&lt;/small&gt;
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>@enderror
+</code></pre></div>
+<h3 id="resaltar-campos-con-error-css">Resaltar campos con error CSS<a class="headerlink" href="#resaltar-campos-con-error-css" title="Permanent link">&para;</a></h3>
+<p>También puedes añadir una clase CSS al campo si tiene error, para destacarlo visualmente según diseño de la aplicación:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>&lt;input name="title"
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>class="@error('title')
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>is-invalid @enderror"&gt;
+</code></pre></div>
+<p>Y luego en CSS puedes estilizar la clase <code>.is-invalid</code>.</p>
+<h3 id="mostrar-todos-los-errores-juntos">Mostrar todos los errores juntos<a class="headerlink" href="#mostrar-todos-los-errores-juntos" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>@if ($errors-
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>&gt;any())
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>&lt;div
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>class="alert
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>alert-danger"&gt;
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>&lt;ul&gt;
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>@foreach
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>($errors-&gt;all()
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>as $error)
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>&lt;li&gt;{{ $error
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>}}&lt;/li&gt;
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>@endforeach
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>&lt;/ul&gt;
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>&lt;/div&gt;
+<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a>@endif
+</code></pre></div>
+<h3 id="modificar-la-vista-de-edicion-como-lo-hicimos-en-la-de-creacion">Modificar la vista de edición como lo hicimos en la de creación<a class="headerlink" href="#modificar-la-vista-de-edicion-como-lo-hicimos-en-la-de-creacion" title="Permanent link">&para;</a></h3>
+<p>La vista de creación debe haber quedado así:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>@extends('layouts
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>@section('title'
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>'Crear nueva Nota
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>@section('content
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>&lt;h2&gt;Editar No
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>h2&gt;
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>&lt;form action=
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>route('note.store
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>method="POST"&gt;
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>@csrf
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>&lt;label&gt;Título:&lt;/l
+<a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a>&lt;input
+<a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>type="text"
+<a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a>name="title" valu
+<a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a>old('title') }}"
+<a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a>required&gt;
+<a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a>@error('t
+<a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a>&lt;smal
+<a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a>style="color:red
+<a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a>$message }}&lt;/smal
+<a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a>@enderro
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>&lt;label&gt;Descripció
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>label&gt;
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>&lt;textarea
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>name="descriptio
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>required&gt;{{
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>old('description
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>textarea&gt;
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>@error('descripti
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>&lt;smal
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>style="color:red
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>$message }}&lt;/smal
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>@enderro
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>@
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>&lt;label&gt;Fe
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>label&gt;
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>&lt;input
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>type="date" name=
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>value="{{ old('da
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>}}" required&gt;
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>@error('d
+<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>&lt;smal
+<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>style="color:red
+<a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>$message }}&lt;/smal
+<a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>@enderro
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>&lt;label&gt;Completada
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>label&gt;
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>&lt;input
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>type="checkbox"
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>name="done" {{
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>old('done') ? 'ch
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>: '' }}&gt;
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>&lt;button
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>type="submit"&gt;Gua
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>button&gt;
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>&lt;a href=
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>route('note.index
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>}}"&gt;Cancelar&lt;/a&gt;
+<a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>@error('d
+<a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>&lt;smal
+<a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a>style="color:red
+<a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a>$message }}&lt;/smal
+<a id="__codelineno-22-19" name="__codelineno-22-19" href="#__codelineno-22-19"></a>@enderro
+<a id="__codelineno-22-20" name="__codelineno-22-20" href="#__codelineno-22-20"></a>&lt;/form&gt;
+<a id="__codelineno-22-21" name="__codelineno-22-21" href="#__codelineno-22-21"></a>@endsection
+</code></pre></div>
+<p>también modificamos la vista del formulario de edición para mostrar los mensajes de error:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>@extends('layouts
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>@section('title'
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>Nota')
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>@section('content
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>&lt;h2&gt;Editar No
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>&lt;form action=
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>route('note.updat
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>$note-&gt;id) }}"
+<a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>method="POST"&gt;
+<a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>@csrf
+<a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>@method(
+<a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>&lt;label&gt;Tí
+<a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>label&gt;
+<a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a>&lt;input ty
+<a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a>name="title" valu
+<a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a>$note-&gt;title }}"
+<a id="__codelineno-23-19" name="__codelineno-23-19" href="#__codelineno-23-19"></a>@error('t
+<a id="__codelineno-23-20" name="__codelineno-23-20" href="#__codelineno-23-20"></a>&lt;smal
+<a id="__codelineno-23-21" name="__codelineno-23-21" href="#__codelineno-23-21"></a>style="color:red
+<a id="__codelineno-23-22" name="__codelineno-23-22" href="#__codelineno-23-22"></a>$message }}&lt;/smal
+<a id="__codelineno-23-23" name="__codelineno-23-23" href="#__codelineno-23-23"></a>@enderro
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>&lt;label&gt;Descripció
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>label&gt;
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>&lt;textarea
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>name="descriptio
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>required&gt;{{ $note
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>&gt;description }}&lt;/
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>@error('descripti
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>&lt;smal
+<a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>style="color:red
+<a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a>$message }}&lt;/smal
+<a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a>@enderro
+<a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a>
+<a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a>&lt;label&gt;Fe
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>label&gt;
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>&lt;input ty
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>name="date" value
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>$note-&gt;date }}"
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>@error('d
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>&lt;smal
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>style="color:red
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>$message }}&lt;/smal
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>@enderro
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>&lt;label&gt;Completada
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>&lt;input
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>type="checkbox"
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>name="done" {{ $n
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>? 'checked': ''
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>
+<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>&lt;button
+<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>type="submit"&gt;Act
+<a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>button&gt;
+<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>&lt;a href=
+<a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a>route('note.index
+<a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a>}}"&gt;Cancelar&lt;/a&gt;
+<a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a>@error('d
+<a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a>&lt;smal
+<a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a>style="color:red
+<a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a>$message }}&lt;/smal
+<a id="__codelineno-26-17" name="__codelineno-26-17" href="#__codelineno-26-17"></a>@enderro
+<a id="__codelineno-26-18" name="__codelineno-26-18" href="#__codelineno-26-18"></a>&lt;/form&gt;
+<a id="__codelineno-26-19" name="__codelineno-26-19" href="#__codelineno-26-19"></a>@endsection
+</code></pre></div>
+<p>Algunos métodos interesantes de laravel que no hemos utilizado pero que se usan a menudo son:</p>
+<p><code>Illum</code> <code>make(</code> Crear un validador</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>inate)
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>\Supp
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>ort\F
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>acade
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>s\Val
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>idato
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>r
+</code></pre></div>
+<p><code>Illum</code> <code>fails</code> Verificar si la validación falló</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>inate ()
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>\Supp
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>ort\F
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>acade
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>s\Val
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>idato
+<a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>r
+</code></pre></div>
+<p><code>Illum</code> <code>error</code> Obtener los errores de</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>inate s()
+</code></pre></div>
+<p>validación</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>\Supp
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>ort\F
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>acade
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>s\Val
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>idato
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>r
+</code></pre></div>
+<p><code>Illum</code> <code>valid</code> Validar y redirigir automáticamente</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>inate ate()
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>\Supp
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>ort\F
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>acade
+<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>s\Val
+<a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>idato
+<a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>r
+</code></pre></div>
+<p><code>Illum</code> <code>old()</code> Obtener el valor anterior de un</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>inate
+</code></pre></div>
+<p>campo</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>\Supp
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>ort\F
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>acade
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>s\Req
+<a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>uest
+</code></pre></div>
+<p><code>Illum</code> <code>flash</code> Guardar datos en la sesión para la</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>inate ()
+</code></pre></div>
+<p>siguiente</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>\Supp
+</code></pre></div>
+<p>petición</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>ort\F
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>acade
+<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>s\Req
+<a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a>uest
+</code></pre></div>
+<p>Ahora vamos a probar a crear una nota con una descripción inferir a los 10 caracteres y veremos el mensaje de error.</p>
+<p>{ width=400px }</p>
+<p>Ahora corregimos el error y vemos que la nota se crea correctamente. Además nos aparece un mensaje de éxito.</p>
+<p>{ width=400px }</p>
+<p>Ahora podéis comprobar que:</p>
+<ul>
+<li>
+<p>En la edición las validaciones y mensajes de éxito funcionan igual.</p>
+</li>
+<li>
+<p>El campo ´done´ funciona correctamente tanto en creación como en edición.</p>
+</li>
+</ul>
+<p>Si has seguido al pie de la letra las instrucciones, el campo <code>done</code> no va a funcionar. Al añadir la clase <code>NoteRequest</code> pedimos que el campo sea <code>boolean</code> pero a este punto está llegando un <code>on</code> cuando el checkbox está marcado, o nada cuando no lo está. Y por tanto no llegaremos nunca a que se ejecute el método <code>store()</code> o <code>update()</code>, que es donde estábamos manejando el valor del checkbox.</p>
+<p>Necesitamos que cuando se valida el campo <code>done</code>, si está marcado llegue como <code>true</code> y si no está marcado como <code>false</code>. Ya que en la validación hemos especificado que debe ser un booleano. Para ello vamos a usar el método <code>prepareForValidation()</code> que nos permite modificar los datos antes de que se apliquen las reglas de validación.</p>
+<p>Añadimos este método en la clase <code>NoteRequest</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>&lt;?php
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>protected function
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>prepareForValidati
+<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>{
+<a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>$this-&gt;merge(
+<a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>'done' =&gt;
+<a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a>$this-&gt;done ? true
+<a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a>false,
+<a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a>]);
+<a id="__codelineno-38-10" name="__codelineno-38-10" href="#__codelineno-38-10"></a>}
+</code></pre></div>
+<p>De esta manera nos aseguramos que el campo <code>done</code> siempre llega como <code>1</code> o <code>0</code>, y por tanto la validación funciona correctamente.</p>
+<p>Este método es muy útil para modificar cualquier dato antes de que se aplique la validación. Por ejemplo, podríamos usarlo para formatear fechas, convertir cadenas a mayúsculas/minúsculas. No siempre la información que llega del formulario está en el formato que necesitamos para validar o almacenar. Y que no esté en el formato no significa que no sea válido. Pero la validación de <code>laravel</code> es estricta y debemos asegurarnos que los datos cumplen las reglas que hemos definido.</p>
+<h3 id="traducir-los-mensajes-de-error">Traducir los mensajes de error<a class="headerlink" href="#traducir-los-mensajes-de-error" title="Permanent link">&para;</a></h3>
+<p>Laravel trae sus mensajes de error por defecto en inglés. Hasta la versión los ficheros de traducción se encontraban en <code>resources/lang/en/validation.php</code>. A partir de Laravel 10 es necesario activar el sistema de traducción para que se publiquen los archivos de idioma. Para ello ejecutamos el siguiente comando:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>php artisan lang:publish
+</code></pre></div>
+<p>Esto creará los archivos de traducción en <code>src/lang/</code>. Ahora si queremos traducir los mensajes de error al castellano, por ejemplo, podemos copiar el archivo <code>src/</code> <code>lang/en/validation.php</code> a <code>src/</code> <code>lang/es/validation.php</code> y traducir los mensajes.</p>
+<p>Para que Laravel use el idioma español, debemos configurar el valor de <code>locale</code> en el archivo <code>config/app.php</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>'locale' =&gt; 'es',
+</code></pre></div>
+<h2 id="mensajes-de-exito">Mensajes de Éxito<a class="headerlink" href="#mensajes-de-exito" title="Permanent link">&para;</a></h2>
+<p>Para mejorar la experiencia del usuario, es buena práctica mostrar mensajes de éxito o error después de operaciones como crear, actualizar o eliminar. PPara ello vamos a usar los mensajes flash, que permiten mandar un mensaje entre peticiones almacenándolo en la sesión.</p>
+<h3 id="flash-de-sesion-con-with">Flash de sesión con with()<a class="headerlink" href="#flash-de-sesion-con-with" title="Permanent link">&para;</a></h3>
+<p>Este método permite guardar un mensaje en la sesión que se mostrará en la siguiente petición. Vamos a usarlo para mostrar un mensaje de éxito después de crear o actualizar o eliminar una nota.</p>
+<p>En la función <code>store()</code> del controlador:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>&lt;?php
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>return redirect()-
+<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>&gt;route('note.index')-
+<a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>&gt;with('success', 'Nota
+<a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a>guardada
+<a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a>correctamente.');
+</code></pre></div>
+<p>En la función <code>update()</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>&lt;?php
+<a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>return redirect()-
+<a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>&gt;route('note.index')-
+<a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>&gt;with('success', 'Nota
+<a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>actualizada
+<a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a>correctamente.');
+</code></pre></div>
+<p>En la función <code>destroy()</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>&lt;?php
+<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>return redirect()-
+<a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>&gt;route('note.index')-
+<a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>&gt;with('danger', 'Nota
+<a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>eliminada
+<a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a>correctamente.');
+</code></pre></div>
+<h3 id="mostrar-el-mensaje-en-la-vista-por-ejemplo-en-layout">Mostrar el mensaje en la vista (por ejemplo, en layout):<a class="headerlink" href="#mostrar-el-mensaje-en-la-vista-por-ejemplo-en-layout" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>@if
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>(session('success
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>&lt;div
+<a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>class="alert ale
+<a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>success"&gt;
+<a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>{{
+<a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a>session('success
+<a id="__codelineno-44-8" name="__codelineno-44-8" href="#__codelineno-44-8"></a>}}
+<a id="__codelineno-44-9" name="__codelineno-44-9" href="#__codelineno-44-9"></a>&lt;/div&gt;
+<a id="__codelineno-44-10" name="__codelineno-44-10" href="#__codelineno-44-10"></a>@endif
+<a id="__codelineno-44-11" name="__codelineno-44-11" href="#__codelineno-44-11"></a>@if
+<a id="__codelineno-44-12" name="__codelineno-44-12" href="#__codelineno-44-12"></a>(session('danger
+<a id="__codelineno-44-13" name="__codelineno-44-13" href="#__codelineno-44-13"></a>&lt;div
+<a id="__codelineno-44-14" name="__codelineno-44-14" href="#__codelineno-44-14"></a>class="alert ale
+<a id="__codelineno-44-15" name="__codelineno-44-15" href="#__codelineno-44-15"></a>danger"&gt;
+<a id="__codelineno-44-16" name="__codelineno-44-16" href="#__codelineno-44-16"></a>{{
+<a id="__codelineno-44-17" name="__codelineno-44-17" href="#__codelineno-44-17"></a>session('danger'
+<a id="__codelineno-44-18" name="__codelineno-44-18" href="#__codelineno-44-18"></a>&lt;/div&gt;
+<a id="__codelineno-44-19" name="__codelineno-44-19" href="#__codelineno-44-19"></a>@endif
+</code></pre></div>
+<p>O incluirlo como partial:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>@if
+<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>(session('success
+<a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>&lt;div
+<a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>class="alert ale
+<a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>success"
+<a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a>
+<a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a>style="padding:
+<a id="__codelineno-45-8" name="__codelineno-45-8" href="#__codelineno-45-8"></a>10px; margin-bott
+<a id="__codelineno-45-9" name="__codelineno-45-9" href="#__codelineno-45-9"></a>20px;
+<a id="__codelineno-45-10" name="__codelineno-45-10" href="#__codelineno-45-10"></a>
+<a id="__codelineno-45-11" name="__codelineno-45-11" href="#__codelineno-45-11"></a>background-color
+<a id="__codelineno-45-12" name="__codelineno-45-12" href="#__codelineno-45-12"></a>#d4edda;
+<a id="__codelineno-45-13" name="__codelineno-45-13" href="#__codelineno-45-13"></a>
+<a id="__codelineno-45-14" name="__codelineno-45-14" href="#__codelineno-45-14"></a>color: #155724;
+<a id="__codelineno-45-15" name="__codelineno-45-15" href="#__codelineno-45-15"></a>
+<a id="__codelineno-45-16" name="__codelineno-45-16" href="#__codelineno-45-16"></a>border-color:
+<a id="__codelineno-45-17" name="__codelineno-45-17" href="#__codelineno-45-17"></a>#c3e6cb;
+<a id="__codelineno-45-18" name="__codelineno-45-18" href="#__codelineno-45-18"></a>
+<a id="__codelineno-45-19" name="__codelineno-45-19" href="#__codelineno-45-19"></a>border-radius:
+<a id="__codelineno-45-20" name="__codelineno-45-20" href="#__codelineno-45-20"></a>5px;"&gt;
+<a id="__codelineno-45-21" name="__codelineno-45-21" href="#__codelineno-45-21"></a>{{
+<a id="__codelineno-45-22" name="__codelineno-45-22" href="#__codelineno-45-22"></a>session('success
+<a id="__codelineno-45-23" name="__codelineno-45-23" href="#__codelineno-45-23"></a>}}
+<a id="__codelineno-45-24" name="__codelineno-45-24" href="#__codelineno-45-24"></a>&lt;/div&gt;
+<a id="__codelineno-45-25" name="__codelineno-45-25" href="#__codelineno-45-25"></a>@endif
+<a id="__codelineno-45-26" name="__codelineno-45-26" href="#__codelineno-45-26"></a>@if
+<a id="__codelineno-45-27" name="__codelineno-45-27" href="#__codelineno-45-27"></a>(session('danger
+<a id="__codelineno-45-28" name="__codelineno-45-28" href="#__codelineno-45-28"></a>&lt;div
+<a id="__codelineno-45-29" name="__codelineno-45-29" href="#__codelineno-45-29"></a>class="alert ale
+<a id="__codelineno-45-30" name="__codelineno-45-30" href="#__codelineno-45-30"></a>danger"
+<a id="__codelineno-45-31" name="__codelineno-45-31" href="#__codelineno-45-31"></a>
+<a id="__codelineno-45-32" name="__codelineno-45-32" href="#__codelineno-45-32"></a>style="padding:
+<a id="__codelineno-45-33" name="__codelineno-45-33" href="#__codelineno-45-33"></a>10px; margin-bott
+<a id="__codelineno-45-34" name="__codelineno-45-34" href="#__codelineno-45-34"></a>20px;
+<a id="__codelineno-45-35" name="__codelineno-45-35" href="#__codelineno-45-35"></a>
+<a id="__codelineno-45-36" name="__codelineno-45-36" href="#__codelineno-45-36"></a>background-color
+<a id="__codelineno-45-37" name="__codelineno-45-37" href="#__codelineno-45-37"></a>#f8d7da;
+<a id="__codelineno-45-38" name="__codelineno-45-38" href="#__codelineno-45-38"></a>
+<a id="__codelineno-45-39" name="__codelineno-45-39" href="#__codelineno-45-39"></a>color: #721c24;
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>;
+<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>
+<a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>border-color:
+<a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>#f5c6cb;
+<a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>
+<a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a>border-radius:
+<a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a>5px;"&gt;
+<a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a>{{
+<a id="__codelineno-46-9" name="__codelineno-46-9" href="#__codelineno-46-9"></a>session('danger'
+<a id="__codelineno-46-10" name="__codelineno-46-10" href="#__codelineno-46-10"></a>&lt;/div&gt;
+<a id="__codelineno-46-11" name="__codelineno-46-11" href="#__codelineno-46-11"></a>@endif
+</code></pre></div>
+<p>Y en el layout:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>@include('_partials.message
+</code></pre></div>
+<h2 id="rutas-resource">Rutas Resource<a class="headerlink" href="#rutas-resource" title="Permanent link">&para;</a></h2>
+<h3 id="que-son">¿Qué son?<a class="headerlink" href="#que-son" title="Permanent link">&para;</a></h3>
+<p>Las rutas <code>Route:resource()</code> generan automáticamente todas las rutas necesarias para un CRUD completo. De esta manera nos ahorramos definir todas las rutas para todos los modelos.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>&lt;?php
+<a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>Route::resource('note',
+<a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>NoteController::class);
+</code></pre></div>
+<h3 id="acciones-generadas">Acciones generadas<a class="headerlink" href="#acciones-generadas" title="Permanent link">&para;</a></h3>
+<p>GET /note index Mostrar todas las notas</p>
+<p>GET /note/ create Formulario create para nueva nota</p>
+<p>POST /note store Guardar nueva nota</p>
+<p>GET /note/ show Mostrar una {note} nota</p>
+<p>GET /note/ edit Formulario {note}/edit para editar</p>
+<p>PUT/PATCH / update Actualizar note/{note} nota</p>
+<p>DELETE / destroy Eliminar nota note/{note}</p>
+<h3 id="personalizacion">Personalización<a class="headerlink" href="#personalizacion" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Solo algunas rutas:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>&lt;?php
+<a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>Route::resource('note',
+<a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a>NoteController::class)-
+<a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a>&gt;only(['index',
+<a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a>'show']);
+</code></pre></div>
+<ul>
+<li>Excluir algunas:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>&lt;?php
+<a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>Route::resource('note',
+<a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a>NoteController::class)-
+<a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a>&gt;except(['destroy']);
+</code></pre></div>
+<h3 id="ver-rutas-disponibles">Ver rutas disponibles<a class="headerlink" href="#ver-rutas-disponibles" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>php artisan route:list
+</code></pre></div>
+<p>Te muestra todas las rutas definidas, su método, URI y nombre.</p>
+<h3 id="crear-un-controlador-tipo-resource">Crear un controlador tipo resource<a class="headerlink" href="#crear-un-controlador-tipo-resource" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>php artisan
+<a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>make:controller
+<a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a>NoteController --
+<a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a>resource
+</code></pre></div>
+<p>Este comando crea todos los métodos básicos ( <code>index</code>, <code>create</code>, <code>store</code>, <code>show</code>, <code>edit</code>, <code>update</code>, <code>destroy</code>).</p>
+<h2 id="conclusiones">Conclusiones<a class="headerlink" href="#conclusiones" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>Validar datos es esencial para proteger la integridad de la base de datos.</p>
+</li>
+<li>
+<p>Los mensajes de error y éxito mejoran la experiencia del usuario.</p>
+</li>
+<li>
+<p>Las rutas resource simplifican la estructura del código.</p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      IES JUAN DE GARAY - 2º DWES · Curso original de Beteta adaptado por Eva María Gómez Abad
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

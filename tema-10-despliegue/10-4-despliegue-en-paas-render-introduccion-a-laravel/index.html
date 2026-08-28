@@ -1,0 +1,3032 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Apuntes de Desarrollo Web en Entorno Servidor">
+      
+      
+        <meta name="author" content="Eva María Gómez Abad">
+      
+      
+        <link rel="canonical" href="https://evaprofe.github.io/CURSO_DWES_2627/tema-10-despliegue/10-4-despliegue-en-paas-render-introduccion-a-laravel/">
+      
+      
+        <link rel="prev" href="../10-3-aplicacion-completa-con-estructura-de-laravel-introduccion-a-laravel/">
+      
+      
+        <link rel="next" href="../10-5-actividad-del-tema-10-introduccion-a-laravel/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>10.4 Despliegue en Render - Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#despliegue-en-paas" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-header__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              10.4 Despliegue en Render
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Activar modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Activar modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-nav__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introducción al Desarrollo Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1. Introducción al Desarrollo Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/introduccion-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1 Desarrollo Web en el Servidor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2 Patrón Modelo-Vista-Controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.3 Protocolo HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 1 · MVC y HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Frameworks y Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2. Frameworks y Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1 Introducción a los Frameworks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-2-configuracion-del-entorno-de-trabajo-con-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.2 Entorno de Trabajo con Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-3-instalacion-y-puesta-en-marcha-de-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.3 Instalación y Puesta en Marcha
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-4-estructura-y-elementos-de-un-proyecto-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.4 Estructura de un Proyecto Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-5-actividad-del-tema-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 2 · Introducción a Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/anexos-tailwind-css/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anexo · Tailwind CSS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/instrucciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía del Entorno
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tema-02-frameworks-laravel/proyecto-github/docs/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🚀 Proyecto Guiado · Entorno Laravel
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🚀 Proyecto Guiado · Entorno Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/requisitos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso1-preparacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 1 · Preparación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso7-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 7 · Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso9-mysql-cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 9 · MySQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso10-xdebug/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 10 · Xdebug
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/instrucciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instrucciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/conclusion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conclusión
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. Vistas con Blade
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-03-vistas-blade/3-1-vistas-con-blade-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Creación de Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-03-vistas-blade/3-2-actividad-del-tema-3-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 3 · Agencia de Viajes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4. Migraciones y Modelos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-04-migraciones-modelos/4-1-migraciones-y-modelos-con-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 Migraciones y Modelos en Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-04-migraciones-modelos/4-2-actividad-del-tema-4-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 4 · Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Controladores de Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5. Controladores de Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/5-1-controladores-de-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Controladores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/unidad-5-2-relaciones-uno-a-muchos-en-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.2 Relaciones Uno a Muchos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/actividad-del-tema-5-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 5 · Controladores y Rutas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Desarrollo CRUD Completo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. Desarrollo CRUD Completo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-06-crud-completo/6-1-desarrollo-de-un-crud-completo-en-laravel-parte-1-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1 Desarrollo de un CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-06-crud-completo/6-2-actividad-del-tema-6-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 6 · CRUD de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-07-validaciones-rutas-mensajes/7-1-validaciones-rutas-resource-y-mensajes-del-sistema-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.1 Validaciones y Rutas Resource
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-07-validaciones-rutas-mensajes/actividad-del-tema-7-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 7 · Validaciones del CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. API REST
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    8. API REST
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-1-apis-restful-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.1 Creación de API REST
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-2-apis-con-sanctum-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.2 API con Sanctum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-3-actividad-del-tema-8-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 8 · API de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Seeders, Factories y Faker
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    9. Seeders, Factories y Faker
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-09-seeders-factories-faker/9-1-creacion-de-datos-iniciales-y-de-prueba-seeders-factories-y-faker-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9.1 Datos Iniciales y de Prueba
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-09-seeders-factories-faker/actividad-del-tema-9-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 9 · Generación de Datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-1-introduccion-al-despliegue-de-aplicaciones-web-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.1 Introducción al Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-2-aplicacion-simple-con-estructura-precaria-php-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.2 Aplicación PHP Sencilla
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-3-aplicacion-completa-con-estructura-de-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.3 Aplicación Laravel Completa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.4 Despliegue en Render
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.4 Despliegue en Render
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#creacion-de-la-cuenta-en" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        * Creación de la cuenta en
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creacion-de-la-base-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación de la base de datos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuracion-de-la-aplicacion-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuración de la aplicación Laravel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuración de la aplicación Laravel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-la-rama-render" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear la rama Render
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuracion-del-archivoenv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuración del archivo.env
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creacion-del-archivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación del archivo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creacion-del-archivo_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación del archivo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creacion-del-servicio-en" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación del servicio en
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#puesta-en-marcha-del-despliegue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        * Puesta en marcha del despliegue
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#primera-migracion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Primera migración
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-5-actividad-del-tema-10-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 10 · Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#creacion-de-la-cuenta-en" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        * Creación de la cuenta en
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creacion-de-la-base-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación de la base de datos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuracion-de-la-aplicacion-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuración de la aplicación Laravel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuración de la aplicación Laravel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-la-rama-render" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear la rama Render
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuracion-del-archivoenv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuración del archivo.env
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creacion-del-archivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación del archivo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creacion-del-archivo_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación del archivo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creacion-del-servicio-en" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación del servicio en
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#puesta-en-marcha-del-despliegue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        * Puesta en marcha del despliegue
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#primera-migracion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Primera migración
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="despliegue-en-paas">Despliegue en PaaS<a class="headerlink" href="#despliegue-en-paas" title="Permanent link">&para;</a></h1>
+<p>En este apartado hemos elegido <strong>Render</strong> como plataforma de despliegue para nuestra aplicación. <strong>Render</strong> es una plataforma de alojamiento que permite desplegar aplicaciones web, bases de datos y servicios de forma sencilla y rápida.</p>
+<p>Principales características de <strong>Render</strong>:</p>
+<p>Despliegue <strong>Render</strong> permite desplegar automático aplicaciones automáticamente desde un repositorio de GitHub o GitLab.</p>
+<p>Escalabilidad <strong>Render</strong> permite escalar aplicaciones fácilmente, ajustando los recursos según las necesidades.</p>
+<p>Soporte para <strong>Render</strong> soporta una múltiples amplia variedad de lenguajes lenguajes de programación y frameworks.</p>
+<p>Integración con <strong>Render</strong> permite crear y bases de datos gestionar bases de datos de forma sencilla.</p>
+<p>Seguridad <strong>Render</strong> ofrece características de seguridad como HTTPS, firewall y protección DDoS.</p>
+<p>Precios <strong>Render</strong> ofrece precios competitivos competitivos y un plan gratuito para proyectos pequeños.</p>
+<p>Soporte para <strong>Render</strong> permite desplegar contenedores aplicaciones en contenedores Docker.</p>
+<p>Monitorización y <strong>Render</strong> proporciona logs herramientas de monitorización y acceso a logs para depurar aplicaciones.</p>
+<p>Las dos principales características que nos interesan son el despliegue automático y la integración con bases de datos. Y la posibilidad de crear una cuenta gratuita para proyectos pequeños.</p>
+<p>En nuestro caso, para aprovechar el despliegue automático, es necesario que el repositorio de la aplicación esté en GitHub. Si no tienes una cuenta en GitHub, puedes crear una de forma gratuita.</p>
+<p>Por tanto para empezar tenemos un proyecto de Laravel (recien creado, sin modificaciones), si desplegamos este proyecto, el despliegue nos servirá para cualquier proyecto de Laravel que tengamos, ya que el proceso de despliegue es el mismo. Eso sí, lo tenemos que tener en GitHub.</p>
+<p>Podemos utilizar el proyecto creado para el curso, que está en el siguiente repositorio:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>https://github.com/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>jbeteta-ies/
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>phpDeployTest
+</code></pre></div>
+<p>En este caso el repositorio es privado (cada alumno debe tener su propio repositorio ya sea púbico o privado). Lo conveniente sería clonar el repositorios y subirlo a una cuenta de GitHub propia, será necesario para poder hacer el despliegue.</p>
+<h2 id="creacion-de-la-cuenta-en">* Creación de la cuenta en<a class="headerlink" href="#creacion-de-la-cuenta-en" title="Permanent link">&para;</a></h2>
+<p>Para crear una cuenta en <strong>Render</strong>, sigue estos pasos:</p>
+<ol>
+<li>
+<p><strong>1</strong>. Accede a la página de <strong>Render</strong>.</p>
+</li>
+<li>
+<p><strong>2</strong>. Haz clic en el botón "Sign Up" Registrarse) en la esquina superior derecha.</p>
+</li>
+<li>
+<p><strong>3</strong>. Puedes registrarte con tu cuenta de GitHub, GitLab o correo electrónico. En este caso, selecciona "Sign up with GitHub" Registrarse con GitHub).</p>
+</li>
+<li>
+<p><strong>4</strong>. Autoriza a <strong>Render</strong> para acceder a tu cuenta de GitHub.</p>
+</li>
+<li>
+<p><strong>5</strong>. Completa el proceso de registro siguiendo las instrucciones en pantalla.</p>
+</li>
+<li>
+<p><strong>6</strong>. Una vez registrado, serás redirigido al panel de control de <strong>Render</strong>.</p>
+</li>
+</ol>
+<p>Yo he creado mi cuenta con GitHub, por lo que me ha redirigido a la página de autorización de <strong>Render</strong> en GitHub. He autorizado a <strong>Render</strong> para acceder a mi cuenta de GitHub y he completado el registro.</p>
+<p><strong>Render</strong> ofrece múltiples opciones. Nosotros vamos a centrarnos en el despliegue de nuestra aplicación, utilizando las mínimas opciones de <strong>Render</strong>. Existen otros cursos de Despliegue de aplicaciones que seguro que profundizan más en las características de este tipo de servidores.</p>
+<h2 id="creacion-de-la-base-de-datos">Creación de la base de datos<a class="headerlink" href="#creacion-de-la-base-de-datos" title="Permanent link">&para;</a></h2>
+<p>Lo primero que vamos a hacer es crear la base de datos que vamos a utilizar en nuestra aplicación. Recordemos que nuestra aplicación utiliza una base de datos MySQL. Pero <strong>Render</strong> es su versión gratuita solo nos permite crear bases de datos PostgreSQL. Por tanto, vamos a crear una base de datos PostgreSQL.</p>
+<p>Opciones seleccionadas:</p>
+<p>Name Nombre de la <code>pg-</code> instancia</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>larave
+</code></pre></div>
+<p>Postgress</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>l
+</code></pre></div>
+<p>Database Nombre de la <code>larave</code> base de datos</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>l
+</code></pre></div>
+<p>Username Nombre de <code>alumno</code> usuario de la base de datos</p>
+<p>Region Región de la <code>Europe</code> base de datos</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>(Frank
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>furt)
+</code></pre></div>
+<p>Postgres Versión de <code>16</code> Version PostgreSQL</p>
+<p>Datalog Región para <code>EU</code> Region enviar datos al Datalog</p>
+<p>Instance Tipo de <code>Free</code> Type instancia</p>
+<p>Una vez seleccionadas las opciones, hacemos clic en el botón "Create Database" Crear base de datos). <strong>Render</strong> creará la base de datos y nos proporcionará las credenciales de acceso.</p>
+<p>La base de datos se creará en la región de Europa Frankfurt) por defecto. Si necesitas cambiar la región, puedes hacerlo en las opciones avanzadas.</p>
+<p>En el plan gratuito las base de datos caducan a los 30 días. Por tanto tenemos este tiempo para realizar el despliegue de nuestra aplicación y probarla. Posteriormente hay que volver a crear la base de datos o actualizar a un plan de pago.</p>
+<p>Una vez creada, la aplicación nos mostrará las credenciales de acceso a la base de datos. Estas credenciales son necesarias para configurar nuestra aplicación Laravel.</p>
+<p>Host <code>dpg-d0qdmsjuibrs73ehedm</code></p>
+<p>Port <code>5432</code></p>
+<p>Database <code>laravel_6idw</code></p>
+<p>Username <code>alumno</code></p>
+<p>Password <code>p3DmIdbZEBtmzcuMflpDHoE</code></p>
+<p>URL `postgresql:// Externa alumno:p3DmIdbZEBtmzcuMflpDHoEp d0qdmsjuibrs73ehedmg-a.frankfurt- postgres.com/laravel_6idw'</p>
+<p>PSQL <code>PGPASSWORD=p3DmIdbZEBtm</code> Command</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Epxp8uToLh psql -h dpg-
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>d0qdmsjuibrs73ehedmg-a.
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>postgres.**Render**.com
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>laravel_6idw
+</code></pre></div>
+<p>Nosotros necesitaremos el <code>Host</code>, <code>Port</code>, <code>Database</code>, <code>Username</code> y <code>Password</code> para configurar nuestra aplicación Laravel.</p>
+<h2 id="configuracion-de-la-aplicacion-laravel">Configuración de la aplicación Laravel<a class="headerlink" href="#configuracion-de-la-aplicacion-laravel" title="Permanent link">&para;</a></h2>
+<p>Antes de comenzar con la creación del servicio en <strong>Render</strong>, debemos preparar nuestra aplicación para que funcione correctamente en el entorno de <strong>Render</strong>. Para ello, debemos realizar los siguientes</p>
+<ol>
+<li>
+<p><strong>1</strong>. Crear una rama <code>Render</code> esta rama será la que utilicemos para accionar el desplegue automático.</p>
+</li>
+<li>
+<p><strong>2</strong>. Configurar el archivo <code>.env</code> de Laravel.</p>
+</li>
+<li>
+<p><strong>3</strong>. Crear el archivo <code>Dockerfile</code> para la aplicación.</p>
+</li>
+<li>
+<p><strong>4</strong>. Crear el archivo <code>src/public/</code> <code>migrate.php</code> para ejecutar las migraciones de la base de datos.</p>
+</li>
+</ol>
+<p>Para ello y para no mezclar el código de la aplicación con el código de <code>Render</code> vamos a crear una carpeta llamada <code>/</code></p>
+<p><code>Render</code> en la raíz de nuestro proyecto. En esta carpeta vamos a crear los archivos necesarios para el despliegue en <strong>Render</strong>.</p>
+<h3 id="crear-la-rama-render">Crear la rama Render<a class="headerlink" href="#crear-la-rama-render" title="Permanent link">&para;</a></h3>
+<p>El nombre de <code>Render</code> es completamenta aleatorio. Simplemente es tener una rama sobre la que guardar los cambios necesarios y activar el despliegue automático. Por ejemplo, en nuesta aplicación podemos trabajar con una rama <code>develop</code> y una rama <code>main</code>. Durante el desarrlllo y pruebebas de aplicaciones podemos trabajar en la rama <code>develop</code> y cuando tengamos una versión estable, la pasamos a <code>main</code>.</p>
+<p>Cuando queramos desplegar la aplicación, simplemente hacemos un <code>merge</code> de <code>develop</code> a <code>Render</code> y <strong>Render</strong> se encargará de desplegar la aplicación automáticamente.</p>
+<p>Yo voy a trabajar directamente en la rama <code>Render</code>. El manejo de ramas es algo que dejo para cursos más específicos sobre control de versiones y Git.</p>
+<p>Lo primero que tenemos que hacer antes de crear la rama es tener nustro proyecto limpio, es decir, hemos hecho <code>commit</code> de todos los cambios y no tenemos cambios pendientes.</p>
+<p>Crear la rama <code>Render</code> es sencillo, simplemente ejecutamos el siguiente comando en la terminal:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>git checkout -b Render
+</code></pre></div>
+<p>Esto creará una nueva rama llamada <code>Render</code> y nos cambiará a esa rama. A partir de ahora, todos los cambios que realicemos se guardarán en esta rama. Y si estamos en local y queremos subir los cambios a GitHub, simplemente hacemos un <code>push</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>git push -u origin
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Render
+</code></pre></div>
+<p>Para los que manejan vsCode si tenemos nuestro editor conectado podemos manejar las ramas y las actualizaiones desde el propio editor. En la parte inferior izquierda de la pantalla, podemos ver el nombre de la rama actual y al hacer clic en ella, podemos cambiar de rama o crear una nueva. Pero yo voy a dar las explicaiones utilizano la terminal.</p>
+<p>Ahora creamos la carpeta <code>Render</code> en la raíz de nuestro proyecto:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>mkdir Render
+</code></pre></div>
+<p>Y dentro de esta carpeta vamos a crear los archivos necesarios para el despliegue en <strong>Render</strong>.</p>
+<h3 id="configuracion-del-archivoenv">Configuración del archivo.env<a class="headerlink" href="#configuracion-del-archivoenv" title="Permanent link">&para;</a></h3>
+<p>Como ya sabremos el fichero <code>.env</code> es el archivo de configuración de nuestra aplicación Laravel. En este archivo vamos a configurar la conexión a la base de datos que hemos creado en <strong>Render</strong>. Pero si tenemos bien configurado nuestro <code>.gitignore</code>, este archivo no se subirá al repositorio. Por tanto, vamos a crear un archivo <code>.env.**Render**</code> dentro de la carpeta <code>Render</code> que será el que subamos al repositorio y que <strong>Render</strong> utilizará para configurar la aplicación. De esta manera también podemos tener un <code>.env</code> local para nuestro desarrollo y un <code>.env.**Render**</code> para el despliegue en <strong>Render</strong>.</p>
+<p>Creamos el archivo <code>.env.**Render**</code> dentro de la carpeta <code>Render</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>touch Render/.env.Render
+</code></pre></div>
+<p>Y editamos el archivo para configurar la conexión a la base de datos. Vamos a utilizar las credenciales que nos ha proporcionado <strong>Render</strong> al crear la base de datos. El contenido del archivo <code>.env.Render</code> será el siguiente:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>APP_NAME=Laravel
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>APP_ENV=production
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>APP_KEY=base64:F3DJSvM2e
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>APP_DEBUG=false
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>APP_URL=https://phpdeplo
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>LOG_CHANNEL=stack
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>LOG_LEVEL=error
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>DB_CONNECTION=pgsql
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>DB_HOST=dpg-d0qdmsjuibrs
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>DB_PORT=5432
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>DB_DATABASE=laravel_6idw
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>DB_USERNAME=alumno
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>DB_PASSWORD=p3DmIdbZEBtm
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>BROADCAST_DRIVER=log
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>CACHE_DRIVER=file
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>QUEUE_CONNECTION=sync
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>SESSION_DRIVER=file
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>SESSION_LIFETIME=120
+<a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>
+<a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a>MAIL_MAILER=smtp
+<a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a>MAIL_HOST=smtp.mailtrap.
+<a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a>MAIL_PORT=2525
+<a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a>MAIL_USERNAME=null
+<a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a>MAIL_PASSWORD=null
+<a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a>MAIL_ENCRYPTION=null
+<a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a>MAIL_FROM_ADDRESS=hello@
+<a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a>MAIL_FROM_NAME="${APP_NA
+</code></pre></div>
+<p>Los valores utilizados en el archivo <code>.env.Render</code> son los que nos ha proporcionado <strong>Render</strong> al crear la base de datos. Cada alumno debe utilizar sus propias credenciales. Asegúrate de sustituir los valores por los que te ha proporcionado <strong>Render</strong> al crear tu base de datos.</p>
+<p>Como vimos ya en el tema anterior, sería recomendabla modificar el acrivo anterior y utilizar <code>secretos</code> para las credenciales de la base de datos. Pero para simplificar el proceso, vamos a utilizar el archivo <code>.env.Render</code> directamente. En puntos anteriores ya hemos visto como utilizar secretos en GitHub Actions.</p>
+<h3 id="creacion-del-archivo">Creación del archivo<a class="headerlink" href="#creacion-del-archivo" title="Permanent link">&para;</a></h3>
+<p><code>Dockerfile</code></p>
+<p><strong>Render</strong> utiliza Docker para desplegar aplicaciones. Por tanto, necesitamos crear un archivo <code>Dockerfile</code> que contenga las instrucciones para construir la imagen de nuestra aplicación Laravel. Este archivo para que no tenga conflictos con otros ficheros de nuestra aplicación, lo vamos a crear también dentro de la carpeta <code>Render</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>touch Render/Dockerfile
+</code></pre></div>
+<p>Creamos el archivo <code>Dockerfile</code> dentro de la carpeta <code>Render</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>touch Render/Dockerfile
+</code></pre></div>
+<p>Y editamos el archivo para configurar la imagen de Docker. El contenido del archivo <code>Dockerfile</code> será el siguiente:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>FROM php:8.4-fpm
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a># Instalar depend
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>necesarias para M
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>etc.
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>RUN apt-get updat
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>get install -y \
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>git \
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>unzip \
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>curl \
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>libzip-dev \
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>libpng-dev \
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>libxml2-dev \
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>libonig-dev \
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>libssl-dev \
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a>libpq-dev \
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>libmongoc-1.0
+<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a>libjemalloc2
+<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a>&amp;&amp; rm -rf /va
+<a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a>apt/lists/*
+<a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a>
+<a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a># Instalar extens
+<a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a>necesarias
+<a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a>RUN docker-php-ex
+<a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a>pdo pdo_mysql pdo
+<a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a>xml ctype zip
+<a id="__codelineno-14-27" name="__codelineno-14-27" href="#__codelineno-14-27"></a>
+<a id="__codelineno-14-28" name="__codelineno-14-28" href="#__codelineno-14-28"></a># Instalar MongoD
+<a id="__codelineno-14-29" name="__codelineno-14-29" href="#__codelineno-14-29"></a>extension
+<a id="__codelineno-14-30" name="__codelineno-14-30" href="#__codelineno-14-30"></a># RUN pecl instal
+<a id="__codelineno-14-31" name="__codelineno-14-31" href="#__codelineno-14-31"></a>&amp;&amp; docker-php-ext
+<a id="__codelineno-14-32" name="__codelineno-14-32" href="#__codelineno-14-32"></a>mongodb
+<a id="__codelineno-14-33" name="__codelineno-14-33" href="#__codelineno-14-33"></a>
+<a id="__codelineno-14-34" name="__codelineno-14-34" href="#__codelineno-14-34"></a># Instalar Xdebug
+<a id="__codelineno-14-35" name="__codelineno-14-35" href="#__codelineno-14-35"></a>RUN pecl install
+<a id="__codelineno-14-36" name="__codelineno-14-36" href="#__codelineno-14-36"></a>docker-php-ext-en
+<a id="__codelineno-14-37" name="__codelineno-14-37" href="#__codelineno-14-37"></a>xdebug
+<a id="__codelineno-14-38" name="__codelineno-14-38" href="#__codelineno-14-38"></a>
+<a id="__codelineno-14-39" name="__codelineno-14-39" href="#__codelineno-14-39"></a># Instalar Compos
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>p
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>RUN curl -sS http
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>getcomposer.org/i
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>| php -- --instal
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>usr/local/bin --
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>filename=compose
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a># Establecer dire
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>trabajo
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>WORKDIR /var/www/
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a># Copiar el códig
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>desde /src del re
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>contenedor
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>COPY src/ /var/ww
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a># Copiar.env.**R
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>COPY
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>**Render**/.env.*
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>/var/www/html/.en
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>
+<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a># Ejecutar compos
+<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a>install sin depen
+<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a>de desarrollo
+<a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a>RUN composer inst
+<a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a>optimize-autoload
+<a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a>dev
+<a id="__codelineno-15-28" name="__codelineno-15-28" href="#__codelineno-15-28"></a>
+<a id="__codelineno-15-29" name="__codelineno-15-29" href="#__codelineno-15-29"></a># Exponer puerto
+<a id="__codelineno-15-30" name="__codelineno-15-30" href="#__codelineno-15-30"></a>el que uses)
+<a id="__codelineno-15-31" name="__codelineno-15-31" href="#__codelineno-15-31"></a>EXPOSE 1000
+<a id="__codelineno-15-32" name="__codelineno-15-32" href="#__codelineno-15-32"></a>
+<a id="__codelineno-15-33" name="__codelineno-15-33" href="#__codelineno-15-33"></a># Comando para a
+<a id="__codelineno-15-34" name="__codelineno-15-34" href="#__codelineno-15-34"></a>Laravel con servi
+<a id="__codelineno-15-35" name="__codelineno-15-35" href="#__codelineno-15-35"></a>embebido PHP
+<a id="__codelineno-15-36" name="__codelineno-15-36" href="#__codelineno-15-36"></a>CMD ["php", "arti
+<a id="__codelineno-15-37" name="__codelineno-15-37" href="#__codelineno-15-37"></a>"serve", "--host=
+<a id="__codelineno-15-38" name="__codelineno-15-38" href="#__codelineno-15-38"></a>"--port=1000"]
+</code></pre></div>
+<p>Analicemos paso a paso el contenido del <code>Dockerfile</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>FROM php:8.4-fpm
+</code></pre></div>
+<p>Esta línea indica que estamos utilizando la imagen base de PHP 8.4 con FPM FastCGI Process Manager). Esta es una imagen oficial dePHP que incluye las extensiones necesarias para ejecutar aplicaciones Laravel.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>RUN apt-get update &amp;&amp;
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>apt-get install -y \
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>git \
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>unzip \
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>curl \
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>libzip-dev \
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>libpng-dev \
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>libxml2-dev \
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>libonig-dev \
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>libssl-dev \
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>libpq-dev \
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>libmongoc-1.0-0 \
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>libjemalloc2 \
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>&amp;&amp; rm -rf /var/lib/
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>apt/lists/*
+</code></pre></div>
+<p>Esta sección instala las dependencias necesarias para nuestra aplicación Laravel. Incluye herramientas como <code>git</code>, <code>unzip</code>, <code>curl</code> y las bibliotecas necesarias para las extensiones de PHP que vamos a utilizar. También limpia la caché de apt para reducir el tamaño de la imagen. En este caso ya hemos añadido las dependencias necesarias para <code>MongoDB</code> y <code>PostgreSQL</code>. Si en nuestro proyecto local utiliamos más dependencias, las debemos añadir aquí. Recordad que este Docker debe ser igual al que tenemos en nuestro proyecto local, para que no tengamos problemas de dependencias al desplegar la aplicación.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>RUN docker-php-ext-
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>install pdo pdo_mysql
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>pdo_pgsql xml ctype zip
+</code></pre></div>
+<p>En este caso he mantenido las extensiones para mysql y pgsql. Seguramente ya que en <code>Render</code> vamos a utilizar <code>PostgreSQL</code>, podemos eliminar la extensión <code>pdo_mysql</code> si no la vamos a utilizar en el proyecto. Pero si la tenemos en nuestro proyecto local, es mejor dejarla para evitar problemas de dependencias.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a># Instalar MongoDB
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>extension
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a># RUN pecl install
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>mongodb &amp;&amp; docker-php-
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>ext-enable mongodb
+</code></pre></div>
+<p>Esta línea está comentada, pero si en nuestro proyecto utilizamos MongoDB, debemos descomentarla para instalar la extensión de MongoDB. Si no la utilizamos, podemos eliminar esta línea.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a># Instalar Xdebug
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a># RUN pecl install
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>xdebug &amp;&amp; docker-php-
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>ext-enable xdebug
+</code></pre></div>
+<p>Esta línea también está comentada, no es normal que utilicemos <code>Xdebug</code> en producción.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a># Instalar Composer
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>RUN curl -sS https://
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>getcomposer.org/
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>installer | php -- --
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>install-dir=/usr/local/
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>bin --filename=composer
+</code></pre></div>
+<p>Esta línea instala Composer, el gestor de dependencias de PHP. Esto nos permitirá instalar las dependencias de nuestra aplicación Laravel. Recordad que la carpeta <code>vendor</code> no se sube al repositorio, por lo que debemos instalar las dependencias en el contenedor.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a># Establecer directorio
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>de trabajo
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>WORKDIR /var/www/html
+</code></pre></div>
+<p>Esta línea establece el directorio de trabajo dentro del contenedor. Todas las siguientes instrucciones se ejecutarán en este directorio.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a># Copiar el código
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>Laravel desde /src del
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>repo al contenedor
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>COPY src/ /var/www/html/
+</code></pre></div>
+<p>Esta línea copia el código de nuestra aplicación Laravel desde la carpeta <code>src</code> del repositorio al directorio de trabajo del contenedor. Asegúrate de que tu código Laravel está en la carpeta <code>src</code> del repositorio. 'src\' es la carpeta donde debemos tener nuestro proyecto de Laravel. Si hemos cambiado el nombre de la carpeta, debemos cambiar esta línea para que apunte a la carpeta correcta.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a># Copiar.env.Render
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>COPY Render/.env.Render
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>/var/www/html/.env
+</code></pre></div>
+<p>Esta línea copia el archivo <code>.env.Render</code> que hemos creado anteriormente al directorio de trabajo del contenedor y lo renombra a <code>.env</code>. Esto es necesario para que Laravel pueda leer la configuración de la base de datos y otras variables de entorno.</p>
+<p>Estamos pasando datos con información sensible al contenedor. Esto normalmente no se hace así, se deben crear unas variables de entorno en el servidor y no pasar los datos directamente al contenedor. Pero de momento elegimos la opción más simple.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a># Ejecutar composer
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>install sin dependencias
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>de desarrollo
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>RUN composer install --
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>optimize-autoloader --
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>no-dev
+</code></pre></div>
+<p>Esta línea ejecuta Composer para instalar las dependencias de nuestra aplicación Laravel. Utiliza la opción <code>--optimize-</code> <code>autoloader</code> para optimizar el autoloading y <code>--no-dev</code> para no instalar las dependencias de desarrollo. Esto es importante para reducir el tamaño de la imagen y mejorar el rendimiento en producción.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a># Exponer puerto 1000 (o
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>el que uses)
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>EXPOSE 1000
+</code></pre></div>
+<p>Esta línea expone el puerto 1000 del contenedor. Este es el puerto en el que Laravel servirá la aplicación. Asegúrate de que este puerto está configurado correctamente en tu aplicación Laravel.</p>
+<p>1000 es el puerto que pide <code>Render</code> para exponer la aplicación, no está elegido al azar. Para modificar el puerto debes mirar la documentación de <strong>Render</strong> y ver si se puede modificar.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a># Comando para arrancar
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>Laravel con servidor
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>embebido PHP
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>CMD ["php", "artisan",
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>"serve", "--
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>host=0.0.0.0", "--
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>port=1000"]
+</code></pre></div>
+<p>Esta línea define el comando que se ejecutará cuando se inicie el contenedor. En este caso, estamos utilizando el servidor embebido de Laravel para servir la aplicación en el puerto 1000. Esto es suficiente para desplegar una aplicación Laravel en <strong>Render</strong>.</p>
+<h3 id="creacion-del-archivo_1">Creación del archivo<a class="headerlink" href="#creacion-del-archivo_1" title="Permanent link">&para;</a></h3>
+<p><code>migrate.php</code></p>
+<p>Nuestro servidor, como nos pasará en la mayoría de los servidores gratuitos, no permite ejecutar comandos de Artisan directamente. Por tanto, debemos crear un archivo PHP que se encargue de ejecutar las migraciones de la base de datos. Este archivo lo vamos a llamar <code>migrate.php</code> y lo vamos a crear dentro de la carpeta <code>src/public/</code>. Es importante que esté en esta carpeta para que podamos acceder desde el navegador y ejecutar las migraciones.</p>
+<p>De momento este fichero solo nos permite ejecutar las migraciones de la base de datos, hacer un <code>fresh</code> o un <code>reset</code>. Si fuera necesario ampliarlo, por ejemplo para ejecutar <code>db:seed</code> o <code>queue:work</code>, deberíamos añadir las opciones necesarias en el fichero.</p>
+<p>Creamos el archivo <code>migrate.php</code> dentro de la carpeta <code>src/public/</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>&lt;?php
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>ini_set('display_
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>ini_set('display_
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>error_reporting(
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>
+<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>use Illuminate\Fo
+<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>use Illuminate\Co
+<a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>ArtisanConsole;
+<a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a>
+<a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a>$basePath = __DI
+<a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a>
+<a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a>require $basePath
+<a id="__codelineno-28-13" name="__codelineno-28-13" href="#__codelineno-28-13"></a>
+<a id="__codelineno-28-14" name="__codelineno-28-14" href="#__codelineno-28-14"></a>// Definir la cla
+<a id="__codelineno-28-15" name="__codelineno-28-15" href="#__codelineno-28-15"></a>define('SECRET_K
+<a id="__codelineno-28-16" name="__codelineno-28-16" href="#__codelineno-28-16"></a>
+<a id="__codelineno-28-17" name="__codelineno-28-17" href="#__codelineno-28-17"></a>// Validar key y
+<a id="__codelineno-28-18" name="__codelineno-28-18" href="#__codelineno-28-18"></a>$key = $_GET['key
+<a id="__codelineno-28-19" name="__codelineno-28-19" href="#__codelineno-28-19"></a>$action = $_GET[
+<a id="__codelineno-28-20" name="__codelineno-28-20" href="#__codelineno-28-20"></a>
+<a id="__codelineno-28-21" name="__codelineno-28-21" href="#__codelineno-28-21"></a>if ($key !== SECR
+<a id="__codelineno-28-22" name="__codelineno-28-22" href="#__codelineno-28-22"></a>http_response
+<a id="__codelineno-28-23" name="__codelineno-28-23" href="#__codelineno-28-23"></a>exit('Acceso
+<a id="__codelineno-28-24" name="__codelineno-28-24" href="#__codelineno-28-24"></a>}
+<a id="__codelineno-28-25" name="__codelineno-28-25" href="#__codelineno-28-25"></a>
+<a id="__codelineno-28-26" name="__codelineno-28-26" href="#__codelineno-28-26"></a>$allowedActions =
+<a id="__codelineno-28-27" name="__codelineno-28-27" href="#__codelineno-28-27"></a>
+<a id="__codelineno-28-28" name="__codelineno-28-28" href="#__codelineno-28-28"></a>if (!in_array($ac
+<a id="__codelineno-28-29" name="__codelineno-28-29" href="#__codelineno-28-29"></a>http_response
+<a id="__codelineno-28-30" name="__codelineno-28-30" href="#__codelineno-28-30"></a>exit('Acción
+<a id="__codelineno-28-31" name="__codelineno-28-31" href="#__codelineno-28-31"></a>}
+<a id="__codelineno-28-32" name="__codelineno-28-32" href="#__codelineno-28-32"></a>
+<a id="__codelineno-28-33" name="__codelineno-28-33" href="#__codelineno-28-33"></a>// Bootstrap de l
+<a id="__codelineno-28-34" name="__codelineno-28-34" href="#__codelineno-28-34"></a>$app = require_on
+<a id="__codelineno-28-35" name="__codelineno-28-35" href="#__codelineno-28-35"></a>app.php';
+<a id="__codelineno-28-36" name="__codelineno-28-36" href="#__codelineno-28-36"></a>
+<a id="__codelineno-28-37" name="__codelineno-28-37" href="#__codelineno-28-37"></a>$kernel = $app-
+<a id="__codelineno-28-38" name="__codelineno-28-38" href="#__codelineno-28-38"></a>&gt;make(Illuminate\
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>// Capturar la sa
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>ob_start();
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>try {
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>switch ($acti
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>case 'mig
+<a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>$exit
+<a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>['--force' =&gt; tru
+<a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>brea
+<a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a>case 'res
+<a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a>$exit
+<a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a>&gt;call('migrate:re
+<a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a>brea
+<a id="__codelineno-29-14" name="__codelineno-29-14" href="#__codelineno-29-14"></a>case 'fre
+<a id="__codelineno-29-15" name="__codelineno-29-15" href="#__codelineno-29-15"></a>$exit
+<a id="__codelineno-29-16" name="__codelineno-29-16" href="#__codelineno-29-16"></a>&gt;call('migrate:f
+<a id="__codelineno-29-17" name="__codelineno-29-17" href="#__codelineno-29-17"></a>brea
+<a id="__codelineno-29-18" name="__codelineno-29-18" href="#__codelineno-29-18"></a>}
+<a id="__codelineno-29-19" name="__codelineno-29-19" href="#__codelineno-29-19"></a>} catch (Exceptio
+<a id="__codelineno-29-20" name="__codelineno-29-20" href="#__codelineno-29-20"></a>ob_end_clean
+<a id="__codelineno-29-21" name="__codelineno-29-21" href="#__codelineno-29-21"></a>http_response
+<a id="__codelineno-29-22" name="__codelineno-29-22" href="#__codelineno-29-22"></a>exit("Error e
+<a id="__codelineno-29-23" name="__codelineno-29-23" href="#__codelineno-29-23"></a>$e-&gt;getMessage()
+<a id="__codelineno-29-24" name="__codelineno-29-24" href="#__codelineno-29-24"></a>}
+<a id="__codelineno-29-25" name="__codelineno-29-25" href="#__codelineno-29-25"></a>
+<a id="__codelineno-29-26" name="__codelineno-29-26" href="#__codelineno-29-26"></a>$output = ob_get_
+<a id="__codelineno-29-27" name="__codelineno-29-27" href="#__codelineno-29-27"></a>
+<a id="__codelineno-29-28" name="__codelineno-29-28" href="#__codelineno-29-28"></a>// Enviar resulta
+<a id="__codelineno-29-29" name="__codelineno-29-29" href="#__codelineno-29-29"></a>header('Content-T
+<a id="__codelineno-29-30" name="__codelineno-29-30" href="#__codelineno-29-30"></a>echo "Ejecutado c
+<a id="__codelineno-29-31" name="__codelineno-29-31" href="#__codelineno-29-31"></a>echo $output;
+</code></pre></div>
+<p>Le hemos añadido una clave secreta para evitar que cualquier persona pueda ejecutar las migraciones. Para ejecutar las migraciones, debemos acceder a la URL</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>https://phpdeploytest-
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>sh8f.on**Render**.com/
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>migrate.php?
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>key=123456&amp;action=migrate
+</code></pre></div>
+<p>Si queremos hacer un <code>fresh</code> o un <code>reset</code>, simplemente cambiamos el valor de <code>action</code> a <code>fresh</code> o <code>reset</code>.</p>
+<h2 id="creacion-del-servicio-en">Creación del servicio en<a class="headerlink" href="#creacion-del-servicio-en" title="Permanent link">&para;</a></h2>
+<p>Ahora que tenemos nuestra aplicación configurada y lista para desplegar, vamos a crear el servicio en <strong>Render</strong>. Para ello, sigue estos pasos:</p>
+<p>Primero en el panel de control de <strong>Render</strong>, haz clic en el botón "New" Nuevo y selecciona "Web Service" Servicio web).</p>
+<p>En la siguiente página me debe dejar seleccionar el repositorio de GitHub donde tengo mi proyecto. En este caso, selecciono el repositorio <code>phpDeployTest</code> que he creado anteriormente. Si no ves tu repositorio, asegúrate de que has autorizado a <strong>Render</strong> para acceder a tu cuenta de GitHub y que el repositorio es público o tienes acceso a él.</p>
+<p>Una vez seleccionado el repositorio, <strong>Render</strong> te pedirá que configures el servicio. Aquí debes completar los siguientes campos:</p>
+<p>Name Nombre del <code>phpDep</code> servicio</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>loyTes
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>t
+</code></pre></div>
+<p>Language Lenguaje de <code>Docker</code> programación PHP no está)</p>
+<p>Branch Rama del <code>Render</code> repositorio que se utilizará para el despliegue</p>
+<p>Region Región donde <code>Europe</code> se desplegará</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>(Frank
+</code></pre></div>
+<p>el servicio</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>furt)
+</code></pre></div>
+<p>Root Directorio raíz <code>.</code> Directory del servicio</p>
+<p>Dockerfile Ruta al archivo <code>./</code> Path Dockerfile</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>**Rend
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>er**/
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>Docker
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>file
+</code></pre></div>
+<p>Intace type Tipo de <code>Free</code> instancia</p>
+<p>En la parte inferior de la página, encontrarás una sección llamada "Environment Variables" Variables de entorno). Aquí podemos añadir las variables de entorno, incluso nos permite subirlas desde un archico <code>.env</code>. En nuestro caso, vamos a subir el archivo <code>.env.**Render**</code> que hemos creado anteriormente. Dejamos esta opción vacía y para pruebas posteriores ya que es más segura que tener nuestro archivo con datos sensibles en el repositorio.</p>
+<p>Una vez completados todos los campos, haz clic en el botón "Create Web Service" Crear servicio web). <strong>Render</strong> comenzará a construir la imagen de Docker y desplegará tu aplicación.</p>
+<p>Nos pueden aparecer otros campos como:</p>
+<p>Docker Comando `` Command para construir la imagen de Docker</p>
+<p>Pre deploy Comando que `` Command se ejecutará antes de desplegar la aplicación</p>
+<p>Auto Activar el <code>on</code> deploy despliegue</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>Commit
+</code></pre></div>
+<p>automático al hacer push a la rama seleccionada Deploy URL del <code>https:</code> hook webhook para</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>//
+</code></pre></div>
+<p>el despliegue</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>api.**
+</code></pre></div>
+<p>automático</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>Render
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>**.com
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>/
+<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>deploy
+<a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>/srv-
+<a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>xxxxxx
+</code></pre></div>
+<p>Principalmente no hay que tocar nada de esto. <strong>Render</strong> se encargará de construir la imagen de Docker y desplegar tu aplicación automáticamente. Como en la últia línea de <code>Dockerfile</code> hemos indicado que se ejecute el comando <code>php</code> <code>artisan serve</code>, <strong>Render</strong> iniciará el servidor embebido de Laravel en el puerto</p>
+<ol>
+<li></li>
+</ol>
+<h2 id="puesta-en-marcha-del-despliegue">* Puesta en marcha del despliegue<a class="headerlink" href="#puesta-en-marcha-del-despliegue" title="Permanent link">&para;</a></h2>
+<p>Tenemos dos opcioenes para iniciar el despliegue de nuestra aplicación:</p>
+<ol>
+<li>
+<p><strong>1</strong>. Despliegue manual: Para ello, en el panel de control de <strong>Render</strong>, haz clic en el botón "Manual Deploy" Despliegue manual) y selecciona la rama <code>Render</code>. <strong>Render</strong> comenzará a construir la imagen de Docker y desplegará tu aplicación.</p>
+</li>
+<li>
+<p><strong>2</strong>. Despliegue automático: Si has activado el despliegue automático, <strong>Render</strong> desplegará tu aplicación automáticamente cada vez que hagas un push a la rama <code>Render</code>. Para ello, simplemente haz un commit y push a la rama <code>Render</code> y <strong>Render</strong> se encargará del resto.</p>
+</li>
+</ol>
+<p>El primer despliegue puede tardar un poco más de lo habitual, ya que <strong>Render</strong> debe construir la imagen de Docker y desplegar tu aplicación por primera vez. Los siguientes despliegues serán más rápidos, ya que <strong>Render</strong> utilizará la caché de Docker.</p>
+<p>Durante el despliegue, <strong>Render</strong> mostrará el progreso en tiempo real en el panel de control. Una vez que el despliegue se haya completado, podrás acceder a tu aplicación Laravel en la URL proporcionada por <strong>Render</strong>.</p>
+<p>En la imagen anterior podemos ver el progreso del despliegue de nuestra aplicación. Una vez que el despliegue se haya completado, <strong>Render</strong> nos proporcionará una URL para acceder a nuestra aplicación.</p>
+<p>Cuando el despliegue termine (podemos seguirlo en los logs), <strong>Render</strong> nos mostrará la URL de nuestra aplicación. En mi caso, la URL es:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>https://phpdeploytest-
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>sh8f.on**Render**.com
+</code></pre></div>
+<p>Esta es la imagen del proyecto inicial de Laravel que hemos desplegado en <strong>Render</strong>. Si accedemos a la URL, veremos la página de bienvenida de Laravel.</p>
+<h2 id="primera-migracion">Primera migración<a class="headerlink" href="#primera-migracion" title="Permanent link">&para;</a></h2>
+<p>Una vez que hemos desplegado nuestra aplicación, es importante realizar la primera migración de la base de datos para crear las tablas necesarias. Para ello, debemos acceder al archivo <code>migrate.php</code> que hemos creado anteriormente.</p>
+<p>Para ejecutar las migraciones, simplemente accedemos a la URL</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>https://phpdeploytest-
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>sh8f.onRender.com/
+<a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>migrate.php?
+<a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>key=123456&amp;action=migrate
+</code></pre></div>
+<p>Recuerda que debes sustituir <code>123456</code> por la clave secreta que has definido en el archivo <code>migrate.php</code>. Si no lo haces, obtendrás un error de acceso denegado.</p>
+<p>Si todo ha ido bien, deberías ver un mensaje indicando que se ha ejecutado el comando <code>migrate</code> y por tanto las tablas necesarias se han creado en la base de datos. Si hay algún error, se mostrará un mensaje de error con los detalles del problema.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      IES JUAN DE GARAY - 2º DWES · Curso original de Beteta adaptado por Eva María Gómez Abad
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,3260 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Apuntes de Desarrollo Web en Entorno Servidor">
+      
+      
+        <meta name="author" content="Eva María Gómez Abad">
+      
+      
+        <link rel="canonical" href="https://evaprofe.github.io/CURSO_DWES_2627/tema-10-despliegue/10-1-introduccion-al-despliegue-de-aplicaciones-web-introduccion-a-laravel/">
+      
+      
+        <link rel="prev" href="../../tema-09-seeders-factories-faker/actividad-del-tema-9-introduccion-a-laravel/">
+      
+      
+        <link rel="next" href="../10-2-aplicacion-simple-con-estructura-precaria-php-introduccion-a-laravel/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>10.1 Introducción al Despliegue - Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#introduccion-al-despliegue-de-aplicaciones-web" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-header__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              10.1 Introducción al Despliegue
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Activar modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Activar modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-nav__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introducción al Desarrollo Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1. Introducción al Desarrollo Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/introduccion-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1 Desarrollo Web en el Servidor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2 Patrón Modelo-Vista-Controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.3 Protocolo HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 1 · MVC y HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Frameworks y Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2. Frameworks y Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1 Introducción a los Frameworks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-2-configuracion-del-entorno-de-trabajo-con-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.2 Entorno de Trabajo con Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-3-instalacion-y-puesta-en-marcha-de-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.3 Instalación y Puesta en Marcha
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-4-estructura-y-elementos-de-un-proyecto-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.4 Estructura de un Proyecto Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-5-actividad-del-tema-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 2 · Introducción a Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/anexos-tailwind-css/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anexo · Tailwind CSS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/instrucciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía del Entorno
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tema-02-frameworks-laravel/proyecto-github/docs/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🚀 Proyecto Guiado · Entorno Laravel
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🚀 Proyecto Guiado · Entorno Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/requisitos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso1-preparacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 1 · Preparación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso7-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 7 · Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso9-mysql-cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 9 · MySQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso10-xdebug/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 10 · Xdebug
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/instrucciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instrucciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/conclusion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conclusión
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. Vistas con Blade
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-03-vistas-blade/3-1-vistas-con-blade-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Creación de Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-03-vistas-blade/3-2-actividad-del-tema-3-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 3 · Agencia de Viajes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4. Migraciones y Modelos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-04-migraciones-modelos/4-1-migraciones-y-modelos-con-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 Migraciones y Modelos en Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-04-migraciones-modelos/4-2-actividad-del-tema-4-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 4 · Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Controladores de Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5. Controladores de Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/5-1-controladores-de-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Controladores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/unidad-5-2-relaciones-uno-a-muchos-en-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.2 Relaciones Uno a Muchos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/actividad-del-tema-5-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 5 · Controladores y Rutas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Desarrollo CRUD Completo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. Desarrollo CRUD Completo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-06-crud-completo/6-1-desarrollo-de-un-crud-completo-en-laravel-parte-1-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1 Desarrollo de un CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-06-crud-completo/6-2-actividad-del-tema-6-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 6 · CRUD de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-07-validaciones-rutas-mensajes/7-1-validaciones-rutas-resource-y-mensajes-del-sistema-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.1 Validaciones y Rutas Resource
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-07-validaciones-rutas-mensajes/actividad-del-tema-7-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 7 · Validaciones del CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. API REST
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    8. API REST
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-1-apis-restful-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.1 Creación de API REST
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-2-apis-con-sanctum-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.2 API con Sanctum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-3-actividad-del-tema-8-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 8 · API de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Seeders, Factories y Faker
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    9. Seeders, Factories y Faker
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-09-seeders-factories-faker/9-1-creacion-de-datos-iniciales-y-de-prueba-seeders-factories-y-faker-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9.1 Datos Iniciales y de Prueba
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-09-seeders-factories-faker/actividad-del-tema-9-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 9 · Generación de Datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.1 Introducción al Despliegue
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.1 Introducción al Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#que-es-el-despliegue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué es el despliegue?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tipos-de-despliegue-manual-automatico-y-continuo-cicd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipos de despliegue: manual, automático y continuo CI/CD
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tipos de despliegue: manual, automático y continuo CI/CD">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#despliegue-manual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Despliegue manual
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#despliegue-automatico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Despliegue automático
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#despliegue-continuo-cicd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Despliegue continuo CI/CD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#en-resumen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        En resumen
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entornos-desarrollo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entornos: desarrollo,
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#staging-produccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        staging, producción
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requisitos-del-servidor-para-desplegar-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requisitos del servidor para desplegar Laravel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Requisitos del servidor para desplegar Laravel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#servidores-compartidos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Servidores compartidos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vps-virtual-private-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VPS Virtual Private Server)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paas-platform-as-a-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PaaS Platform as a Service)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requisitos-y-particularidades-del-despliegue-en-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requisitos y particularidades del despliegue en Laravel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gestion-de-dependencias-y-configuracion-env" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gestión de dependencias y configuración (.env)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pruebas-antes-y-despues-del-despliegue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pruebas antes y después del despliegue
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estrategias-para-mantener-la-estructura-de-laravel-en-entornos-restrictivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estrategias para mantener la estructura de Laravel en entornos restrictivos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparacion-del-proyecto-para-despliegue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preparación del proyecto para despliegue
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#herramientas-utiles-para-el-despliegue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Herramientas útiles para el despliegue
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-2-aplicacion-simple-con-estructura-precaria-php-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.2 Aplicación PHP Sencilla
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-3-aplicacion-completa-con-estructura-de-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.3 Aplicación Laravel Completa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-4-despliegue-en-paas-render-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.4 Despliegue en Render
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-5-actividad-del-tema-10-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 10 · Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#que-es-el-despliegue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué es el despliegue?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tipos-de-despliegue-manual-automatico-y-continuo-cicd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipos de despliegue: manual, automático y continuo CI/CD
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tipos de despliegue: manual, automático y continuo CI/CD">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#despliegue-manual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Despliegue manual
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#despliegue-automatico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Despliegue automático
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#despliegue-continuo-cicd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Despliegue continuo CI/CD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#en-resumen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        En resumen
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entornos-desarrollo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entornos: desarrollo,
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#staging-produccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        staging, producción
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requisitos-del-servidor-para-desplegar-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requisitos del servidor para desplegar Laravel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Requisitos del servidor para desplegar Laravel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#servidores-compartidos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Servidores compartidos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vps-virtual-private-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VPS Virtual Private Server)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paas-platform-as-a-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PaaS Platform as a Service)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requisitos-y-particularidades-del-despliegue-en-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requisitos y particularidades del despliegue en Laravel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gestion-de-dependencias-y-configuracion-env" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gestión de dependencias y configuración (.env)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pruebas-antes-y-despues-del-despliegue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pruebas antes y después del despliegue
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estrategias-para-mantener-la-estructura-de-laravel-en-entornos-restrictivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estrategias para mantener la estructura de Laravel en entornos restrictivos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparacion-del-proyecto-para-despliegue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preparación del proyecto para despliegue
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#herramientas-utiles-para-el-despliegue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Herramientas útiles para el despliegue
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="introduccion-al-despliegue-de-aplicaciones-web">Introducción al despliegue de aplicaciones web<a class="headerlink" href="#introduccion-al-despliegue-de-aplicaciones-web" title="Permanent link">&para;</a></h1>
+<h2 id="que-es-el-despliegue">¿Qué es el despliegue?<a class="headerlink" href="#que-es-el-despliegue" title="Permanent link">&para;</a></h2>
+<p>El <strong>despliegue</strong> de una aplicación web es el proceso mediante el cual se pone un sistema en funcionamiento para que esté disponible a los usuarios. Normalmente, este proceso implica mover una aplicación desde un entorno de desarrollo (local) a un servidor accesible desde Internet.</p>
+<p>Este proceso puede involucrar:</p>
+<ul>
+<li>
+<p>Transferencia de archivos.</p>
+</li>
+<li>
+<p>Configuración de bases de datos.</p>
+</li>
+<li>
+<p>Establecimiento de permisos.</p>
+</li>
+<li>
+<p>Configuración del servidor web.</p>
+</li>
+</ul>
+<h2 id="tipos-de-despliegue-manual-automatico-y-continuo-cicd">Tipos de despliegue: manual, automático y continuo CI/CD<a class="headerlink" href="#tipos-de-despliegue-manual-automatico-y-continuo-cicd" title="Permanent link">&para;</a></h2>
+<p>El tipo de despliegue depende principalmente de los recursos disponibles y la accesibilidad del servidor. Hay <code>Hostings</code> que pondrán a nuestra disposición un panel de control para gestionar el despliegue, mientras que en otros casos tendremos que hacerlo manualmente o mediante scripts.</p>
+<h3 id="despliegue-manual">Despliegue manual<a class="headerlink" href="#despliegue-manual" title="Permanent link">&para;</a></h3>
+<p>No automatizado, donde se realizan acciones manualmente. Principalmete:</p>
+<ul>
+<li>
+<p>Subir archivos FTP, SCP.</p>
+</li>
+<li>
+<p>Ejecutar comandos directamente en el servidor.</p>
+</li>
+</ul>
+<p>El método más común en este tipo de despliegue es el uso de <strong>FTP</strong> o <strong>SSH</strong> para transferir archivos y ejecutar comandos. Una vez los archivos están transferidos y la configuración está hecha, el sistema debería estar operativo.</p>
+<h3 id="despliegue-automatico">Despliegue automático<a class="headerlink" href="#despliegue-automatico" title="Permanent link">&para;</a></h3>
+<p>Mediante scripts o herramientas que automatizan parte del proceso. Por ejemplo: scripts bash, Ansible.</p>
+<p>Ventajas:</p>
+<ul>
+<li>
+<p>Menos propenso a errores humanos.</p>
+</li>
+<li>
+<p>Más rápido y eficiente.</p>
+</li>
+<li>
+<p>Repetible y consistente.</p>
+</li>
+</ul>
+<p>Desventajas:</p>
+<ul>
+<li>
+<p>Requiere conocimientos técnicos para configurar.</p>
+</li>
+<li>
+<p>Puede ser complejo de mantener.</p>
+</li>
+</ul>
+<h3 id="despliegue-continuo-cicd">Despliegue continuo CI/CD<a class="headerlink" href="#despliegue-continuo-cicd" title="Permanent link">&para;</a></h3>
+<p>El despliegue continuo es parte de una estrategia DevOps. Se basa en integrar cambios de forma frecuente y automatizar tests y despliegues. Herramientas comunes: GitHub Actions, GitLab CI, Jenkins.</p>
+<p>CI/CD <strong>=</strong> Continuous Integration / Continuous Deployment (or Delivery) Es decir, <strong>Integración Continua</strong> y <strong>Despliegue (0</strong> <strong>Entrega) Continua</strong>.</p>
+<ol>
+<li><strong>Cl</strong> – Continuous Integration Integración Continua)</li>
+</ol>
+<p>Significa que los desarrolladores</p>
+<p><strong>frecuentemente</strong> en un repositorio común (como GitHub o GitLab). Cada vez que alguien sube código, un sistema automático:</p>
+<p>a Ejecuta pruebas unitarias y de integración. b Comprueba que el código se compila correctamente. c Detecta errores o conflictos antes de que lleguen a producción. <strong>Objetivo</strong>: evitar que el código “rompa” la aplicación principal y mantenerla siempre funcional.</p>
+<ol>
+<li><strong>CD</strong> – Continuous Deployment / Continuous Delivery</li>
+</ol>
+<p>Hay dos interpretaciones del segundo “CD” (según el nivel de automatización): Continuous Delivery Entrega Continua):</p>
+<ul>
+<li>El sistema deja la aplicación lista para desplegar, pero el despliegue final se hace manualmente (por ejemplo, con aprobación de un responsable).</li>
+</ul>
+<p>Continuous Deployment Despliegue Continuo):</p>
+<ul>
+<li>Todo el proceso es completamente automático: desde que se aprueba el código, hasta que se despliega en producción sin intervención humana.</li>
+</ul>
+<p><strong>Objetivo</strong>: poder entregar nuevas versiones <strong>rápido, seguro y sin</strong> <strong>interrupciones</strong>.</p>
+<h3 id="en-resumen">En resumen<a class="headerlink" href="#en-resumen" title="Permanent link">&para;</a></h3>
+<p><strong>cl</strong> Continuous Integración Auto Integration continua prue valid códi</p>
+<p><strong>cD</strong> Continuous Entrega Prep Delivery continua vers para</p>
+<p><strong>cD</strong> Continuous Despliegue Desp Deployment continuo auto en p</p>
+<ul>
+<li>
+<p>Subes código a GitHub →</p>
+</li>
+<li>
+<p>GitHub Actions ejecuta tests automáticamente CI →</p>
+</li>
+<li>
+<p>Si todo va bien, el código se despliega en el servidor CD.</p>
+</li>
+</ul>
+<h2 id="entornos-desarrollo">Entornos: desarrollo,<a class="headerlink" href="#entornos-desarrollo" title="Permanent link">&para;</a></h2>
+<h2 id="staging-produccion">staging, producción<a class="headerlink" href="#staging-produccion" title="Permanent link">&para;</a></h2>
+<p>Normalmente, dependiendo del proyecto, tendremos varios entornos para gestionar el ciclo de vida de la aplicación:</p>
+<ul>
+<li>
+<p><strong>Desarrollo</strong>: donde los programadores escriben y prueban el código.</p>
+</li>
+<li>
+<p><strong>Staging</strong> entorno intermedio para pruebas antes de subir a producción.</p>
+</li>
+<li>
+<p><strong>Producción</strong>: sistema en funcionamiento accesible por los usuarios finales.</p>
+</li>
+</ul>
+<p>Aunque no todos los proyectos usan un entorno de staging, es muy recomendable para proyectos medianos y grandes. Permite detectar errores antes de que afecten a los usuarios reales.</p>
+<p>Cada entorno puede tener su configuración y base de datos distinta.</p>
+<h2 id="requisitos-del-servidor-para-desplegar-laravel">Requisitos del servidor para desplegar Laravel<a class="headerlink" href="#requisitos-del-servidor-para-desplegar-laravel" title="Permanent link">&para;</a></h2>
+<p>Antes de hablar de requisitos, es importante entender los tipos de servidores donde podemos desplegar Laravel:</p>
+<ol>
+<li>
+<p><strong>Servidores compartidos</strong></p>
+</li>
+<li>
+<p><strong>Servidores dedicados (VPS)</strong></p>
+</li>
+<li>
+<p><strong>Plataformas como servicio (PaaS)</strong></p>
+</li>
+</ol>
+<h3 id="servidores-compartidos">Servidores compartidos<a class="headerlink" href="#servidores-compartidos" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>Definición</strong>: Es un tipo de alojamiento en el que varios sitios web comparten los mismos recursos de un único servidor físico CPU, memoria, espacio en disco, etc.).</p>
+</li>
+<li>
+<p><strong>Ventajas</strong>:</p>
+</li>
+<li>
+<p>Económico: es la opción más barata.</p>
+</li>
+<li>
+<p>Configuración sencilla: el proveedor gestiona casi todo (actualizaciones, seguridad, etc.).</p>
+</li>
+<li>
+<p>Ideal para proyectos pequeños o de baja carga.</p>
+</li>
+<li>
+<p><strong>Desventajas</strong>:</p>
+</li>
+<li>
+<p>Recursos limitados: si otro sitio en el mismo servidor consume muchos recursos, tu aplicación puede verse afectada.</p>
+</li>
+<li>
+<p>Menor control: no puedes modificar configuraciones del servidor a bajo nivel.</p>
+</li>
+<li>
+<p>Posibles problemas de seguridad: compartes el entorno con otros usuarios.</p>
+</li>
+</ul>
+<p>Más baratos pero con limitaciones en configuración y permisos. Laravel puede funcionar si se estructura correctamente. Estos servidores suelen ofrecer un panel de control como cPanel o Plesk. Pero dependiendo del plan contratado nos podemos enconrrar con limitaciones como:</p>
+<ul>
+<li>
+<p>Plan gratuito: No acceso a SSH, FTP limitado, sin acceso a Composer.</p>
+</li>
+<li>
+<p>Plan de pago: Acceso a SSH, FTP completo, acceso a Composer.</p>
+</li>
+</ul>
+<p>Como veremos más adelante, aunque utilicemos el plan gratuito, podemos desplegar Laravel, pero con ciertas limitaciones y dificultades que con los planes de pago no tendríamos.</p>
+<h3 id="vps-virtual-private-server">VPS Virtual Private Server)<a class="headerlink" href="#vps-virtual-private-server" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>Definición</strong>: Es un servidor físico entero reservado exclusivamente para tu aplicación o sitio web.</p>
+</li>
+<li>
+<p><strong>Ventajas</strong>:</p>
+</li>
+<li>
+<p>Máximo rendimiento: todos los recursos están dedicados a tu proyecto.</p>
+</li>
+<li>
+<p>Control total: puedes instalar y configurar el software a tu medida.</p>
+</li>
+<li>
+<p>Mayor seguridad: no compartes el servidor con otros usuarios.</p>
+</li>
+<li>
+<p><strong>Desventajas</strong>:</p>
+</li>
+<li>
+<p>Coste elevado.</p>
+</li>
+<li>
+<p>Mayor responsabilidad: necesitas conocimientos técnicos para su configuración y mantenimiento (aunque puedes contratar soporte).</p>
+</li>
+<li>
+<p><strong>Ideal para</strong>: aplicaciones con mucho tráfico, requisitos especiales de configuración o que manejan información sensible.</p>
+</li>
+<li>
+<p><strong>Ejemplo tipico</strong>: servicios como OVH, Hetzner o servidores bare-metal de DigitalOcean.</p>
+</li>
+</ul>
+<p>En estos servidores, Laravel puede desplegarse con total libertad, ya que tenemos acceso completo al sistema operativo y podemos instalar todas las dependencias necesarias.</p>
+<h3 id="paas-platform-as-a-service">PaaS Platform as a Service)<a class="headerlink" href="#paas-platform-as-a-service" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>: PaaS es un modelo de computación en la nube que proporciona una plataforma lista para usar donde puedes desarrollar, ejecutar y desplegar aplicaciones sin preocuparte por la infraestructura subyacente.</p>
+</li>
+<li>
+<p><strong>Ejemplos de servicios PaaS</strong>:</p>
+</li>
+<li>
+<p><strong>Heroku</strong></p>
+</li>
+<li>
+<p><strong>Laravel Forge</strong> (gestiona servidores, aunque no es PaaS puro)</p>
+</li>
+<li>
+<p><strong>Google App Engine</strong></p>
+</li>
+<li>
+<p><strong>Railway</strong></p>
+</li>
+<li>
+<p><strong>Render</strong></p>
+</li>
+<li>
+<p><strong>Ventajas</strong>:</p>
+</li>
+<li>
+<p>No gestionas servidores directamente.</p>
+</li>
+<li>
+<p>Escalabilidad automática.</p>
+</li>
+<li>
+<p>Despliegue simplificado con git push.</p>
+</li>
+<li>
+<p>Suele tener integraciones listas (bases de datos, cache, colas, etc.).</p>
+</li>
+<li>
+<p><strong>Desventajas</strong>:</p>
+</li>
+<li>
+<p>Menor control del entorno.</p>
+</li>
+<li>
+<p>Puede ser más caro a gran escala.</p>
+</li>
+<li>
+<p>Dependencia del proveedor.</p>
+</li>
+<li>
+<p><strong>Ideal para</strong>: desarrollo ágil y rápido despliegue, especialmente en equipos pequeños o startups.</p>
+</li>
+</ul>
+<p>Nivel de Bajo Alto M control g i</p>
+<p>Mantenimiento Proveedor Usuario P</p>
+<p>Coste inicial Bajo Alto M ( p</p>
+<p>Escalabilidad Limitada Alta A (manual) ( m</p>
+<p>Curva de Muy baja Alta M aprendizaje</p>
+<p>Ideal para Proyectos Grandes D pequeños con y control d total</p>
+<p>Ejemplos Hostinger, OVH, H GoDaddy Hetzner R R</p>
+<h2 id="requisitos-y-particularidades-del-despliegue-en-laravel">Requisitos y particularidades del despliegue en Laravel<a class="headerlink" href="#requisitos-y-particularidades-del-despliegue-en-laravel" title="Permanent link">&para;</a></h2>
+<p>En este punto estamos hablando de generalidades del despliegue centrandonos en Laravel. Pero en cada caso tenemos que adaptar a las particularidades del servidor y del proyecto. tamién hemos puesto unas versiones de <code>PHP</code> y <code>MySQL</code> que son las mínimas recomendadas, pero siempre es mejor usar las últimas versiones estables para aprovechar mejoras de rendimiento y seguridad. Hay que revisar la documetnación oficial de <code>Laravel</code> o del <code>Framework</code> que estemos usando para ver los requisitos específicos.</p>
+<p>Lo que debe tener (o soportar):</p>
+<ul>
+<li>
+<p><strong>PHP 8.1</strong> Laravel 10 lo requiere como <strong>PHP</strong> ≥ <strong>8.1</strong> mínimo)</p>
+</li>
+<li>
+<p><strong>Extensiones PHP necesarias</strong>:</p>
+</li>
+<li>
+<p><code>openssl</code>, <code>pdo</code>, <code>mbstring</code>, <code>tokenizer</code>, <code>xml</code>, <code>ctype</code>, <code>json</code>, <code>bcmath</code>, <code>fileinfo</code>, curl</p>
+</li>
+<li>
+<p><strong>Composer</strong> (algunos hosts permiten usarlo vía terminal o ya lo incluyen)</p>
+</li>
+<li>
+<p><strong>Acceso SSH</strong> (opcional pero muy recomendable)</p>
+</li>
+<li>
+<p><strong>Base de datos MySQL 5.7</strong> o MariaDB <strong>Base de datos MySQL</strong> ≥ <strong>5.7</strong> ≥ 10.3</p>
+</li>
+<li>
+<p><strong>Soporte para Laravel</strong>: muchos hostings compartidos permiten Laravel, pero otros tienen restricciones o versiones antiguas de PHP</p>
+</li>
+</ul>
+<p>Observaciones:</p>
+<ul>
+<li>
+<p>Idealmente, que tenga <strong>soporte para</strong> <strong>archivos.htaccess</strong> si se usa Apache.</p>
+</li>
+<li>
+<p>El entorno es limitado, por lo que puedes encontrar restricciones para usar colas, websockets o tareas programadas (cronjobs).</p>
+</li>
+</ul>
+<p>Lo que debes instalar o configurar:</p>
+<ul>
+<li>
+<p>Sistema operativo Ubuntu 22.04 o similar es muy común)</p>
+</li>
+<li>
+<p><strong>PHP</strong> y las mismas extensiones <strong>PHP</strong> ≥ listadas arriba</p>
+</li>
+<li>
+<p><strong>Composer</strong> instalado globalmente</p>
+</li>
+<li>
+<p><strong>MySQL o MariaDB</strong>: debes instalarlo tú mismo</p>
+</li>
+<li>
+<p><strong>Servidor web</strong>: Apache o Nginx Laravel funciona bien con ambos)</p>
+</li>
+<li>
+<p><strong>Gestión de procesos</strong>: como Supervisor si usas colas</p>
+</li>
+<li>
+<p><strong>Certificados SSL</strong>: con Letʼs Encrypt o similar</p>
+</li>
+<li>
+<p><strong>Firewall, seguridad, backups</strong>: todo debe ser gestionado por ti (o automatizado)</p>
+</li>
+</ul>
+<p>Observaciones:</p>
+<ul>
+<li>
+<p>Control total, pero también responsabilidad total.</p>
+</li>
+<li>
+<p>Recomendado usar herramientas como Laravel Forge para automatizar la configuración.</p>
+</li>
+</ul>
+<p>Lo que debe ofrecer el proveedor (la mayoría lo hace):</p>
+<ul>
+<li>
+<p>Imagen de entorno con <strong>PHP</strong> y <strong>PHP</strong> ≥ extensiones comunes</p>
+</li>
+<li>
+<p>Soporte para <strong>Composer</strong> y scripts de construcción ( <code>composer install</code>)</p>
+</li>
+<li>
+<p>Acceso a <strong>MySQL gestionado</strong> o la opción de conectar a uno externo</p>
+</li>
+<li>
+<p>Variables de entorno fácilmente configurables ( <code>.env</code>)</p>
+</li>
+<li>
+<p>Soporte para <strong>artisan commands</strong>, tareas programadas y colas</p>
+</li>
+<li>
+<p>Despliegue con git o pipelines CI/CD</p>
+</li>
+</ul>
+<p>Ejemplos de proveedores que cumplen esto:</p>
+<ul>
+<li>
+<p><strong>Heroku</strong> (usando addons para MySQL</p>
+</li>
+<li>
+<p><strong>Render</strong> (soporta PHP y MySQL directamente)</p>
+</li>
+<li>
+<p><strong>Railway</strong> (muy amigable para Laravel)</p>
+</li>
+<li>
+<p><strong>Laravel Vapor</strong> (usa AWS y está optimizado para Laravel)</p>
+</li>
+</ul>
+<p>PHP ≥ 8.1 Sí, si es Tú lo Pre moderno instalas</p>
+<p>Composer A veces Lo instalas Pre incluido tú</p>
+<p>MySQL / Preinstalado Lo instalas Int MariaDB tú ex</p>
+<p>Extensiones Ya Tú las Ge PHP configuradas habilitas inc necesarias Soporte Limitado Completo Co para tareas lím de Laravel el</p>
+<p>Acceso Limitado Completo Lim SSH / CLI vir</p>
+<p>Laravel es un framework PHP que sigue el patrón MVC Modelo-Vista-Controlador) y tiene una estructura de carpetas bien definida. Algunas particularidades importantes al desplegar Laravel son:</p>
+<ul>
+<li>
+<p><strong>Estructura de carpetas</strong>: Laravel tiene una estructura de carpetas que debe respetarse para que el framework funcione correctamente. Las carpetas más importantes son:</p>
+</li>
+<li>
+<p><code>app/</code>: Contiene la lógica de la aplicación.</p>
+</li>
+<li>
+<p><code>config/</code>: Archivos de configuración.</p>
+</li>
+<li>
+<p><code>database/</code>: Migraciones y seeders.</p>
+</li>
+<li>
+<p><code>public/</code>: Punto de entrada público (debe ser el directorio raíz del servidor).</p>
+</li>
+<li>
+<p><code>resources/</code>: Vistas, traducciones y assets.</p>
+</li>
+<li>
+<p><code>routes/</code>: Definición de rutas.</p>
+</li>
+<li>
+<p><code>storage/</code>: Logs, caché y archivos temporales.</p>
+</li>
+<li>
+<p><strong>Configuración del servidor web</strong>: El servidor web debe apuntar a la carpeta <code>public/</code> de Laravel. Esto es crucial para que las rutas y los assets se sirvan correctamente.</p>
+</li>
+<li>
+<p><strong>Permisos de carpetas</strong>: Las carpetas <code>storage/</code> y <code>bootstrap/cache/</code> deben tener permisos de escritura para que Laravel pueda funcionar correctamente. Normalmente, se recomienda establecer permisos 775 o 777 dependiendo del entorno.</p>
+</li>
+<li>
+<p><strong>Variables de entorno</strong>: Laravel utiliza un archivo <code>.env</code> para gestionar la configuración sensible, como las credenciales de la base de datos. Este archivo <strong>no</strong> debe subirse al repositorio y debe ser configurado en cada entorno de despliegue (puede tener usuarios/contraseñas locales).</p>
+</li>
+<li>
+<p><strong>Comandos Artisan</strong>: Laravel incluye una herramienta de línea de comandos llamada Artisan, que permite ejecutar tareas comunes como migraciones, limpieza de caché, y más. Es recomendable ejecutar <code>php</code> <code>artisan migrate</code> y <code>php artisan</code> <code>config:cache</code> después del despliegue.</p>
+</li>
+<li>
+<p><strong>Dependencias</strong>: Laravel utiliza Composer para gestionar sus dependencias. Es importante ejecutar <code>composer install</code> en el entorno de producción para asegurarse de que todas las dependencias estén instaladas correctamente.</p>
+</li>
+<li>
+<p><strong>Caché y optimizacion</strong>: Laravel permite optimizar la aplicación para producción con comandos como <code>php</code> <code>artisan optimize</code>, <code>php artisan</code> <code>route:cache</code>, y <code>php artisan</code> <code>config:cache</code>. Esto mejora el rendimiento al reducir el tiempo de carga de las rutas y la configuración.</p>
+</li>
+</ul>
+<p>Laravel funciona especialmente bien en entornos, por varias razones:</p>
+<ul>
+<li>
+<p><strong>Despliegue ágil</strong>: Muchos PaaS permiten desplegar con un simple <code>git push</code>, ideal para equipos de desarrollo.</p>
+</li>
+<li>
+<p><strong>Integración con Forge / Vapor</strong>:</p>
+</li>
+<li>
+<p><strong>Laravel Forge</strong>: aunque no es PaaS en sí, automatiza la gestión de servidores en plataformas como DigitalOcean, AWS o Linode.</p>
+</li>
+<li>
+<p><strong>Laravel Vapor</strong>: es una solución PaaS serverless para AWS, diseñada específicamente para Laravel, que elimina totalmente la necesidad de gestionar servidores.</p>
+</li>
+<li>
+<p><strong>Entorno estandarizado</strong>: Laravel requiere PHP, Composer, y ciertas extensiones, lo cual muchos PaaS ya tienen configurado por defecto.</p>
+</li>
+</ul>
+<p><strong>Conclusión</strong>: Para muchos equipos modernos, especialmente los que priorizan velocidad de desarrollo y despliegue, <strong>usar PaaS con Laravel</strong> <strong>puede ser una excelente opción</strong>.</p>
+<h2 id="gestion-de-dependencias-y-configuracion-env">Gestión de dependencias y configuración (.env)<a class="headerlink" href="#gestion-de-dependencias-y-configuracion-env" title="Permanent link">&para;</a></h2>
+<p>Laravel usa <strong>Composer</strong> para gestionar las dependencias PHP.</p>
+<p>En producción:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>composer install --
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>optimize-autoloader --
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>no-dev
+</code></pre></div>
+<p>Esto instala las dependencias necesarias sin incluir las de desarrollo, optimizando el autoloader para mejorar el rendimiento. Estas dependencias se definen en el archivo <code>composer.json</code> del proyecto y se instalan en la carpeta <code>vendor/</code>.</p>
+<p>El archivo <code>.env</code> contiene la configuración sensible: claves, base de datos, entorno, etc. <strong>Nunca debe subirse al repositorio</strong> ya que contiene información sensible como usuarios y contraseñas. Pero tenemos que asegurarnos de que cada entorno tenga su propio archivo <code>.env</code> configurado correctamente.</p>
+<h2 id="pruebas-antes-y-despues-del-despliegue">Pruebas antes y después del despliegue<a class="headerlink" href="#pruebas-antes-y-despues-del-despliegue" title="Permanent link">&para;</a></h2>
+<p>Antes de desplegar:</p>
+<ul>
+<li>
+<p>Ejecutar tests con PHPUnit.</p>
+</li>
+<li>
+<p>Verificar que la aplicación funcione en local o staging.</p>
+</li>
+</ul>
+<p>Después del despliegue:</p>
+<ul>
+<li>
+<p>Verificar logs ( <code>storage/logs/</code> <code>laravel.log</code>).</p>
+</li>
+<li>
+<p>Probar funcionalidades clave.</p>
+</li>
+<li>
+<p>Tener backup previo de archivos y base de datos.</p>
+</li>
+</ul>
+<h2 id="estrategias-para-mantener-la-estructura-de-laravel-en-entornos-restrictivos">Estrategias para mantener la estructura de Laravel en entornos restrictivos<a class="headerlink" href="#estrategias-para-mantener-la-estructura-de-laravel-en-entornos-restrictivos" title="Permanent link">&para;</a></h2>
+<p>Nos podemos encontrar con servidores donde no podemos respetar la estructura de Laravel, especialmente en servidores compartidos o con restricciones de acceso. Por ejempo, hay servidores que no permiten la instalación de ficheros fuera de la carpeta <code>public_html</code> o <code>www</code>. Laravel, por defecto, espera que la carpeta <code>public/</code> sea el punto de entrada, y el resto de carpetas no denerían ser accesibles públicamente (seguridad). En estos casos, debemos adaptar la estructura o usar técnicas alternativas para mantener la seguridad y funcionalidad de la aplicación. En el siguiente tema veremos como instalar Laravel en un servidor compartido modificando la estructura de carpetas.</p>
+<p>En este tipo de entornos ( <code>hostil</code>) debemos:</p>
+<ul>
+<li>
+<p>Mover archivos <code>public/</code> a la raíz y reconfigurar rutas si es necesarios.</p>
+</li>
+<li>
+<p>Copiar toda la estructura de Laravel en la carpeta <code>public_html</code> o <code>www</code>.</p>
+</li>
+<li>
+<p>Usar <code>index.php</code> personalizado, hay que modificar las rutas de autoload y bootstrap para que apunten a la ubicación correcta de los archivos de Laravel.</p>
+</li>
+<li>
+<p>Asegurar que las rutas a <code>vendor/</code> o <code>storage/</code> no sean accesibles públicamente. Podemos usar el archivo <code>.htaccess</code> para denegar el acceso a estas carpetas.</p>
+</li>
+</ul>
+<h2 id="preparacion-del-proyecto-para-despliegue">Preparación del proyecto para despliegue<a class="headerlink" href="#preparacion-del-proyecto-para-despliegue" title="Permanent link">&para;</a></h2>
+<p>En un entorno de producción amigable VPS, PaaS, la preparación del proyecto es más sencilla. Pero en un entorno hostil (servidor compartido), debemos tener en cuenta las limitaciones y adaptar el proceso.</p>
+<p>Pasos comunes:</p>
+<ol>
+<li><strong>1</strong>. Subir archivos.</li>
+</ol>
+<p>Ejecutar <code>composer install</code>.</p>
+<ol>
+<li>
+<p><strong>3</strong>. Configurar <code>.env</code>.</p>
+</li>
+<li>
+<p><strong>4</strong>. Ejecutar migraciones:</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>php artisan migrate
+</code></pre></div>
+<ol>
+<li><strong>5</strong>. Crear cache de configuración:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>php artisan
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>config:cache
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>php artisan
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>route:cache
+</code></pre></div>
+<ol>
+<li><strong>6</strong>. Establecer permisos:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>chmod -R 775 storage
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>bootstrap/cache
+</code></pre></div>
+<p>En los entornos hostiles (no tengamos acceso a línea de comando y no podamos modificar la carpeta de entrada a <code>/</code> <code>public</code>), debemos adaptar los pasos.</p>
+<p>Es posible que no podamos ejecutar <code>composer install</code> directamente en el servidor. Tampoco podemos ejecutar comandos Artisan directamente si no tenemos acceso SSH. Es recomendable preparar el proyecto en local y subirlo ya preparado, no es lo ideal, tendremos que aplicar parches y medidas de seguridad adicionales. Pero es una opción viable. Como he dicho anteriormente, en el siguiente tema veremos un ejemplo práctico de despliegue en un servidor compartido, donde adaptaremos la estructura de Laravel para que funcione correctamente.</p>
+<p>Normalmente las licencias gratuitos suelen poner muchos problemas para instalar aplicaciones complejas como <code>Laravel</code>, incluso en algunos casos direntamente no es posible. Lo ideal es usar un plan de pago, aunque sea el más básico, ya que suelen permitir instalar <code>Laravel</code> sin problemas.</p>
+<h2 id="herramientas-utiles-para-el-despliegue">Herramientas útiles para el despliegue<a class="headerlink" href="#herramientas-utiles-para-el-despliegue" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong>Composer</strong>: gestión de dependencias PHP.</p>
+</li>
+<li>
+<p><strong>Git</strong>: control de versiones.</p>
+</li>
+<li>
+<p><strong>GitHub Actions / GitLab CI</strong>: automatización de CI/CD.</p>
+</li>
+<li>
+<p><strong>Laravel Forge</strong>: despliegue automático de Laravel.</p>
+</li>
+<li>
+<p><strong>Envoyer</strong>: despliegue sin interrupciones.</p>
+</li>
+<li>
+<p><strong>Docker</strong>: contenedores para entornos consistentes.</p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      IES JUAN DE GARAY - 2º DWES · Curso original de Beteta adaptado por Eva María Gómez Abad
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

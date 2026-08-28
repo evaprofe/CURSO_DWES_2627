@@ -1,0 +1,3538 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Apuntes de Desarrollo Web en Entorno Servidor">
+      
+      
+        <meta name="author" content="Eva María Gómez Abad">
+      
+      
+        <link rel="canonical" href="https://evaprofe.github.io/CURSO_DWES_2627/tema-03-vistas-blade/3-1-vistas-con-blade-introduccion-a-laravel/">
+      
+      
+        <link rel="prev" href="../../tema-02-frameworks-laravel/proyecto-github/conclusion/">
+      
+      
+        <link rel="next" href="../3-2-actividad-del-tema-3-introduccion-a-laravel/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>3.1 Creación de Vistas con Blade - Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#creacion-de-vistas-en-laravel-y-uso-de-blade" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-header__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3.1 Creación de Vistas con Blade
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Activar modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Activar modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-nav__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introducción al Desarrollo Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1. Introducción al Desarrollo Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/introduccion-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1 Desarrollo Web en el Servidor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2 Patrón Modelo-Vista-Controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.3 Protocolo HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 1 · MVC y HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Frameworks y Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2. Frameworks y Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1 Introducción a los Frameworks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-2-configuracion-del-entorno-de-trabajo-con-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.2 Entorno de Trabajo con Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-3-instalacion-y-puesta-en-marcha-de-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.3 Instalación y Puesta en Marcha
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-4-estructura-y-elementos-de-un-proyecto-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.4 Estructura de un Proyecto Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-5-actividad-del-tema-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 2 · Introducción a Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/anexos-tailwind-css/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anexo · Tailwind CSS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/instrucciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía del Entorno
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tema-02-frameworks-laravel/proyecto-github/docs/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🚀 Proyecto Guiado · Entorno Laravel
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🚀 Proyecto Guiado · Entorno Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/requisitos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso1-preparacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 1 · Preparación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso7-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 7 · Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso9-mysql-cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 9 · MySQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso10-xdebug/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 10 · Xdebug
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/instrucciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instrucciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/conclusion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conclusión
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. Vistas con Blade
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Creación de Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Creación de Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion-a-blade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción a Blade
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introducción a Blade">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ventajas-principales-de-blade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ventajas principales de Blade
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creacion-de-paginas-html-completas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación de páginas HTML completas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creación de páginas HTML completas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definir-las-rutas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Definir las rutas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creacion-de-un-layout-base" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación de un Layout base
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anadir-un-menu-de-navegacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Añadir un menú de navegación
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uso-de-partials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uso de Partials
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#componentes-en-blade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Componentes en Blade
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Componentes en Blade">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#convenciones-y-rutas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Convenciones y rutas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-alert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo — alert
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#patrones-recomendados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Patrones recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#continuamos-con-nuestra-practica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continuamos con nuestra práctica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ahora-el-componente-con-etiquetas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ahora el componente con etiquetas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incluir-recursos-estaticos-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        * Incluir recursos estáticos (assets)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="* Incluir recursos estáticos (assets)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#incluir-imagenes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Incluir imágenes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#incluir-archivos-css" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Incluir archivos CSS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mejorar-el-diseno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mejorar el diseño
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        * Conclusión
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-2-actividad-del-tema-3-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 3 · Agencia de Viajes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4. Migraciones y Modelos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-04-migraciones-modelos/4-1-migraciones-y-modelos-con-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 Migraciones y Modelos en Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-04-migraciones-modelos/4-2-actividad-del-tema-4-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 4 · Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Controladores de Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5. Controladores de Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/5-1-controladores-de-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Controladores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/unidad-5-2-relaciones-uno-a-muchos-en-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.2 Relaciones Uno a Muchos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/actividad-del-tema-5-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 5 · Controladores y Rutas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Desarrollo CRUD Completo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. Desarrollo CRUD Completo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-06-crud-completo/6-1-desarrollo-de-un-crud-completo-en-laravel-parte-1-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1 Desarrollo de un CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-06-crud-completo/6-2-actividad-del-tema-6-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 6 · CRUD de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-07-validaciones-rutas-mensajes/7-1-validaciones-rutas-resource-y-mensajes-del-sistema-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.1 Validaciones y Rutas Resource
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-07-validaciones-rutas-mensajes/actividad-del-tema-7-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 7 · Validaciones del CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. API REST
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    8. API REST
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-1-apis-restful-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.1 Creación de API REST
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-2-apis-con-sanctum-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.2 API con Sanctum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-3-actividad-del-tema-8-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 8 · API de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Seeders, Factories y Faker
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    9. Seeders, Factories y Faker
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-09-seeders-factories-faker/9-1-creacion-de-datos-iniciales-y-de-prueba-seeders-factories-y-faker-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9.1 Datos Iniciales y de Prueba
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-09-seeders-factories-faker/actividad-del-tema-9-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 9 · Generación de Datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-1-introduccion-al-despliegue-de-aplicaciones-web-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.1 Introducción al Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-2-aplicacion-simple-con-estructura-precaria-php-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.2 Aplicación PHP Sencilla
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-3-aplicacion-completa-con-estructura-de-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.3 Aplicación Laravel Completa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-4-despliegue-en-paas-render-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.4 Despliegue en Render
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-5-actividad-del-tema-10-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 10 · Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion-a-blade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción a Blade
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introducción a Blade">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ventajas-principales-de-blade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ventajas principales de Blade
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creacion-de-paginas-html-completas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación de páginas HTML completas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creación de páginas HTML completas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definir-las-rutas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Definir las rutas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creacion-de-un-layout-base" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación de un Layout base
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anadir-un-menu-de-navegacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Añadir un menú de navegación
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uso-de-partials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uso de Partials
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#componentes-en-blade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Componentes en Blade
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Componentes en Blade">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#convenciones-y-rutas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Convenciones y rutas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-alert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo — alert
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#patrones-recomendados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Patrones recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#continuamos-con-nuestra-practica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continuamos con nuestra práctica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ahora-el-componente-con-etiquetas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ahora el componente con etiquetas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incluir-recursos-estaticos-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        * Incluir recursos estáticos (assets)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="* Incluir recursos estáticos (assets)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#incluir-imagenes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Incluir imágenes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#incluir-archivos-css" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Incluir archivos CSS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mejorar-el-diseno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mejorar el diseño
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        * Conclusión
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="creacion-de-vistas-en-laravel-y-uso-de-blade">Creación de Vistas en Laravel y uso de Blade<a class="headerlink" href="#creacion-de-vistas-en-laravel-y-uso-de-blade" title="Permanent link">&para;</a></h1>
+<h2 id="introduccion-a-blade">Introducción a Blade<a class="headerlink" href="#introduccion-a-blade" title="Permanent link">&para;</a></h2>
+<p><strong>Blade</strong> es el motor de plantillas simple pero potente incluido en Laravel. A diferencia de otros motores de plantillas PHP, Blade no te impide usar código PHP simple en tus plantillas. De hecho, todas las plantillas de Blade se compilan en código PHP simple y se almacenan en caché hasta que se modifican, lo que significa que Blade prácticamente no añade ninguna sobrecarga a tu aplicación. Los archivos de plantilla de Blade usan la extensión <code>.blade.php</code> y suelen almacenarse en el directorio <code>resources/views</code>.</p>
+<p>Durante este tema iremos realizaremos una práctica completa para entender cómo funciona Blade y cómo podemos usarlo para crear vistas en Laravel.</p>
+<h3 id="ventajas-principales-de-blade">Ventajas principales de Blade<a class="headerlink" href="#ventajas-principales-de-blade" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>Permite reutilizar código con <strong>layouts</strong> y <strong>partials</strong>.</p>
+</li>
+<li>
+<p>Tiene una sintaxis muy clara y elegante.</p>
+</li>
+<li>
+<p>Es más rápido y organizado que escribir HTML puro.</p>
+</li>
+<li>
+<p>Permite incluir recursos estáticos (árbol de carpetas, CSS, imágenes) fácilmente.</p>
+</li>
+</ul>
+<h2 id="creacion-de-paginas-html-completas">Creación de páginas HTML completas<a class="headerlink" href="#creacion-de-paginas-html-completas" title="Permanent link">&para;</a></h2>
+<p>Vamos a comenzar por crear varias páginas HTML básicas con todo su código HTML. Más adelante veremos cómo optimizar el código usando layouts, partials y componentes.</p>
+<p>Vamos a crear 4 páginas básicas en <code>resources/views/landing/</code>:</p>
+<ul>
+<li>
+<p><code>index.blade.php</code>: página de inicio</p>
+</li>
+<li>
+<p><code>about.blade.php</code>: Página típica about, datos de la empresa</p>
+</li>
+<li>
+<p><code>services.blade.php</code>: Página con los servicios que ofrece la empresa</p>
+</li>
+<li>
+<p><code>contact.blade.php</code>: Página de contacto</p>
+</li>
+</ul>
+<p>Vamos a crear las páginas de ejemplo.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&lt;!DOCTYPE html&gt;
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>&lt;html lang="es"&gt;
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>&lt;head&gt;
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>&lt;meta
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>charset="UTF-8"&gt;
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>&lt;title&gt;Inicio&lt;/
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>title&gt;
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>&lt;/head&gt;
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>&lt;body&gt;
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>&lt;header&gt;
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>&lt;h1&gt;Bienvenido a
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>nuestra web&lt;/h1&gt;
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>&lt;/header&gt;
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>&lt;main&gt;
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>&lt;p&gt;Esta
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>es la página de
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>inicio.&lt;/p&gt;
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>&lt;/main&gt;
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>&lt;footer&gt;
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>&lt;p&gt;Pie
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>de página &amp;copy;
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>2025&lt;/p&gt;
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>&lt;/footer&gt;
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>&lt;/body&gt;
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>&lt;/html&gt;
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&lt;!DOCTYPE html&gt;
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>&lt;html lang="es"&gt;
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>&lt;head&gt;
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>&lt;meta
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>charset="UTF-8"&gt;
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>&lt;title&gt;Sobre
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>nosotros&lt;/title&gt;
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>&lt;/head&gt;
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>&lt;body&gt;
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>&lt;header&gt;
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>&lt;h1&gt;Sobre
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>nosotros&lt;/h1&gt;
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>&lt;/header&gt;
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>&lt;main&gt;
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>&lt;p&gt;Información
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>sobre nuestra
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>empresa.&lt;/p&gt;
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>&lt;/main&gt;
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>&lt;footer&gt;
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>&lt;p&gt;Pie
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>de página &amp;copy;
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>2025&lt;/p&gt;
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>&lt;/footer&gt;
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>&lt;/body&gt;
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>&lt;/html&gt;
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>&lt;!DOCTYPE html&gt;
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>&lt;html lang="es"&gt;
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>&lt;head&gt;
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>&lt;meta
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>charset="UTF-8"&gt;
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>&lt;title&gt;Servicios&lt;
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>title&gt;
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>&lt;/head&gt;
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>&lt;body&gt;
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>&lt;header&gt;
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>&lt;h1&gt;Servicios&lt;/h1
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>&lt;/header&gt;
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>&lt;main&gt;
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>&lt;p&gt;Descripción de
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>nuestros
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>servicios.&lt;/p&gt;
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>&lt;/main&gt;
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>&lt;footer&gt;
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>&lt;p&gt;Pie de
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>página &amp;copy;
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>2025&lt;/p&gt;
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>&lt;/footer&gt;
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>&lt;/body&gt;
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>&lt;/html&gt;
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>&lt;!DOCTYPE html&gt;
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>&lt;html lang="es"&gt;
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>&lt;head&gt;
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>&lt;meta
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>charset="UTF-8"&gt;
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>&lt;title&gt;Contacto&lt;/
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>title&gt;
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>&lt;/head&gt;
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>&lt;body&gt;
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>&lt;header&gt;
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>&lt;h1&gt;Contacto&lt;/h1&gt;
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>&lt;/header&gt;
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>&lt;main&gt;
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>&lt;p&gt;Formulario de
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>contacto.&lt;/p&gt;
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>&lt;/main&gt;
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>&lt;footer&gt;
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>&lt;p&gt;Pie de
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>página &amp;copy;
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>2025&lt;/p&gt;
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>&lt;/footer&gt;
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>&lt;/body&gt;
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>&lt;/html&gt;
+</code></pre></div>
+<p>Las vistas se encuentran en <code>resources/</code> <code>views/landing/</code> y tienen la extensión <code>.blade.php</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>resources
+</code></pre></div>
+<p>└── <code>views</code> └── <code>landing</code> ├──</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>index.blade.php
+</code></pre></div>
+<p>├──</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>about.blade.php
+</code></pre></div>
+<p>├──</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>services.blade.php
+</code></pre></div>
+<p>└──</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>contact.blade.php
+</code></pre></div>
+<h3 id="definir-las-rutas">Definir las rutas<a class="headerlink" href="#definir-las-rutas" title="Permanent link">&para;</a></h3>
+<p>Ahora vamos a definir las rutas para que las vistas tengan su punto de entrada. Vamos a <code>routes/web.php</code> y definimos las rutas para cada página usando <code>Route:view()</code>, que es una forma sencilla de devolver una vista sin necesidad de un controlador.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>&lt;?php
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>Route::view('/',
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>'landing.index')-
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>&gt;name('home');
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>Route::view('/
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>about',
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>'landing.about')-
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>&gt;name('about');
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>Route::view('/
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>services',
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>'landing.services
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>&gt;name('services')
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>Route::view('/
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>contact',
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>'landing.contact'
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>&gt;name('contact');
+</code></pre></div>
+<p>Cada ruta debe tener un nombre único para poder referenciarla fácilmente en los enlaces. De esta manera la ruta sólo estará definida en un único lugar y si cambia la URL, solo tenemos que actualizarla en un sitio. Esto nos ayudará a mantener el código limpio y evitar errores.</p>
+<p>Probamos las rutas en el navegador, debemos ver las páginas HTML que hemos creado.</p>
+<h2 id="creacion-de-un-layout-base">Creación de un Layout base<a class="headerlink" href="#creacion-de-un-layout-base" title="Permanent link">&para;</a></h2>
+<p>Podemos darnos cuenta que todas las páginas comparten más del 90% de su estructura HTML, y eso es poco eficiente. Cualquier cambio en la cabecera o pie de página, tendríamos que hacerlo en cada archivo. Para ello <code>blade</code> nos permite crear un <strong>layout</strong> base que contenga la estructura común de las páginas, y que pueda ser reutilizado en todas las vistas.</p>
+<p>Los <code>layouts</code> son plantillas que contienen la estructura común de las páginas. En Laravel, los layouts se crean en la carpeta <code>resources/views/landing/layouts/</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>&lt;!DOCTYPE html&gt;
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>&lt;html lang="es"&gt;
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>&lt;head&gt;
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>&lt;meta
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>charset="UTF-8"&gt;
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>&lt;title&gt;
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>@yield('title')
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>&lt;/title&gt;
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>&lt;/head&gt;
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>&lt;body&gt;
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>&lt;header&gt;
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>@yield('header')
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>&lt;/header&gt;
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>&lt;main&gt;
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>@yield('content'
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>&lt;/main&gt;
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>&lt;footer&gt;
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>&lt;p&gt;Pie de
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>página &amp;copy;
+<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>2025&lt;/p&gt;
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>&lt;/footer&gt;
+<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>&lt;/body&gt;
+<a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a>&lt;/html&gt;
+</code></pre></div>
+<ul>
+<li>
+<p><code>@yield('title')</code> es un marcador de posición que se reemplazará por el contenido de la sección <code>title</code> en las vistas que extiendan este layout.</p>
+</li>
+<li>
+<p><code>@yield('header')</code> y <code>@yield('content')</code> son marcadores de posición para el contenido específico de cada vista.</p>
+</li>
+</ul>
+<p><strong>Modificar las vistas</strong> para que extiendan el layout:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>@extends('landing
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>@section('title',
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>@section('header'
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>&lt;h1&gt;Bienvenido
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>h1&gt;
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>@endsection
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>@section('content
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>&lt;p&gt;Esta es la
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>inicio.&lt;/p&gt;
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>@endsection
+</code></pre></div>
+<p>Ahora hacemos lo mismo con las otras vistas:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>@extends('landing
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>@section('title',
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>@section('header'
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>&lt;h1&gt;Sobre noso
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>@endsection
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>@section('content
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>&lt;p&gt;Información
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>empresa.&lt;/p&gt;
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>@endsection
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>@extends('landing
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>@section('title',
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>@section('header'
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>&lt;h1&gt;Servicios&lt;
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>@endsection
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>@section('content
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>&lt;p&gt;Descripción
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>servicios.&lt;/p&gt;
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>@endsection
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>@extends('landing
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>@section('title',
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>@section('header'
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>&lt;h1&gt;Contacto&lt;/
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>@endsection
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>@section('content
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>&lt;p&gt;Formulario
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>@endsection
+</code></pre></div>
+<p>Con los layouts, si quieres cambiar la estructura común (cabecera, pie de página), solo tienes que hacerlo en un único archivo. Seguimos manteniendo el código limpio y organizado. De manera que si por ejemplo queremos cambiar el pie de página, solo tenemos que modificar el layout y se reflejará en todas las páginas.</p>
+<h2 id="anadir-un-menu-de-navegacion">Añadir un menú de navegación<a class="headerlink" href="#anadir-un-menu-de-navegacion" title="Permanent link">&para;</a></h2>
+<p>Ahora vamos a poner en práctica lo aprendido anteriormente. Vamos a añadir un menú a nuestra páginas. Como en todas las páginas el menú es el mismo, lo añadiremos al layout. De esta manera vemos que añadieno el menú en un solo logar nos vale para todas las páginas. Solo hay que mantener un menú, siento insistir en lo mismo pero es muy importante.</p>
+<p>En el layout, dentro del <code>header</code>, incluimos el menú de navegación:</p>
+<p>Para ello, vamos a modificar la plantilla y vamos a añadir un menú de navegación:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>&lt;header&gt;
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>&lt;nav&gt;
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>&lt;ul&gt;
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>&lt;li&gt;&lt;
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>href="/"&gt;Inicio&lt;/
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>li&gt;
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>&lt;li&gt;&lt;
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>href="/about"&gt;Sob
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>nosotros&lt;/a&gt;&lt;/li&gt;
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>&lt;li&gt;&lt;
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>href="/
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>services"&gt;Servici
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>a&gt;&lt;/li&gt;
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>&lt;li&gt;&lt;
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>href="/
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>contact"&gt;Contacto
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>a&gt;&lt;/li&gt;
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>&lt;/ul&gt;
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>&lt;/nav&gt;
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>@yield('heade
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>&lt;/header&gt;
+</code></pre></div>
+<p>Podemos probarlo y puede funionar. Pero no es la mejor forma de hacerlo. Puede dar problemas, por ejemplo, si cambiamos la URL de una de las páginas, tendríamos que cambiarlo en todas las vistas. Para evitar esto, Laravel nos permite nombrar las rutas y usar esos nombres para generar los enlaces. En resumen, en lugar de escribir las URLs directamente, usamos el nombre de la ruta.</p>
+<p>Recuerda como nombramos las rutas, por ejemplo la ruta de inicio:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>&lt;?php
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>Route::view('/',
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>'landing.index')-
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>&gt;name('home');
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>&lt;nav&gt;
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>&lt;ul&gt;
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>&lt;li&gt;&lt;a
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>href="{{
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>route('home')
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>}}"&gt;Inicio&lt;/a&gt;&lt;/li&gt;
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>&lt;li&gt;&lt;a
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>href="{{
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>route('about')
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>}}"&gt;Sobre nosotros&lt;/
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>a&gt;&lt;/li&gt;
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>&lt;li&gt;&lt;a
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>href="{{
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>route('services')
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>}}"&gt;Servicios&lt;/a&gt;&lt;/
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>li&gt;
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>&lt;li&gt;&lt;a
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>href="{{
+<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>route('contact')
+<a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>}}"&gt;Contacto&lt;/a&gt;&lt;/li&gt;
+<a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a>&lt;/ul&gt;
+<a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a>&lt;/nav&gt;
+</code></pre></div>
+<p>Es mejor usar <code>{{ route('nombre') }}</code> en lugar de URLs escritas a mano, así si la ruta cambia solo lo actualizas en un lugar. De esta forma, si por lo que sea en un futuro hay que modificar la URL de una ruta (por SEO, por modificaciones en la web, etc), solo hay que cambiarla en un único sitio, en la definición de la ruta. Esto ayuda a mantener el código limpio y evitar errores.</p>
+<h2 id="uso-de-partials">Uso de Partials<a class="headerlink" href="#uso-de-partials" title="Permanent link">&para;</a></h2>
+<p>Pero aún podemos mejorar más el código. En un sitio web podemos tener más de una plantilla y el menú repite en todas ellas. Si queremos cambiar el menú, tendríamos que hacerlo en cada layout. Para evitar esto, <code>blade</code> nos permite crear <strong>partials</strong>. Utilizaresmos una plantilla llamada <code>_partials</code> para guardar fragmentos de código reutilizables, como el menú de navegación. En algunas carpetas <code>laravel</code> aconseja utilizar <code>_</code> para que siempre estén al principio del listado de archivos.</p>
+<p>En <code>resources/views/_partials/</code>, creamos un archivo <code>nav.blade.php</code> para el menú:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>&lt;nav&gt;
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>&lt;ul&gt;
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>&lt;li&gt;&lt;a
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>href="{{
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>route('home')
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>}}"&gt;Inicio&lt;/a&gt;&lt;/
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>li&gt;
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>&lt;li&gt;&lt;a
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>href="{{
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>route('about')
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>}}"&gt;Sobre
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>nosotros&lt;/a&gt;&lt;/li&gt;
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>&lt;li&gt;&lt;a
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>href="{{
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>route('services')
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>}}"&gt;Servicios&lt;/
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>a&gt;&lt;/li&gt;
+<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a>&lt;li&gt;&lt;a
+<a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a>href="{{
+<a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a>route('contact')
+<a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a>}}"&gt;Contacto&lt;/
+<a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a>a&gt;&lt;/li&gt;
+<a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a>&lt;/ul&gt;
+<a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a>&lt;/nav&gt;
+</code></pre></div>
+<p>Incluimos el partial en el layout:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>@include('_partials.nav')
+</code></pre></div>
+<p>Ahora el layout queda así:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>&lt;!DOCTYPE html&gt;
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>&lt;html lang="es"&gt;
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>&lt;head&gt;
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>&lt;meta
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>charset="UTF-8"&gt;
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>&lt;title&gt;
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>@yield('t
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>&lt;/title&gt;
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>&lt;/head&gt;
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>&lt;body&gt;
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>&lt;header&gt;
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>@include('_partia
+<a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>@yield('h
+<a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>&lt;/header&gt;
+<a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>
+<a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>&lt;main&gt;
+<a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>@yield('c
+<a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>&lt;/main&gt;
+<a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a>
+<a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a>&lt;footer&gt;
+<a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a>&lt;p&gt;Pie de
+<a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a>&amp;copy; 2025&lt;/p&gt;
+<a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a>&lt;/footer&gt;
+<a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a>&lt;/body&gt;
+<a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a>&lt;/html&gt;
+</code></pre></div>
+<h2 id="componentes-en-blade">Componentes en Blade<a class="headerlink" href="#componentes-en-blade" title="Permanent link">&para;</a></h2>
+<p>Un componente de Blade es una unidad reutilizable de interfaz que encapsula un trozo de vista (y, opcionalmente, una clase PHP) con una API clara de props y slots. Se usa como si fuera una etiqueta HTML (), puede recibir y fusionar atributos y permite construir UI consistente y componible.</p>
+<p>Ventajas:</p>
+<ul>
+<li>
+<p><strong>Reutilizables</strong>: extraes UI repetida (alertas, botones, tarjetas).</p>
+</li>
+<li>
+<p><strong>API declarativa</strong>: props y slots claros; menos <code>@include</code> con arrays sueltos.</p>
+</li>
+<li>
+<p><strong>Encapsulan estilos/estructura</strong> y permiten <strong>fusionar atributos</strong> del padre.</p>
+</li>
+<li>
+<p><strong>Cero boilerplate</strong>: no creas clase; solo el <code>.blade.php</code>.</p>
+</li>
+<li>
+<p><strong>Composición</strong>: pueden anidar otros componentes <code>&lt;x-…&gt;</code>.</p>
+</li>
+</ul>
+<h3 id="convenciones-y-rutas">Convenciones y rutas<a class="headerlink" href="#convenciones-y-rutas" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>Archivo: <code>resources/views/</code> <code>components/alert.blade.php</code> → uso: <code>&lt;x-alert …/&gt;</code></p>
+</li>
+<li>
+<p>Subcarpetas: <code>resources/views/</code> _components/forms/ <code>input.blade.php</code> → <code>&lt;x-</code> forms.input …/&gt;</p>
+</li>
+<li>
+<p>Nombres con guion: <code>toast-</code> <code>notice.blade.php</code> → <code>&lt;x-toast-</code> notice …/&gt;</p>
+</li>
+</ul>
+<p>Los componentes se crean en la carpeta <code>resources/views/components/</code> por defecto. Si queremos usar otra carpeta, como <code>_components</code>, tenemos que registrarla en el <code>AppServiceProvider</code>.</p>
+<h3 id="ejemplo-alert">Ejemplo — alert<a class="headerlink" href="#ejemplo-alert" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>resources/views/
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>components/alert.blade.php
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>@props([
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>'type' =&gt;
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>'info', //
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>info | success |
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>warning | error
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>'title' =&gt;
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>null,
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>])
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>@php
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>$base =
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>'rounded-md p-4
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>border';
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>$map = [
+<a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>'info' =&gt;
+<a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>'bg-blue-50
+<a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a>text-blue-800
+<a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a>border-
+<a id="__codelineno-22-19" name="__codelineno-22-19" href="#__codelineno-22-19"></a>blue-200',
+<a id="__codelineno-22-20" name="__codelineno-22-20" href="#__codelineno-22-20"></a>'success' =&gt;
+<a id="__codelineno-22-21" name="__codelineno-22-21" href="#__codelineno-22-21"></a>'bg-green-50
+<a id="__codelineno-22-22" name="__codelineno-22-22" href="#__codelineno-22-22"></a>text-green-800
+<a id="__codelineno-22-23" name="__codelineno-22-23" href="#__codelineno-22-23"></a>border-
+<a id="__codelineno-22-24" name="__codelineno-22-24" href="#__codelineno-22-24"></a>green-200',
+<a id="__codelineno-22-25" name="__codelineno-22-25" href="#__codelineno-22-25"></a>'warning' =&gt;
+<a id="__codelineno-22-26" name="__codelineno-22-26" href="#__codelineno-22-26"></a>'bg-yellow-50
+<a id="__codelineno-22-27" name="__codelineno-22-27" href="#__codelineno-22-27"></a>text-yellow-800
+<a id="__codelineno-22-28" name="__codelineno-22-28" href="#__codelineno-22-28"></a>border-
+<a id="__codelineno-22-29" name="__codelineno-22-29" href="#__codelineno-22-29"></a>yellow-200',
+<a id="__codelineno-22-30" name="__codelineno-22-30" href="#__codelineno-22-30"></a>'error' =&gt;
+<a id="__codelineno-22-31" name="__codelineno-22-31" href="#__codelineno-22-31"></a>'bg-red-50 text-
+<a id="__codelineno-22-32" name="__codelineno-22-32" href="#__codelineno-22-32"></a>red-800 border-
+<a id="__codelineno-22-33" name="__codelineno-22-33" href="#__codelineno-22-33"></a>red-200',
+<a id="__codelineno-22-34" name="__codelineno-22-34" href="#__codelineno-22-34"></a>];
+<a id="__codelineno-22-35" name="__codelineno-22-35" href="#__codelineno-22-35"></a>@endphp
+<a id="__codelineno-22-36" name="__codelineno-22-36" href="#__codelineno-22-36"></a>
+<a id="__codelineno-22-37" name="__codelineno-22-37" href="#__codelineno-22-37"></a>&lt;div {{
+<a id="__codelineno-22-38" name="__codelineno-22-38" href="#__codelineno-22-38"></a>$attributes-
+<a id="__codelineno-22-39" name="__codelineno-22-39" href="#__codelineno-22-39"></a>&gt;merge(['class'
+<a id="__codelineno-22-40" name="__codelineno-22-40" href="#__codelineno-22-40"></a>$
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>=&gt; "$base ".
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>($map[$type] ??
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>$map['info'])])
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>}}&gt;
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>@isset($title)
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>&lt;div
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>class="font-
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>semibold
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>mb-1"&gt;{{ $title
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>}}&lt;/div&gt;
+<a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>@endisset
+<a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>
+<a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>&lt;div&gt;{{ $slot
+<a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>}}&lt;/div&gt;
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>@isset($actions)
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>&lt;div
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>class="mt-3"&gt;{{
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>$actions }}&lt;/
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>div&gt;
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>@endisset
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>&lt;/div&gt;
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>&lt;x-alert type="succe
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>title="¡Listo!"
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>class="mb-4"&gt;
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>Los cambios se gua
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>correctamente.
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>&lt;x-slot:actions&gt;
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>&lt;a href="{{
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>route('items.index')
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>class="underline"&gt;Vo
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>a&gt;
+<a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>&lt;/x-slot:actions&gt;
+<a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>&lt;/x-alert&gt;
+</code></pre></div>
+<p>En este ejemplo, el componente <code>alert</code> tiene:</p>
+<ul>
+<li>
+<p>Props: <code>type</code> (tipo de alerta) y <code>title</code> (título opcional).</p>
+</li>
+<li>
+<p>Slot principal: contenido de la alerta.</p>
+</li>
+<li>
+<p>Slot con nombre <code>actions</code>: para botones o enlaces adicionales.</p>
+</li>
+</ul>
+<h3 id="patrones-recomendados">Patrones recomendados<a class="headerlink" href="#patrones-recomendados" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>Props con default</strong> en <code>@props([.])</code>; pasa valores dinámicos con <strong>dos puntos</strong> ( <code>:prop="…"</code>) para arrays/booleanos.</p>
+</li>
+<li>
+<p><strong>Clases condicionales</strong> con <code>$attributes-&gt;class([.])</code>; deduplica y fusiona con lo que envíe el padre.</p>
+</li>
+<li>
+<p><strong>Slots con nombre</strong> para zonas opcionales ( <code>header</code>, <code>footer</code>, <code>actions</code>).</p>
+</li>
+<li>
+<p><strong>Evita lógica pesada</strong> (consultas, cálculos complejos). Mantén el componente “presentacional”.</p>
+</li>
+<li>
+<p><strong>Organiza por dominios</strong>: <code>components/cards/…</code>, <code>components/forms/…</code>, etc.</p>
+</li>
+<li>
+<p><strong>Comparado con @include</strong>: los componentes ofrecen <strong>API (props/</strong> <strong>slots)</strong> y <strong>fusión de atributos</strong>; <code>@include</code> solo pega HTML.</p>
+</li>
+</ul>
+<h3 id="continuamos-con-nuestra-practica">Continuamos con nuestra práctica<a class="headerlink" href="#continuamos-con-nuestra-practica" title="Permanent link">&para;</a></h3>
+<p>Ahora vamos a mejorar el diseño de la página de servicios. En lugar de mostrar una lista de servicios Queremos mostrar <strong>tarjetas</strong> en la página de servicios.</p>
+<p>Primero creamos tarjetas manualmente en <code>services.blade.php</code>, dentro de la sección <code>content</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>&lt;div
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>class="card"&gt;
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>&lt;h2&gt;Servicio
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>1&lt;/h2&gt;
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>
+<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>&lt;p&gt;Descripción
+<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>breve del
+<a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>servicio 1.&lt;/
+<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>p&gt;
+<a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a>&lt;/div&gt;
+<a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a>
+<a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a>&lt;div
+<a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a>class="card"&gt;
+<a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a>
+<a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a>&lt;h2&gt;Servicio
+<a id="__codelineno-26-17" name="__codelineno-26-17" href="#__codelineno-26-17"></a>2&lt;/h2&gt;
+<a id="__codelineno-26-18" name="__codelineno-26-18" href="#__codelineno-26-18"></a>
+<a id="__codelineno-26-19" name="__codelineno-26-19" href="#__codelineno-26-19"></a>&lt;p&gt;Descripción
+<a id="__codelineno-26-20" name="__codelineno-26-20" href="#__codelineno-26-20"></a>breve del
+<a id="__codelineno-26-21" name="__codelineno-26-21" href="#__codelineno-26-21"></a>servicio 2.&lt;/
+<a id="__codelineno-26-22" name="__codelineno-26-22" href="#__codelineno-26-22"></a>p&gt;
+<a id="__codelineno-26-23" name="__codelineno-26-23" href="#__codelineno-26-23"></a>&lt;/div&gt;
+<a id="__codelineno-26-24" name="__codelineno-26-24" href="#__codelineno-26-24"></a>
+<a id="__codelineno-26-25" name="__codelineno-26-25" href="#__codelineno-26-25"></a>&lt;div
+<a id="__codelineno-26-26" name="__codelineno-26-26" href="#__codelineno-26-26"></a>class="card"&gt;
+<a id="__codelineno-26-27" name="__codelineno-26-27" href="#__codelineno-26-27"></a>
+<a id="__codelineno-26-28" name="__codelineno-26-28" href="#__codelineno-26-28"></a>&lt;h2&gt;Servicio
+<a id="__codelineno-26-29" name="__codelineno-26-29" href="#__codelineno-26-29"></a>3&lt;/h2&gt;
+<a id="__codelineno-26-30" name="__codelineno-26-30" href="#__codelineno-26-30"></a>
+<a id="__codelineno-26-31" name="__codelineno-26-31" href="#__codelineno-26-31"></a>&lt;p&gt;Descripción
+<a id="__codelineno-26-32" name="__codelineno-26-32" href="#__codelineno-26-32"></a>breve del
+<a id="__codelineno-26-33" name="__codelineno-26-33" href="#__codelineno-26-33"></a>servicio 3.&lt;/
+<a id="__codelineno-26-34" name="__codelineno-26-34" href="#__codelineno-26-34"></a>p&gt;
+<a id="__codelineno-26-35" name="__codelineno-26-35" href="#__codelineno-26-35"></a>&lt;/div&gt;
+</code></pre></div>
+<p>Esta sería una forma de hacerlo, pero no es la mejor. Si queremos añadir más servicios, tendríamos que repetir el mismo código HTML muchas veces. Para evitar esto <code>blade</code> nos permite crear <strong>componentes</strong>. Los componentes son bloques de código reutilizables que podemos usar en diferentes partes de la aplicación. En Laravel, los componentes se crean en la carpeta <code>resources/</code> <code>views/components/</code>.</p>
+<p>Luego, creamos un componente en <code>resources/views/components/</code> <code>card.blade.php</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>&lt;div
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>class="card"&gt;
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>&lt;h2&gt;{{
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>$title }}&lt;/h2&gt;
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>&lt;p&gt;{{
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>$content }}&lt;/p&gt;
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>&lt;/div&gt;
+</code></pre></div>
+<p>Y lo usamos así en <code>services.blade.php</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>@extends('landing
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>@section('title'
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>@section('header
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>&lt;h1&gt;Servicios
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>@endsection
+<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>@section('content
+<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>@component('c
+<a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>@slot('ti
+<a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a>1');
+<a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a>@slot('co
+<a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a>&lt;p&gt;De
+<a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a>del servicio 1.&lt;/
+<a id="__codelineno-28-13" name="__codelineno-28-13" href="#__codelineno-28-13"></a>@endslot
+<a id="__codelineno-28-14" name="__codelineno-28-14" href="#__codelineno-28-14"></a>@endcomponent
+<a id="__codelineno-28-15" name="__codelineno-28-15" href="#__codelineno-28-15"></a>@component('c
+<a id="__codelineno-28-16" name="__codelineno-28-16" href="#__codelineno-28-16"></a>@slot('ti
+<a id="__codelineno-28-17" name="__codelineno-28-17" href="#__codelineno-28-17"></a>2');
+<a id="__codelineno-28-18" name="__codelineno-28-18" href="#__codelineno-28-18"></a>@slot('co
+<a id="__codelineno-28-19" name="__codelineno-28-19" href="#__codelineno-28-19"></a>&lt;p&gt;De
+<a id="__codelineno-28-20" name="__codelineno-28-20" href="#__codelineno-28-20"></a>del servicio 2.&lt;/
+<a id="__codelineno-28-21" name="__codelineno-28-21" href="#__codelineno-28-21"></a>@endslot
+<a id="__codelineno-28-22" name="__codelineno-28-22" href="#__codelineno-28-22"></a>@endcomponent
+<a id="__codelineno-28-23" name="__codelineno-28-23" href="#__codelineno-28-23"></a>@component('c
+<a id="__codelineno-28-24" name="__codelineno-28-24" href="#__codelineno-28-24"></a>@slot('ti
+<a id="__codelineno-28-25" name="__codelineno-28-25" href="#__codelineno-28-25"></a>3');
+<a id="__codelineno-28-26" name="__codelineno-28-26" href="#__codelineno-28-26"></a>@slot('co
+<a id="__codelineno-28-27" name="__codelineno-28-27" href="#__codelineno-28-27"></a>&lt;p&gt;De
+<a id="__codelineno-28-28" name="__codelineno-28-28" href="#__codelineno-28-28"></a>del servicio 3.&lt;/
+<a id="__codelineno-28-29" name="__codelineno-28-29" href="#__codelineno-28-29"></a>@endslot
+<a id="__codelineno-28-30" name="__codelineno-28-30" href="#__codelineno-28-30"></a>@endcomponent
+<a id="__codelineno-28-31" name="__codelineno-28-31" href="#__codelineno-28-31"></a>@endsection
+</code></pre></div>
+<p>Con componentes evitamos repetir el mismo código HTML muchas veces. Los componentes estan parametrizados y son reutilizables. Si queremos cambiar el diseño de la tarjeta, solo tenemos que hacerlo en un único archivo.</p>
+<h3 id="ahora-el-componente-con-etiquetas">Ahora el componente con etiquetas <x-...><a class="headerlink" href="#ahora-el-componente-con-etiquetas" title="Permanent link">&para;</a></h3>
+<p>Modificamos el componente para que reciba las propiedades <code>title</code> y <code>content</code>:</p>
+<p>En el caso de utilizar este tipo de componentes con la sintaxis <code>&lt;x-.&gt;</code>, Laravel busca los componentes en la carpeta <code>resources/</code> <code>views/components/</code> por defecto. Si queremos usar otra carpeta, como <code>_components</code>, tenemos que registrarla en el <code>AppServiceProvider</code>.</p>
+<p>Así que movemos el componente <code>card.blade.php</code> a <code>resources/</code> <code>views/components/</code>. Para evitar confusiones, es mejor usar la carpeta por defecto <code>components</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>@props(['title'])
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>&lt;div
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>class="card"&gt;
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>@isset($title)
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>&lt;h2&gt;{{
+<a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>$title }}&lt;/h2&gt;
+<a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>@endisset
+<a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>&lt;div&gt;
+<a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a>&lt;p&gt;{{
+<a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a>$slot }}&lt;/p&gt;
+<a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a>&lt;/div&gt;
+<a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a>&lt;/div&gt;
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>@extends('landing
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>@section('title'
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>@section('header
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>&lt;h1&gt;Servicios
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>@endsection
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>@section('content
+<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>&lt;x-card title
+<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>&lt;p&gt;Descri
+<a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a>servicio 1.&lt;/p&gt;
+<a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a>&lt;/x-card&gt;
+<a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a>
+<a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a>&lt;x-card title
+<a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a>&lt;p&gt;Descri
+<a id="__codelineno-30-16" name="__codelineno-30-16" href="#__codelineno-30-16"></a>servicio 2.&lt;/p&gt;
+<a id="__codelineno-30-17" name="__codelineno-30-17" href="#__codelineno-30-17"></a>&lt;/x-card&gt;
+<a id="__codelineno-30-18" name="__codelineno-30-18" href="#__codelineno-30-18"></a>
+<a id="__codelineno-30-19" name="__codelineno-30-19" href="#__codelineno-30-19"></a>&lt;x-card title
+<a id="__codelineno-30-20" name="__codelineno-30-20" href="#__codelineno-30-20"></a>&lt;p&gt;Descri
+<a id="__codelineno-30-21" name="__codelineno-30-21" href="#__codelineno-30-21"></a>servicio 3.&lt;/p&gt;
+<a id="__codelineno-30-22" name="__codelineno-30-22" href="#__codelineno-30-22"></a>&lt;/x-card&gt;
+<a id="__codelineno-30-23" name="__codelineno-30-23" href="#__codelineno-30-23"></a>@endsection
+</code></pre></div>
+<p>Cualquiera de las dos formas de usar el componente es válida. La segunda puede ser más limpia y clara, la primera es más sencilla para los que empiezan.</p>
+<h2 id="incluir-recursos-estaticos-assets">* Incluir recursos estáticos (assets)<a class="headerlink" href="#incluir-recursos-estaticos-assets" title="Permanent link">&para;</a></h2>
+<h3 id="incluir-imagenes">Incluir imágenes<a class="headerlink" href="#incluir-imagenes" title="Permanent link">&para;</a></h3>
+<p>Dentro de las tarjetas podemos añadir imágenes. Vamos a incluir una carpeta llamada <code>assets</code> dentro de <code>public/</code> y dentro de esta carpeta creamos otra llamada <code>images/</code>. En esta carpeta vamos a incluir las imágenes que queramos usar en la aplicación. Copiamos una imagen de ejemplo en <code>public/assets/images/</code> y la llamamos <code>servicios.png</code>.</p>
+<p>Para añadir esta imagen de manera estática, modificamos la tarjeta:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>&lt;div
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>class="card"&gt;
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>&lt;h2&gt;{{
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>$title }}&lt;/h2&gt;
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>&lt;img
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>src="assets/
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>images/
+<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>servicios.png"
+<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>alt="Servicio"&gt;
+<a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a>&lt;p&gt;{{
+<a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a>$content }}&lt;/p&gt;
+<a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a>&lt;/div&gt;
+</code></pre></div>
+<p>Pero con esto no es la mejor forma de hacerlo. Laravel tiene una función llamada <code>asset()</code> que nos permite generar la URL correcta para acceder a los recursos estáticos. Así que lo mejor utilizar la función <code>asset()</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>&lt;div
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>class="card"&gt;
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>&lt;h2&gt;{{
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>$title }}&lt;/h2&gt;
+<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>&lt;img
+<a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>src="{{
+<a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>asset('assets/
+<a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a>images/
+<a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>servicios.png')
+<a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a>}}"
+<a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a>alt="Servicio"
+<a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a>width="128px"&gt;
+<a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a>&lt;p&gt;{{
+<a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a>$content }}&lt;/p&gt;
+<a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a>&lt;/div&gt;
+</code></pre></div>
+<p>Las imágenes deben estar en <code>public/</code> <code>assets/images/</code> y la función <code>asset()</code> generará la URL correcta para acceder a ellas.</p>
+<h3 id="incluir-archivos-css">Incluir archivos CSS<a class="headerlink" href="#incluir-archivos-css" title="Permanent link">&para;</a></h3>
+<p>Igual que hemos incluido las imágenes, podemos incluir archivos CSS. En la carpeta <code>assets/css/</code> creamos un archivo <code>style.css</code> y lo enlazamos en el layout. Este archivo contendrá los estilos CSS que queramos aplicar a la aplicación.</p>
+<p>Aunque CSS no es objetivo del curso, vamos a ver cómo incluirlo en el layout. Y pondremos alagunas reglas para mejorar el diseño de nuestra web.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>&lt;link
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>rel="stylesheet"
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>href="{{
+<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>asset('assets/css/
+<a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>style.css') }}"&gt;
+</code></pre></div>
+<p>El fichero puede tener el siguiente contenido de prueba:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>h1 {
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>color:
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>darkblue;
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>}
+</code></pre></div>
+<p>Si probamos la aplicación, veremos que el título de cada página es azul oscuro.</p>
+<h3 id="mejorar-el-diseno">Mejorar el diseño<a class="headerlink" href="#mejorar-el-diseno" title="Permanent link">&para;</a></h3>
+<p>Vamos a mejorar el diseño de las tarjetas y del menú de navegación. En el archivo <code>style.css</code> añadimos los siguientes estilos:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>body {
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>font-
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>family: Arial,
+<a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>sans-serif;
+<a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>
+<a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a>background-
+<a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a>color:
+<a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a>#f4f4f4;
+<a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a>}
+<a id="__codelineno-35-10" name="__codelineno-35-10" href="#__codelineno-35-10"></a>h1 {
+<a id="__codelineno-35-11" name="__codelineno-35-11" href="#__codelineno-35-11"></a>color:
+<a id="__codelineno-35-12" name="__codelineno-35-12" href="#__codelineno-35-12"></a>darkblue;
+<a id="__codelineno-35-13" name="__codelineno-35-13" href="#__codelineno-35-13"></a>}
+<a id="__codelineno-35-14" name="__codelineno-35-14" href="#__codelineno-35-14"></a>h2 {
+<a id="__codelineno-35-15" name="__codelineno-35-15" href="#__codelineno-35-15"></a>color:
+<a id="__codelineno-35-16" name="__codelineno-35-16" href="#__codelineno-35-16"></a>#333;
+<a id="__codelineno-35-17" name="__codelineno-35-17" href="#__codelineno-35-17"></a>}
+<a id="__codelineno-35-18" name="__codelineno-35-18" href="#__codelineno-35-18"></a>p {
+<a id="__codelineno-35-19" name="__codelineno-35-19" href="#__codelineno-35-19"></a>color:
+<a id="__codelineno-35-20" name="__codelineno-35-20" href="#__codelineno-35-20"></a>#666;
+<a id="__codelineno-35-21" name="__codelineno-35-21" href="#__codelineno-35-21"></a>}
+<a id="__codelineno-35-22" name="__codelineno-35-22" href="#__codelineno-35-22"></a>.card {
+<a id="__codelineno-35-23" name="__codelineno-35-23" href="#__codelineno-35-23"></a>border:
+<a id="__codelineno-35-24" name="__codelineno-35-24" href="#__codelineno-35-24"></a>1px solid
+<a id="__codelineno-35-25" name="__codelineno-35-25" href="#__codelineno-35-25"></a>#ccc;
+<a id="__codelineno-35-26" name="__codelineno-35-26" href="#__codelineno-35-26"></a>padding:
+<a id="__codelineno-35-27" name="__codelineno-35-27" href="#__codelineno-35-27"></a>15px;
+<a id="__codelineno-35-28" name="__codelineno-35-28" href="#__codelineno-35-28"></a>margin:
+<a id="__codelineno-35-29" name="__codelineno-35-29" href="#__codelineno-35-29"></a>10px;
+<a id="__codelineno-35-30" name="__codelineno-35-30" href="#__codelineno-35-30"></a>display:
+<a id="__codelineno-35-31" name="__codelineno-35-31" href="#__codelineno-35-31"></a>inline-block;
+<a id="__codelineno-35-32" name="__codelineno-35-32" href="#__codelineno-35-32"></a>width:
+<a id="__codelineno-35-33" name="__codelineno-35-33" href="#__codelineno-35-33"></a>200px;
+<a id="__codelineno-35-34" name="__codelineno-35-34" href="#__codelineno-35-34"></a>}
+<a id="__codelineno-35-35" name="__codelineno-35-35" href="#__codelineno-35-35"></a>
+<a id="__codelineno-35-36" name="__codelineno-35-36" href="#__codelineno-35-36"></a>nav ul {
+<a id="__codelineno-35-37" name="__codelineno-35-37" href="#__codelineno-35-37"></a>display:
+<a id="__codelineno-35-38" name="__codelineno-35-38" href="#__codelineno-35-38"></a>flex;
+<a id="__codelineno-35-39" name="__codelineno-35-39" href="#__codelineno-35-39"></a>gap: 20px;
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>g p p;
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>list-
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>style: none;
+<a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>}
+<a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>
+<a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a>nav a {
+<a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a>text-
+<a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a>decoration:
+<a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a>none;
+<a id="__codelineno-36-10" name="__codelineno-36-10" href="#__codelineno-36-10"></a>font-
+<a id="__codelineno-36-11" name="__codelineno-36-11" href="#__codelineno-36-11"></a>weight: bold;
+<a id="__codelineno-36-12" name="__codelineno-36-12" href="#__codelineno-36-12"></a>}
+</code></pre></div>
+<h2 id="conclusion">* Conclusión<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
+<p>En este tema hemos aprendido:</p>
+<ul>
+<li>
+<p>Crear vistas en Blade.</p>
+</li>
+<li>
+<p>Reutilizar layouts y partials.</p>
+</li>
+<li>
+<p>Crear componentes para código repetitivo.</p>
+</li>
+<li>
+<p>Incluir imágenes y CSS en el proyecto.</p>
+</li>
+</ul>
+<p>Con estas bases, estamos preparados para empezar a trabajar en proyectos más complejos usando Laravel y Blade de forma profesional.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      IES JUAN DE GARAY - 2º DWES · Curso original de Beteta adaptado por Eva María Gómez Abad
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

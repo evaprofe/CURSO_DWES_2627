@@ -1,0 +1,3902 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Apuntes de Desarrollo Web en Entorno Servidor">
+      
+      
+        <meta name="author" content="Eva María Gómez Abad">
+      
+      
+        <link rel="canonical" href="https://evaprofe.github.io/CURSO_DWES_2627/tema-05-controladores/5-1-controladores-de-laravel-introduccion-a-laravel/">
+      
+      
+        <link rel="prev" href="../../tema-04-migraciones-modelos/4-2-actividad-del-tema-4-introduccion-a-laravel/">
+      
+      
+        <link rel="next" href="../unidad-5-2-relaciones-uno-a-muchos-en-laravel-introduccion-a-laravel/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>5.1 Controladores - Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#controladores" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-header__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5.1 Controladores
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Activar modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Activar modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-nav__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introducción al Desarrollo Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1. Introducción al Desarrollo Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/introduccion-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1 Desarrollo Web en el Servidor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2 Patrón Modelo-Vista-Controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.3 Protocolo HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 1 · MVC y HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Frameworks y Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2. Frameworks y Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1 Introducción a los Frameworks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-2-configuracion-del-entorno-de-trabajo-con-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.2 Entorno de Trabajo con Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-3-instalacion-y-puesta-en-marcha-de-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.3 Instalación y Puesta en Marcha
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-4-estructura-y-elementos-de-un-proyecto-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.4 Estructura de un Proyecto Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/2-5-actividad-del-tema-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 2 · Introducción a Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/anexos-tailwind-css/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anexo · Tailwind CSS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/instrucciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guía del Entorno
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tema-02-frameworks-laravel/proyecto-github/docs/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🚀 Proyecto Guiado · Entorno Laravel
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🚀 Proyecto Guiado · Entorno Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/requisitos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso1-preparacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 1 · Preparación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso7-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 7 · Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso9-mysql-cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 9 · MySQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/paso10-xdebug/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paso 10 · Xdebug
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/instrucciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instrucciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-02-frameworks-laravel/proyecto-github/conclusion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conclusión
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. Vistas con Blade
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-03-vistas-blade/3-1-vistas-con-blade-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Creación de Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-03-vistas-blade/3-2-actividad-del-tema-3-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 3 · Agencia de Viajes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4. Migraciones y Modelos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-04-migraciones-modelos/4-1-migraciones-y-modelos-con-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 Migraciones y Modelos en Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-04-migraciones-modelos/4-2-actividad-del-tema-4-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 4 · Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Controladores de Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5. Controladores de Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Controladores
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Controladores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparacion-del-entorno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preparación del Entorno
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Preparación del Entorno">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-la-base-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear la Base de Datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejecutar-las-migraciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejecutar las Migraciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creacion-del-primer-circuito-mvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación del Primer Circuito MVC
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creación del Primer Circuito MVC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-un-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear un Controlador
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementacion-basica-del-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementación Básica del Controlador
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asociar-la-ruta-con-el-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asociar la Ruta con el Controlador
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comprobaciones-iniciales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comprobaciones Iniciales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-la-vista-de-usuarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear la Vista de Usuarios
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probar-el-circuito" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        = Probar el Circuito
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trabajar-desde-el-controlador-con-el-modelo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trabajar desde el controlador con el Modelo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Trabajar desde el controlador con el Modelo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-recuperar-informacion-con" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Recuperar Información con
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-pasar-datos-a-la-vista" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Pasar Datos a la Vista
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-modificar-la-vista-para-mostrar-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Modificar la Vista para Mostrar Datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-crear-datos-de-prueba" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Crear Datos de Prueba
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consultas-avanzadas-desde-el-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consultas avanzadas desde el controlador
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Consultas avanzadas desde el controlador">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uso-de-where" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uso de where()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encadenar-where" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Encadenar where()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#otros-metodos-de-consulta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Otros métodos de consulta
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejemplos-de-consultas-avanzadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplos de consultas avanzadas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resumen-de-todo-lo-aprendido" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resumen de todo lo aprendido
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acceso-a-base-de-datos-alternativo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acceso a Base de Datos Alternativo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Acceso a Base de Datos Alternativo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uso-de-sql-puro-con-db-raw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uso de SQL Puro con DB Raw
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodos-estaticos-de-db" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métodos estáticos de DB
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparativa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparativa
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#otras-opciones-orm-en-php" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Otras Opciones ORM en PHP
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unidad-5-2-relaciones-uno-a-muchos-en-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.2 Relaciones Uno a Muchos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../actividad-del-tema-5-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 5 · Controladores y Rutas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Desarrollo CRUD Completo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. Desarrollo CRUD Completo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-06-crud-completo/6-1-desarrollo-de-un-crud-completo-en-laravel-parte-1-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1 Desarrollo de un CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-06-crud-completo/6-2-actividad-del-tema-6-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 6 · CRUD de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-07-validaciones-rutas-mensajes/7-1-validaciones-rutas-resource-y-mensajes-del-sistema-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.1 Validaciones y Rutas Resource
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-07-validaciones-rutas-mensajes/actividad-del-tema-7-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 7 · Validaciones del CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. API REST
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    8. API REST
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-1-apis-restful-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.1 Creación de API REST
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-2-apis-con-sanctum-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.2 API con Sanctum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-3-actividad-del-tema-8-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 8 · API de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Seeders, Factories y Faker
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    9. Seeders, Factories y Faker
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-09-seeders-factories-faker/9-1-creacion-de-datos-iniciales-y-de-prueba-seeders-factories-y-faker-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9.1 Datos Iniciales y de Prueba
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-09-seeders-factories-faker/actividad-del-tema-9-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 9 · Generación de Datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-1-introduccion-al-despliegue-de-aplicaciones-web-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.1 Introducción al Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-2-aplicacion-simple-con-estructura-precaria-php-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.2 Aplicación PHP Sencilla
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-3-aplicacion-completa-con-estructura-de-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.3 Aplicación Laravel Completa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-4-despliegue-en-paas-render-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.4 Despliegue en Render
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-5-actividad-del-tema-10-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 10 · Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparacion-del-entorno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preparación del Entorno
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Preparación del Entorno">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-la-base-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear la Base de Datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejecutar-las-migraciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejecutar las Migraciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creacion-del-primer-circuito-mvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación del Primer Circuito MVC
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creación del Primer Circuito MVC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-un-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear un Controlador
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementacion-basica-del-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementación Básica del Controlador
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asociar-la-ruta-con-el-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asociar la Ruta con el Controlador
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comprobaciones-iniciales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comprobaciones Iniciales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-la-vista-de-usuarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear la Vista de Usuarios
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probar-el-circuito" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        = Probar el Circuito
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trabajar-desde-el-controlador-con-el-modelo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trabajar desde el controlador con el Modelo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Trabajar desde el controlador con el Modelo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-recuperar-informacion-con" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Recuperar Información con
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-pasar-datos-a-la-vista" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Pasar Datos a la Vista
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-modificar-la-vista-para-mostrar-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Modificar la Vista para Mostrar Datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-crear-datos-de-prueba" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Crear Datos de Prueba
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consultas-avanzadas-desde-el-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consultas avanzadas desde el controlador
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Consultas avanzadas desde el controlador">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uso-de-where" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uso de where()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encadenar-where" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Encadenar where()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#otros-metodos-de-consulta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Otros métodos de consulta
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejemplos-de-consultas-avanzadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplos de consultas avanzadas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resumen-de-todo-lo-aprendido" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resumen de todo lo aprendido
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acceso-a-base-de-datos-alternativo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acceso a Base de Datos Alternativo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Acceso a Base de Datos Alternativo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uso-de-sql-puro-con-db-raw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uso de SQL Puro con DB Raw
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodos-estaticos-de-db" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métodos estáticos de DB
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparativa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparativa
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#otras-opciones-orm-en-php" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Otras Opciones ORM en PHP
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="controladores">Controladores<a class="headerlink" href="#controladores" title="Permanent link">&para;</a></h1>
+<h2 id="introduccion">Introducción<a class="headerlink" href="#introduccion" title="Permanent link">&para;</a></h2>
+<p>Los <strong>controladores</strong> son el componente que conecta las <strong>rutas</strong> con los <strong>modelos</strong> y las <strong>vistas</strong>. Con este tema completaremos el ciclo de creación de una aplicación web en Laravel siguiendo el patrón MVC.</p>
+<p>Un controlador recibe las solicitudes de los usuarios, consulta los modelos si necesita datos, y devuelve una respuesta adecuada (generalmente una vista).</p>
+<h2 id="preparacion-del-entorno">Preparación del Entorno<a class="headerlink" href="#preparacion-del-entorno" title="Permanent link">&para;</a></h2>
+<h3 id="crear-la-base-de-datos">Crear la Base de Datos<a class="headerlink" href="#crear-la-base-de-datos" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>1</strong>. Crear una base de datos nueva llamada <code>laravel</code> en tu gestor de base de datos MySQL, SQLite, etc.). Si la tenemos creada del tema anterior podemos usar:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>php artisan
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>migrate:reset
+</code></pre></div>
+<ol>
+<li><strong>2</strong>. Configurar la conexión en el archivo <code>.env</code>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>DB_CONNECTION=mysql
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>DB_HOST=mysql
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>DB_PORT=3306
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>DB_DATABASE=laravel
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>DB_USERNAME=alumno
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>DB_PASSWORD=alumno
+</code></pre></div>
+<ol>
+<li><strong>3</strong>. Modificar la migración <code>create_users_table.php</code>, hemos añadido los campos <code>age</code>, <code>address</code> y <code>zipCode</code>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>&lt;?php
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Schema::creat
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>function (Blu
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>$tabl
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>$tabl
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>$tabl
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>&gt;string('emai
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>$tabl
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>&gt;string('pass
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>$tabl
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>&gt;unsignedInte
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>&gt;default(18);
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>$tabl
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>&gt;string('addr
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>$tabl
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>&gt;unsignedBigI
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>&gt;nullable();
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>$tabl
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>&gt;rememberToke
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>$tabl
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>});
+</code></pre></div>
+<h3 id="ejecutar-las-migraciones">Ejecutar las Migraciones<a class="headerlink" href="#ejecutar-las-migraciones" title="Permanent link">&para;</a></h3>
+<p>Una vez hemos modificado la migración de <code>users</code>, ejecutamos el comando para crear la tabla:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>php artisan migrate
+</code></pre></div>
+<p>Comprobar que se crean las tablas correctamente.</p>
+<h2 id="creacion-del-primer-circuito-mvc">Creación del Primer Circuito MVC<a class="headerlink" href="#creacion-del-primer-circuito-mvc" title="Permanent link">&para;</a></h2>
+<p>Vamos a crear un circuito básico que nos permita ver cómo funcionan los controladores, las vistas y los modelos en Laravel. Para ello crearemos una aplicación (circuito completo) que muestre una lista de usuarios.</p>
+<h3 id="crear-un-controlador">Crear un Controlador<a class="headerlink" href="#crear-un-controlador" title="Permanent link">&para;</a></h3>
+<p>Hasta ahora hemos trabajado con las vistas <code>blade</code> y los modelos. Pero para completar el ciclo MVC, necesitamos un controlador que conecte las vistas con los modelos. El controlador se encargará de recibir las peticiones del usuario, consultar los modelos y devolver la vista correspondiente.</p>
+<p>Crear un nuevo controlador <code>UserController</code>, para ello vamos a usar el comando de Artisan. Los controladores los denominamos con el sufijo <code>Controller</code> y los colocamos en la carpeta <code>app/Http/Controllers</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>php artisan
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>make:controller
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>UserController
+</code></pre></div>
+<p>y obtenemos el siguiente resultado:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>&lt;?php
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>namespace
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>App\Http\Controll
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>use
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>Illuminate\Http\R
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>class UserControl
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>extends Controlle
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>{
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>//
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>}
+</code></pre></div>
+<p>Esta clase será la base de nuestro controlador. Se encarga de gestionar las peticiones HTTP y devolver las respuestas adecuadas. En este caso, el controlador <code>UserController</code> se encargará de gestionar las peticiones relacionadas con los usuarios. En este momento no tiene ningún método, pero podemos añadir los que necesitemos.</p>
+<h3 id="implementacion-basica-del-controlador">Implementación Básica del Controlador<a class="headerlink" href="#implementacion-basica-del-controlador" title="Permanent link">&para;</a></h3>
+<p>Crear un método <code>index()</code>, este método mostrará de momento un mensaje de depuración. Este método se encargará de gestionar la petición GET a la ruta <code>/</code> y devolverá una vista con el listado de usuarios.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>&lt;?php
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>public function in
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>{
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>dd('Hola desde
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>UserController@ind
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>}
+</code></pre></div>
+<h3 id="asociar-la-ruta-con-el-controlador">Asociar la Ruta con el Controlador<a class="headerlink" href="#asociar-la-ruta-con-el-controlador" title="Permanent link">&para;</a></h3>
+<p>En <code>routes/web.php</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>&lt;?php
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>use
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Illuminate\Support
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>use
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>App\Http\Controlle
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>Route::get('/',
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>[UserController::c
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>&gt;name('user.index
+</code></pre></div>
+<h3 id="comprobaciones-iniciales">Comprobaciones Iniciales<a class="headerlink" href="#comprobaciones-iniciales" title="Permanent link">&para;</a></h3>
+<p>Acceder a http://localhost:8080/ y comprobar que aparece el mensaje de depuración. Debe aparecer el mensaje <code>Hola desde UserController@index</code>, que creamos en la función <code>index()</code> del controlador <code>UserController</code>.</p>
+<p>Si no aparece, comprobar que el servidor de desarrollo está en marcha y que la ruta está correctamente configurada.</p>
+<h3 id="crear-la-vista-de-usuarios">Crear la Vista de Usuarios<a class="headerlink" href="#crear-la-vista-de-usuarios" title="Permanent link">&para;</a></h3>
+<p>Pero el objetivo no es mostrar un mensaje de depuración, sino una vista con el listado de usuarios. Para ello, vamos a crear una vista <code>users/</code> <code>index.blade.php</code> que mostrará el listado de usuarios. Recuerda que la carpeta <code>views</code> está dentro de la carpeta <code>resources</code>. Vamos a crear una carpeta <code>users</code> dentro de <code>views</code> y dentro de esta carpeta crearemos el archivo <code>index.blade.php</code>.</p>
+<p>Crear un archivo <code>/users/</code> <code>index.blade.php</code> con contenido:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>&lt;!DOCTYPE html&gt;
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>&lt;html lang="en"&gt;
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>&lt;head&gt;
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>&lt;meta
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>charset="UTF-8"&gt;
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>&lt;meta
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>name="viewport"
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>content="width=de
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>width, initial-
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>scale=1.0"&gt;
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>&lt;meta http-
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>equiv="X-UA-
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>Compatible"
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>content="ie=edge
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>&lt;title&gt;Usuari
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>title&gt;
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>&lt;/head&gt;
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>&lt;body&gt;
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>&lt;h1&gt;Lista de
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>usuarios&lt;/h1&gt;
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>&lt;/body&gt;
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>&lt;/html&gt;
+</code></pre></div>
+<h3 id="probar-el-circuito">= Probar el Circuito<a class="headerlink" href="#probar-el-circuito" title="Permanent link">&para;</a></h3>
+<p>Ahora hay que completar el controlador para que devuelva la vista que acabamos de crear. Para ello, en el método <code>index()</code> del controlador <code>UserController</code>, vamos a devolver la vista <code>users/index.blade.php</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>&lt;?php
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>public function
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>index() {
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>return
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>view('users.index
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>}
+</code></pre></div>
+<p>Acceder de nuevo a la URL y comprobar que se carga la vista.</p>
+<h2 id="trabajar-desde-el-controlador-con-el-modelo">Trabajar desde el controlador con el Modelo<a class="headerlink" href="#trabajar-desde-el-controlador-con-el-modelo" title="Permanent link">&para;</a></h2>
+<p>El siguiente paso es recuperar los datos de la base de datos. Para ello, vamos a usar el modelo <code>User</code> que hemos creado anteriormente. Este modelo se encarga de gestionar la tabla <code>users</code> de la base de datos.</p>
+<h3 id="1-recuperar-informacion-con">1. Recuperar Información con<a class="headerlink" href="#1-recuperar-informacion-con" title="Permanent link">&para;</a></h3>
+<p><code>all()</code></p>
+<p>Ahora vamos a modificar el método <code>index()</code> del controlador <code>UserController</code> para que recupere todos los usuarios de la base de datos y los pase a la vista.</p>
+<p>Para ello primero tenemos que hacer referencia al modelo <code>User</code> en la parte superior del controlador:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>&lt;?php
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>use App\Models\User;
+</code></pre></div>
+<p>Ahora podemos utilizar los métodos del modelo <code>User</code> para recuperar los datos. Como <code>User</code> extiende de <code>Model</code>, podemos usar el método <code>all()</code> para recuperar todos los usuarios de la base de datos. Este método devuelve una colección de usuarios que podemos pasar a la vista. Internemante está ejecutando una sentencia <code>sql</code> como la siguiente:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>SELECT * FROM users;
+</code></pre></div>
+<p>Más adelante nos pararemos a ver estos métodos estáticos que ofrecen los modelos de Eloquent.</p>
+<p>El quivalente a la sentencia SQL anterior en Eloquent es:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>&lt;?php
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>$usuarios = User::all();
+</code></pre></div>
+<p>El modelo quedará como sigue:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>&lt;?php
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>use App\Models\Us
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>use
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>Illuminate\Http\R
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>namespace
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>App\Http\Controll
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>class UserControl
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>extends Controlle
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>{
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>public functi
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>index() {
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>$usuarios
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>User::all();
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>return
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>view('users.index
+<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>}
+<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>}
+</code></pre></div>
+<h3 id="2-pasar-datos-a-la-vista">2. Pasar Datos a la Vista<a class="headerlink" href="#2-pasar-datos-a-la-vista" title="Permanent link">&para;</a></h3>
+<p>Si analizamos la clase anterior, vemos que tenemos aún un problema. No estamos pasando los datos a la vista. Para ello, tenemos que modificar la línea que devuelve la vista para que pase la colección de usuarios a la vista.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>&lt;?php
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>return
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>view('users.index',
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>['usuarios' =&gt;
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>$usuarios]);
+</code></pre></div>
+<p>De esta manera le pasamos un array asociativo a la vista, donde la clave <code>usuarios</code> contendrá la colección de usuarios que hemos recuperado de la base de datos. En <code>Laravel</code> cuando en un array asociativo la clave y el valor son iguales, podemos usar la sintaxis simplificada:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>&lt;?php
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>return
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>view('users.index',
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>compact('usuarios'));
+</code></pre></div>
+<p>La función <code>compact()</code> crea un array asociativo con las variables que le pasamos como parámetros. En este caso, creará un array con la clave <code>usuarios</code> y el valor de la variable <code>$usuarios</code>. Si tuvieramos que pasar más variables, podríamos hacerlo de la siguiente manera:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>&lt;?php
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>return
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>view('users.index',
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>compact('usuarios',
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>'otraVariable',
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>'otraVariable2'
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>)
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>);
+</code></pre></div>
+<p>Ahora el método <code>index()</code> del controlador quedará así:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>&lt;?php
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>public function
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>index() {
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>$usuarios =
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>User::all();
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>return
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>view('users.index
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>compact('usuarios
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>}
+</code></pre></div>
+<h3 id="3-modificar-la-vista-para-mostrar-datos">3. Modificar la Vista para Mostrar Datos<a class="headerlink" href="#3-modificar-la-vista-para-mostrar-datos" title="Permanent link">&para;</a></h3>
+<p>Vamos a modificar la vista <code>users/</code> <code>index.blade.php</code> para que muestre el listado de usuarios. Para ello, vamos a usar la sintaxis de <code>Blade</code> para mostrar los datos.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>&lt;h1&gt;Listado de
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>Usuarios&lt;/h1&gt;
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>&lt;ul&gt;
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>@foreach
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>($usuarios as
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>$usuario)
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>&lt;li&gt;{{
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>$loop-
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>&gt;iteration }}.
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>{{
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>$usuario-&gt;name
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>}}
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>({{
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>$usuario-&gt;age
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>}} años)
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>&lt;/li&gt;
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>
+<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a>@endforeach
+<a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a>&lt;/ul&gt;
+</code></pre></div>
+<p>La directiva <code>@foreach</code> nos permite recorrer la colección de usuarios y mostrar cada uno de ellos. La variable <code>$loop</code> es una variable especial que nos permite acceder a información sobre el bucle, como el índice actual ( <code>$loop-</code> <code>&gt;iteration</code>) o si es el primer o último elemento del bucle. Otras opciones son:</p>
+<p><code>$loop-</code> Indica el número de <code>&gt;iteratio</code> iteración actual (empezando desde 1.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>n
+</code></pre></div>
+<p><code>$loop-</code> Indica el número total de elementos en el bucle.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>&gt;count
+</code></pre></div>
+<p><code>$loop-</code> Indica si es el primer elemento del bucle.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>&gt;first
+</code></pre></div>
+<p><code>$loop-</code> Indica si es el último elemento del bucle.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>&gt;last
+</code></pre></div>
+<p><code>$loop-</code> Indica el índice actual del bucle (empezando desde</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>&gt;index
+</code></pre></div>
+<ol>
+<li></li>
+</ol>
+<p><code>$loop-</code> Indica cuántos elementos quedan por recorrer.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>&gt;remainin
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>g
+</code></pre></div>
+<p><code>$loop-</code> Indica la profundidad del bucle (en caso de bucles</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>&gt;depth
+</code></pre></div>
+<p>anidados).</p>
+<p>Vamos a probar ahora si estas modificaciones funcionan correctamente. Acceder a la URL http://localhost:8080/ y comprobar que se muestra el listado de usuarios. Podemos ver que sólo se muestra el título de la página, ya que no tenemos usuarios en la base de datos. Para poder mejorar esta situación vamos a añadir un mensaje que indique que no hay usuarios disponibles. Para ello utilizaremos la directiva <code>@if</code> de <code>Blade</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>&lt;h1&gt;Listado de
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>Usuarios&lt;/h1&gt;
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>@if
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>($usuarios-
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>&gt;isEmpty())
+<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>&lt;p&gt;No hay
+<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>usuarios
+<a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>disponibles.&lt;/
+<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>p&gt;
+<a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a>@else
+<a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a>&lt;ul&gt;
+<a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a>
+<a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a>@foreach
+<a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a>($usuarios as
+<a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a>$usuario)
+<a id="__codelineno-26-17" name="__codelineno-26-17" href="#__codelineno-26-17"></a>
+<a id="__codelineno-26-18" name="__codelineno-26-18" href="#__codelineno-26-18"></a>&lt;li&gt;{{ $loop-
+<a id="__codelineno-26-19" name="__codelineno-26-19" href="#__codelineno-26-19"></a>&gt;iteration }}.
+<a id="__codelineno-26-20" name="__codelineno-26-20" href="#__codelineno-26-20"></a>
+<a id="__codelineno-26-21" name="__codelineno-26-21" href="#__codelineno-26-21"></a>{{ $usuario-
+<a id="__codelineno-26-22" name="__codelineno-26-22" href="#__codelineno-26-22"></a>&gt;name }} ({{
+<a id="__codelineno-26-23" name="__codelineno-26-23" href="#__codelineno-26-23"></a>$usuario-&gt;age
+<a id="__codelineno-26-24" name="__codelineno-26-24" href="#__codelineno-26-24"></a>}} años)
+<a id="__codelineno-26-25" name="__codelineno-26-25" href="#__codelineno-26-25"></a>&lt;/
+<a id="__codelineno-26-26" name="__codelineno-26-26" href="#__codelineno-26-26"></a>li&gt;
+<a id="__codelineno-26-27" name="__codelineno-26-27" href="#__codelineno-26-27"></a>
+<a id="__codelineno-26-28" name="__codelineno-26-28" href="#__codelineno-26-28"></a>@endforeach
+<a id="__codelineno-26-29" name="__codelineno-26-29" href="#__codelineno-26-29"></a>&lt;/ul&gt;
+<a id="__codelineno-26-30" name="__codelineno-26-30" href="#__codelineno-26-30"></a>@endif
+</code></pre></div>
+<p>Podemos ver que hemos añadido una comprobación para ver si la colección de usuarios está vacía. Si está vacía, mostramos un mensaje indicando que no hay usuarios disponibles. Si hay usuarios, mostramos el listado.</p>
+<p><code>Blade</code> también nos permite usar la directiva <code>@switch</code> para realizar comprobaciones múltiples. En este caso, vamos a comprobar la edad de cada usuario y mostrar un mensaje diferente según su edad.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>@foreach
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>($usuarios as
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>$usuario)
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>@switch(true)
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>@case($usuario-
+<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>&gt;age &lt; 18)
+<a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a>
+<a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a>&lt;p&gt;{{ $usuario-
+<a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a>&gt;name }} es
+<a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a>menor de
+<a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a>edad.&lt;/p&gt;
+<a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a>
+<a id="__codelineno-27-15" name="__codelineno-27-15" href="#__codelineno-27-15"></a>@break
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>@case($usuario-
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>&gt;age &gt;= 18 &amp;&amp;
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>$usuario-&gt;age
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>&lt;= 65)
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>
+<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>&lt;p&gt;{{ $usuario-
+<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>&gt;name }} es
+<a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>adulto.&lt;/p&gt;
+<a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a>
+<a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a>@break
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>@default
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>&lt;p&gt;{{ $usuario-
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>&gt;name }} es
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>jubilado.&lt;/p&gt;
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>@endswitch
+<a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>@endforeach
+</code></pre></div>
+<p>En este caso, estamos comprobando la edad de cada usuario y mostrando un mensaje diferente según su edad. La directiva <code>@switch</code> nos permite realizar comprobaciones múltiples de una manera más legible que usando múltiples <code>if</code>.</p>
+<h3 id="4-crear-datos-de-prueba">4. Crear Datos de Prueba<a class="headerlink" href="#4-crear-datos-de-prueba" title="Permanent link">&para;</a></h3>
+<p>Ahora que tenemos el circuito completo, vamos a crear algunos usuarios de prueba para poder ver cómo funciona la aplicación. Lo lógico sería tener un formulario para crear usuarios, pero para simplificar el proceso, vamos a crear un método en el controlador que inserte un usuario de prueba directamente en la base de datos. Para ello, vamos a crear un método <code>create()</code> en el controlador <code>UserController</code> que se encargará de crear un usuario de prueba. Este método se encargará de insertar un usuario en la base de datos y redirigir a la vista de listado de usuarios. Este método se llamará cuando accedamos a la ruta <code>/</code> <code>create</code>.</p>
+<p>Crear Ruta y Método Create</p>
+<p>Para crear los usuarios vamos a aprovechar y utilizar diferentes formas de insertar datos en la base de datos. Vamos a crear un usuario de prueba directamente en el controlador y otro usuario usando el método <code>create()</code> del modelo <code>User</code>. Para ello, vamos a crear un nuevo método <code>create()</code> en el controlador <code>UserController</code> que se encargará de crear los usuarios.</p>
+<p>Para el password vamos a usar el método <code>Hash:make()</code> para encriptar la contraseña. Este método se encarga de encriptar la contraseña usando el algoritmo de encriptación que tengamos configurado en el archivo <code>.env</code>. Por defecto, Laravel usa el algoritmo <code>bcrypt</code>, que es un algoritmo seguro y recomendado para encriptar contraseñas. Para poder usar este método, tenemos que importar la clase <code>Hash</code> en la parte superior del controlador:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>&lt;?php
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>use
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>Illuminate\Support
+</code></pre></div>
+<p>Por último vamos a utilizar la función <code>redirect()</code> para redirigir al usuario a la vista de listado de usuarios después de crear el usuario. Esta función se encarga de redirigir al usuario a la ruta que le indiquemos. En este caso, redirigimos a la ruta <code>user.index</code>, que es la ruta que hemos creado anteriormente para mostrar el listado de usuarios. Así una vez creados los usuarios nos redirigiremos a la vista de listado de usuarios. Resaltar que en la redirección utilizamos el nombre de la ruta que hemos creado anteriormente, <code>user.index</code>, en lugar de la URL completa. Esto es una buena práctica, ya que si cambiamos la URL de la ruta, no tendremos que modificar el código del controlador.</p>
+<p>Acordarse de modificar el modelo y añadir a <code>$fillable</code> los campos que vamos a insertar. En este caso, los campos <code>name</code>, <code>email</code>, <code>password</code>, <code>age</code>, <code>address</code> y <code>zipCode</code>. De esta manera, Eloquent podrá insertar los datos en la base de datos sin problemas.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>&lt;?php
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>public function
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>create() {
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>// creamos el
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>usuario María
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>utilizando el mod
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>$usuario = ne
+<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>User();
+<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>$usuario-&gt;nam
+<a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a>'María García';
+<a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a>$usuario-&gt;ema
+<a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a>'mgarcia@example
+<a id="__codelineno-31-13" name="__codelineno-31-13" href="#__codelineno-31-13"></a>$usuario-&gt;pas
+<a id="__codelineno-31-14" name="__codelineno-31-14" href="#__codelineno-31-14"></a>= Hash::make('123
+<a id="__codelineno-31-15" name="__codelineno-31-15" href="#__codelineno-31-15"></a>$usuario-&gt;age
+<a id="__codelineno-31-16" name="__codelineno-31-16" href="#__codelineno-31-16"></a>$usuario-&gt;add
+<a id="__codelineno-31-17" name="__codelineno-31-17" href="#__codelineno-31-17"></a>'Calle Mayor 1';
+<a id="__codelineno-31-18" name="__codelineno-31-18" href="#__codelineno-31-18"></a>$usuario-&gt;zip
+<a id="__codelineno-31-19" name="__codelineno-31-19" href="#__codelineno-31-19"></a>28080;
+<a id="__codelineno-31-20" name="__codelineno-31-20" href="#__codelineno-31-20"></a>$usuario-&gt;sav
+<a id="__codelineno-31-21" name="__codelineno-31-21" href="#__codelineno-31-21"></a>
+<a id="__codelineno-31-22" name="__codelineno-31-22" href="#__codelineno-31-22"></a>// creamos el
+<a id="__codelineno-31-23" name="__codelineno-31-23" href="#__codelineno-31-23"></a>usuario Juan Pére
+<a id="__codelineno-31-24" name="__codelineno-31-24" href="#__codelineno-31-24"></a>utilizando el mét
+<a id="__codelineno-31-25" name="__codelineno-31-25" href="#__codelineno-31-25"></a>create()
+<a id="__codelineno-31-26" name="__codelineno-31-26" href="#__codelineno-31-26"></a>User::create
+<a id="__codelineno-31-27" name="__codelineno-31-27" href="#__codelineno-31-27"></a>'name' =&gt;
+<a id="__codelineno-31-28" name="__codelineno-31-28" href="#__codelineno-31-28"></a>Pérez',
+<a id="__codelineno-31-29" name="__codelineno-31-29" href="#__codelineno-31-29"></a>'email' =
+<a id="__codelineno-31-30" name="__codelineno-31-30" href="#__codelineno-31-30"></a>'jperez@example.c
+<a id="__codelineno-31-31" name="__codelineno-31-31" href="#__codelineno-31-31"></a>'password
+<a id="__codelineno-31-32" name="__codelineno-31-32" href="#__codelineno-31-32"></a>Hash::make('passw
+<a id="__codelineno-31-33" name="__codelineno-31-33" href="#__codelineno-31-33"></a>'age' =&gt;
+<a id="__codelineno-31-34" name="__codelineno-31-34" href="#__codelineno-31-34"></a>'address
+<a id="__codelineno-31-35" name="__codelineno-31-35" href="#__codelineno-31-35"></a>'Calle Falsa 123
+<a id="__codelineno-31-36" name="__codelineno-31-36" href="#__codelineno-31-36"></a>'zipCode
+<a id="__codelineno-31-37" name="__codelineno-31-37" href="#__codelineno-31-37"></a>28080
+<a id="__codelineno-31-38" name="__codelineno-31-38" href="#__codelineno-31-38"></a>]);
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>// creamos el
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>usuario José Flo
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>utilizando el mét
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>create()
+<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>User::create
+<a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>'name' =&gt;
+<a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>Flores',
+<a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a>'email' =
+<a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>'jflores@example
+<a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a>'password
+<a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a>Hash::make('flore
+<a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a>'age' =&gt;
+<a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a>'address
+<a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a>'Calle Falsa 123
+<a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a>'zipCode
+<a id="__codelineno-32-16" name="__codelineno-32-16" href="#__codelineno-32-16"></a>28080
+<a id="__codelineno-32-17" name="__codelineno-32-17" href="#__codelineno-32-17"></a>]);
+<a id="__codelineno-32-18" name="__codelineno-32-18" href="#__codelineno-32-18"></a>
+<a id="__codelineno-32-19" name="__codelineno-32-19" href="#__codelineno-32-19"></a>// redirigimo
+<a id="__codelineno-32-20" name="__codelineno-32-20" href="#__codelineno-32-20"></a>vista de listado
+<a id="__codelineno-32-21" name="__codelineno-32-21" href="#__codelineno-32-21"></a>usuarios
+<a id="__codelineno-32-22" name="__codelineno-32-22" href="#__codelineno-32-22"></a>return redire
+<a id="__codelineno-32-23" name="__codelineno-32-23" href="#__codelineno-32-23"></a>&gt;route('user.inde
+<a id="__codelineno-32-24" name="__codelineno-32-24" href="#__codelineno-32-24"></a>}
+</code></pre></div>
+<p>Una vez hemos modificado el controlador, tenemos que crear la ruta que se encargará de gestionar la petición a la URL <code>/create</code>. Esta ruta se encargará de llamar al método <code>create()</code> del controlador <code>UserController</code> y crear los usuarios. Para ello, vamos a crear una nueva ruta en el archivo <code>routes/</code> <code>web.php</code> que se encargará de gestionar la petición a la URL <code>/create</code>. En el archivo <code>routes/web.php</code> añadimos la siguiente línea:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>&lt;?php
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>Route::get('/create',
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>[UserController::class,
+<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>'create'])-
+<a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>&gt;name('user.create');
+</code></pre></div>
+<p>Comprobaciones</p>
+<p>Acceder a <code>/create</code>. Si todo va bien primero se crearán los usuarios y luego se nos redirigirá a la vista de listado de usuarios. Por tanto nos debe aparecer el listado de usuarios con los tres usuarios que hemos creado. Si no aparece, comprobar que el servidor de desarrollo está en marcha y que la ruta está correctamente configurada.</p>
+<p>http://localhost:8080/create</p>
+<h2 id="consultas-avanzadas-desde-el-controlador">Consultas avanzadas desde el controlador<a class="headerlink" href="#consultas-avanzadas-desde-el-controlador" title="Permanent link">&para;</a></h2>
+<p>Ahora que tenemos los usuarios creados y hemos visto conseguido crear un circuito MVC completo. Vamos a ver de qué manera podemos realizar consultas más avanzadas desde el controlador. Para ello, vamos a ver cómo podemos filtrar los usuarios según diferentes criterios. Vamos a ver cómo podemos filtrar los usuarios por edad, código postal y otros criterios.</p>
+<h3 id="uso-de-where">Uso de where()<a class="headerlink" href="#uso-de-where" title="Permanent link">&para;</a></h3>
+<p>El método <code>where()</code> nos permite filtrar los resultados de la consulta según diferentes criterios. Este método se encarga de añadir una cláusula <code>WHERE</code> a la consulta SQL que se genera. Por ejemplo, si queremos filtrar los usuarios por edad, podemos hacerlo de la siguiente manera:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>&lt;?php
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>$usuarios =
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>User::where('age', '&gt;=',
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>18)-&gt;get();
+</code></pre></div>
+<p>El segundo parámetro es el operador de comparación que queremos usar. Podemos usar los siguientes operadores:</p>
+<p><code>=</code> Igual</p>
+<p><code>!=</code> Diferente</p>
+<p><code>&gt;</code> Mayor que</p>
+<p><code>&gt;=</code> Mayor o igual que</p>
+<p><code>&lt;</code> Menor que</p>
+<p><code>&lt;=</code> Menor o igual que</p>
+<p><code>LIKE</code> Coincide con patrón</p>
+<p><code>NOT LIKE</code> No coincide con patrón Un ejemplo de que podemos usar el operador <code>LIKE</code> para filtrar los usuarios por nombre, por ejemplo si queremos filtrar los usuarios que empiezan por <code>M</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>&lt;?php
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>$usuarios =
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>User::where('name',
+<a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>'LIKE', 'M%')-&gt;get();
+</code></pre></div>
+<h3 id="encadenar-where">Encadenar where()<a class="headerlink" href="#encadenar-where" title="Permanent link">&para;</a></h3>
+<p>Encadenar <code>where()</code> nos permite añadir múltiples condiciones a la consulta. Sería como añadir múltiples cláusulas <code>WHERE</code> encadenadas por <code>AND</code> a la consulta SQL. Por ejemplo, si queremos filtrar los usuarios por edad y código postal, podemos hacerlo de la siguiente manera:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>&lt;?php
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>$usuarios =
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>User::where('age', '&gt;=',
+<a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>18)
+<a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>-
+<a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a>&gt;where('zipCode', '=',
+<a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a>28080)
+<a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a>-&gt;get();
+</code></pre></div>
+<h3 id="otros-metodos-de-consulta">Otros métodos de consulta<a class="headerlink" href="#otros-metodos-de-consulta" title="Permanent link">&para;</a></h3>
+<p><code>whereB</code> Filtra los <code>User:w</code> resultados</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>etween hereBet
+</code></pre></div>
+<p>según un</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>() ween('a
+</code></pre></div>
+<p>rango de</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>ge',
+</code></pre></div>
+<p>valores.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>[18,
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>30])-
+<a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>&gt;get();
+</code></pre></div>
+<p><code>whereI</code> Filtra los <code>User:w</code> resultados</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>n() hereIn(
+</code></pre></div>
+<p>según una</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>'zipCod
+</code></pre></div>
+<p>lista de</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>e',
+</code></pre></div>
+<p>valores.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>[28080,
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>28081])
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>-
+<a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>&gt;get();
+</code></pre></div>
+<p><code>orWher</code> Añade una <code>User:o</code> cláusula <code>OR</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>e() rWhere(
+</code></pre></div>
+<p>a la consulta.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>'age',
+<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>'&lt;',
+<a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>18)-
+<a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>&gt;get();
+</code></pre></div>
+<p><code>orderB</code> Ordena los <code>User:o</code> resultados</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>y() rderBy(
+</code></pre></div>
+<p>según un</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>'name')
+</code></pre></div>
+<p>campo.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>-
+<a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>&gt;get();
+</code></pre></div>
+<p><code>first(</code> Devuelve el <code>User:o</code> primer</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>) rderBy(
+</code></pre></div>
+<p>resultado de</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>'name')
+</code></pre></div>
+<p>la consulta.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>-
+<a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>&gt;first(
+<a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a>);
+</code></pre></div>
+<p><code>find()</code> Busca un <code>User:f</code> registro por</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>ind(1);
+</code></pre></div>
+<p>su ID.</p>
+<p><code>findOr</code> Busca un <code>User:f</code> registro por</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>Fail() indOrFa
+</code></pre></div>
+<p>su ID y lanza</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>il(1);
+</code></pre></div>
+<p>una excepción si no lo encuentra.</p>
+<h2 id="ejemplos-de-consultas-avanzadas">Ejemplos de consultas avanzadas<a class="headerlink" href="#ejemplos-de-consultas-avanzadas" title="Permanent link">&para;</a></h2>
+<p>Vamos a ver algunos ejemplos de consultas avanzadas que podemos realizar desde el controlador. Estos ejemplos nos ayudarán a entender cómo podemos usar los métodos de Eloquent para realizar consultas más complejas.</p>
+<p>Primero puedes descargar este fichero SQL y ejecutarlo en tu base de datos para tener más usuarios de prueba.</p>
+<p>Una vez tenemos los usuarios de prueba, podemos realizar las siguientes consultas:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>&lt;?php
+<a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>
+<a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a>// Ejemplo 1: Usa
+<a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a>AND
+<a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a>$usuarios = User
+<a id="__codelineno-56-6" name="__codelineno-56-6" href="#__codelineno-56-6"></a>'&gt;=', 18)
+<a id="__codelineno-56-7" name="__codelineno-56-7" href="#__codelineno-56-7"></a>
+<a id="__codelineno-56-8" name="__codelineno-56-8" href="#__codelineno-56-8"></a>&gt;where('zipCode'
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>// Ejemplo 2: Usa
+<a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>OR
+<a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a>$usuarios = User
+<a id="__codelineno-57-4" name="__codelineno-57-4" href="#__codelineno-57-4"></a>'&gt;=', 18)
+<a id="__codelineno-57-5" name="__codelineno-57-5" href="#__codelineno-57-5"></a>
+<a id="__codelineno-57-6" name="__codelineno-57-6" href="#__codelineno-57-6"></a>&gt;orWhere('zipCode
+<a id="__codelineno-57-7" name="__codelineno-57-7" href="#__codelineno-57-7"></a>28080)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>// Ejemplo 3: Usa
+<a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>BETWEEN
+<a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a>$usuarios =
+<a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a>User::whereBetwee
+<a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a>30])
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>// Ejemplo 4: Usa
+<a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>LIKE (búsqueda po
+<a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a>$usuarios =
+<a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a>User::where('name
+<a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a>'Juan%')
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>// Ejemplo 5: Usa
+<a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>NOT LIKE
+<a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a>$usuarios =
+<a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a>User::where('name
+<a id="__codelineno-60-5" name="__codelineno-60-5" href="#__codelineno-60-5"></a>like', 'Juan%')
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>// Ejemplo 6: Usa
+<a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>para buscar por m
+<a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a>valores
+<a id="__codelineno-61-4" name="__codelineno-61-4" href="#__codelineno-61-4"></a>$usuarios =
+<a id="__codelineno-61-5" name="__codelineno-61-5" href="#__codelineno-61-5"></a>User::whereIn('zi
+<a id="__codelineno-61-6" name="__codelineno-61-6" href="#__codelineno-61-6"></a>[28080, 28081, 28
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>// Ejemplo 7: Usa
+<a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>para encontrar va
+<a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a>$usuarios =
+<a id="__codelineno-62-4" name="__codelineno-62-4" href="#__codelineno-62-4"></a>User::whereNull(
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>// Ejemplo 8: Usa
+<a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>'whereNotNull' pa
+<a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a>valores no nulos
+<a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a>$usuarios =
+<a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a>User::whereNotNul
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>// Ejemplo 9: Usa
+<a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a>con 'or' y 'where
+<a id="__codelineno-64-3" name="__codelineno-64-3" href="#__codelineno-64-3"></a>$usuarios = User
+<a id="__codelineno-64-4" name="__codelineno-64-4" href="#__codelineno-64-4"></a>'&gt;=', 18)
+<a id="__codelineno-64-5" name="__codelineno-64-5" href="#__codelineno-64-5"></a>
+<a id="__codelineno-64-6" name="__codelineno-64-6" href="#__codelineno-64-6"></a>&gt;orWhereIn('zipCo
+<a id="__codelineno-64-7" name="__codelineno-64-7" href="#__codelineno-64-7"></a>28081])
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>// Ejemplo 10: Us
+<a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a>'whereDate' para
+<a id="__codelineno-65-3" name="__codelineno-65-3" href="#__codelineno-65-3"></a>fecha
+<a id="__codelineno-65-4" name="__codelineno-65-4" href="#__codelineno-65-4"></a>$usuarios =
+<a id="__codelineno-65-5" name="__codelineno-65-5" href="#__codelineno-65-5"></a>User::whereDate(
+<a id="__codelineno-65-6" name="__codelineno-65-6" href="#__codelineno-65-6"></a>'2025-10-08')
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>// Ejemplo 11: Us
+<a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a>para filtrar por
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>para filtrar por
+<a id="__codelineno-67-2" name="__codelineno-67-2" href="#__codelineno-67-2"></a>$usuarios =
+<a id="__codelineno-67-3" name="__codelineno-67-3" href="#__codelineno-67-3"></a>User::whereDay('c
+<a id="__codelineno-67-4" name="__codelineno-67-4" href="#__codelineno-67-4"></a>8)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>// Ejemplo 12: Us
+<a id="__codelineno-68-2" name="__codelineno-68-2" href="#__codelineno-68-2"></a>'whereMonth' para
+<a id="__codelineno-68-3" name="__codelineno-68-3" href="#__codelineno-68-3"></a>el mes
+<a id="__codelineno-68-4" name="__codelineno-68-4" href="#__codelineno-68-4"></a>$usuarios =
+<a id="__codelineno-68-5" name="__codelineno-68-5" href="#__codelineno-68-5"></a>User::whereMonth
+<a id="__codelineno-68-6" name="__codelineno-68-6" href="#__codelineno-68-6"></a>'10')
+</code></pre></div>
+<p>Puedes modificar el controlador, vamos a añadir un nuevo método <code>filter()</code> que se encargará de realizar pruebas de estas consultas avanzadas y mostrar los resultados en la vista. Para ello, vamos a crear un nuevo método <code>filter()</code> en el controlador <code>UserController</code> que se encargará de realizar las consultas avanzadas y mostrar los resultados en la vista. Este método se llamará cuando accedamos a la ruta <code>/filter</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a>&lt;?php
+<a id="__codelineno-69-2" name="__codelineno-69-2" href="#__codelineno-69-2"></a>public function
+<a id="__codelineno-69-3" name="__codelineno-69-3" href="#__codelineno-69-3"></a>filter() {
+<a id="__codelineno-69-4" name="__codelineno-69-4" href="#__codelineno-69-4"></a>$usuarios =
+<a id="__codelineno-69-5" name="__codelineno-69-5" href="#__codelineno-69-5"></a>User::where('age'
+<a id="__codelineno-69-6" name="__codelineno-69-6" href="#__codelineno-69-6"></a>'&gt;=', 18)
+<a id="__codelineno-69-7" name="__codelineno-69-7" href="#__codelineno-69-7"></a>-
+<a id="__codelineno-69-8" name="__codelineno-69-8" href="#__codelineno-69-8"></a>&gt;where('zipCode',
+<a id="__codelineno-69-9" name="__codelineno-69-9" href="#__codelineno-69-9"></a>'=', 28080)
+<a id="__codelineno-69-10" name="__codelineno-69-10" href="#__codelineno-69-10"></a>-
+<a id="__codelineno-69-11" name="__codelineno-69-11" href="#__codelineno-69-11"></a>&gt;get();
+<a id="__codelineno-69-12" name="__codelineno-69-12" href="#__codelineno-69-12"></a>return
+<a id="__codelineno-69-13" name="__codelineno-69-13" href="#__codelineno-69-13"></a>view('users.index
+<a id="__codelineno-69-14" name="__codelineno-69-14" href="#__codelineno-69-14"></a>compact('usuarios
+<a id="__codelineno-69-15" name="__codelineno-69-15" href="#__codelineno-69-15"></a>}
+</code></pre></div>
+<p>Y añadimos la ruta correspondiente en <code>routes/web.php</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a>&lt;?php
+<a id="__codelineno-70-2" name="__codelineno-70-2" href="#__codelineno-70-2"></a>Route::get('/filter',
+<a id="__codelineno-70-3" name="__codelineno-70-3" href="#__codelineno-70-3"></a>[UserController::class,
+<a id="__codelineno-70-4" name="__codelineno-70-4" href="#__codelineno-70-4"></a>'filter'])-
+<a id="__codelineno-70-5" name="__codelineno-70-5" href="#__codelineno-70-5"></a>&gt;name('user.filter');
+</code></pre></div>
+<p>El ejemplo anterior y utilizando los datos de prueba del curso debe devolver los siguientes usuarios:</p>
+<h2 id="resumen-de-todo-lo-aprendido">Resumen de todo lo aprendido<a class="headerlink" href="#resumen-de-todo-lo-aprendido" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>Creación del circuito MVC completo.</p>
+</li>
+<li>
+<p>Recuperación de datos con Eloquent.</p>
+</li>
+<li>
+<p>Buenas prácticas de organización.</p>
+</li>
+</ul>
+<p>Eloquent facilita mucho el trabajo, pero a veces no controlamos el SQL exacto que se genera.</p>
+<p>En un uso correcto de Eloquent, no es necesario preocuparse por el SQL generado. Eloquent se encarga de optimizar las consultas y generar el SQL adecuado. Sin embargo, es importante conocer cómo funciona Eloquent y cómo se generan las consultas para poder optimizar el rendimiento de la aplicación.</p>
+<p>Para otros casos más complejos, podemos usar SQL puro o el constructor de consultas de Laravel. En este caso, Eloquent no es la mejor opción, tenemos otras opciones que analizaremos a continuación.</p>
+<h2 id="acceso-a-base-de-datos-alternativo">Acceso a Base de Datos Alternativo<a class="headerlink" href="#acceso-a-base-de-datos-alternativo" title="Permanent link">&para;</a></h2>
+<h3 id="uso-de-sql-puro-con-db-raw">Uso de SQL Puro con DB Raw<a class="headerlink" href="#uso-de-sql-puro-con-db-raw" title="Permanent link">&para;</a></h3>
+<p>Laravel nos ofrece la clase <code>DB</code> para acceder a la base de datos de forma más directa. Esta clase nos permite ejecutar consultas SQL puras y obtener los resultados en forma de array. Para ello, podemos usar el método <code>select()</code> de la clase <code>DB</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a>&lt;?php
+<a id="__codelineno-71-2" name="__codelineno-71-2" href="#__codelineno-71-2"></a>$usuarios =
+<a id="__codelineno-71-3" name="__codelineno-71-3" href="#__codelineno-71-3"></a>DB::select(DB::raw('SELECT
+<a id="__codelineno-71-4" name="__codelineno-71-4" href="#__codelineno-71-4"></a>* FROM users'));
+</code></pre></div>
+<p>Si por ejemplo tenemos las tablas <code>users</code> y <code>posts</code>, podemos hacer una consulta SQL que una ambas tablas:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a>&lt;?php
+<a id="__codelineno-72-2" name="__codelineno-72-2" href="#__codelineno-72-2"></a>$usuarios = DB::select(
+<a id="__codelineno-72-3" name="__codelineno-72-3" href="#__codelineno-72-3"></a>DB::raw('
+<a id="__codelineno-72-4" name="__codelineno-72-4" href="#__codelineno-72-4"></a>SELECT users.*,
+<a id="__codelineno-72-5" name="__codelineno-72-5" href="#__codelineno-72-5"></a>posts.title
+<a id="__codelineno-72-6" name="__codelineno-72-6" href="#__codelineno-72-6"></a>FROM users
+<a id="__codelineno-72-7" name="__codelineno-72-7" href="#__codelineno-72-7"></a>INNER JOIN
+<a id="__codelineno-72-8" name="__codelineno-72-8" href="#__codelineno-72-8"></a>posts ON users.id =
+<a id="__codelineno-72-9" name="__codelineno-72-9" href="#__codelineno-72-9"></a>posts.user_id')
+<a id="__codelineno-72-10" name="__codelineno-72-10" href="#__codelineno-72-10"></a>);
+</code></pre></div>
+<p>Esto nos devolverá un array con los resultados de la consulta. Sin embargo, al usar SQL puro, no tenemos acceso a las funcionalidades de Eloquent, como la paginación o la relación entre modelos. Por lo tanto, es recomendable usar Eloquent siempre que sea posible.</p>
+<h3 id="metodos-estaticos-de-db">Métodos estáticos de DB<a class="headerlink" href="#metodos-estaticos-de-db" title="Permanent link">&para;</a></h3>
+<p>Laravel también nos ofrece métodos estáticos para acceder a la base de datos de forma más sencilla. Estos métodos nos permiten realizar operaciones CRUD Crear, Leer, Actualizar y Borrar) de forma más sencilla. Por ejemplo, para insertar un nuevo usuario en la tabla <code>users</code>, podemos usar el método <code>insert()</code> de la clase <code>DB</code>.</p>
+<p>Primero tenemos el método:table() que nos permite acceder a una tabla específica de la base de datos. Este método nos devuelve una instancia de la clase <code>QueryBuilder</code>, que nos permite realizar consultas a la base de datos de forma más sencilla. Por ejemplo, para acceder a la tabla <code>users</code>, podemos usar el siguiente código:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a>&lt;?php
+<a id="__codelineno-73-2" name="__codelineno-73-2" href="#__codelineno-73-2"></a>$usuarios =
+<a id="__codelineno-73-3" name="__codelineno-73-3" href="#__codelineno-73-3"></a>DB::table('users')-
+<a id="__codelineno-73-4" name="__codelineno-73-4" href="#__codelineno-73-4"></a>&gt;get();
+</code></pre></div>
+<p>Esto nos devolverá una colección de usuarios. A partir de aquí, podemos usar los métodos de la clase <code>QueryBuilder</code> para realizar consultas a la base de datos. Por ejemplo, para filtrar los usuarios por edad, podemos usar el método <code>where()</code>:</p>
+<p><code>inser</code> Inserta un <code>DB:tab</code> nuevo</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a>t() le('use
+</code></pre></div>
+<p>registro en la</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-75-1" name="__codelineno-75-1" href="#__codelineno-75-1"></a>rs')-
+</code></pre></div>
+<p>tabla.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-76-1" name="__codelineno-76-1" href="#__codelineno-76-1"></a>&gt;insert
+<a id="__codelineno-76-2" name="__codelineno-76-2" href="#__codelineno-76-2"></a>(['name
+<a id="__codelineno-76-3" name="__codelineno-76-3" href="#__codelineno-76-3"></a>' =&gt;
+<a id="__codelineno-76-4" name="__codelineno-76-4" href="#__codelineno-76-4"></a>'Pedro'
+<a id="__codelineno-76-5" name="__codelineno-76-5" href="#__codelineno-76-5"></a>,
+<a id="__codelineno-76-6" name="__codelineno-76-6" href="#__codelineno-76-6"></a>'email'
+<a id="__codelineno-76-7" name="__codelineno-76-7" href="#__codelineno-76-7"></a>=&gt;
+<a id="__codelineno-76-8" name="__codelineno-76-8" href="#__codelineno-76-8"></a>'correo
+<a id="__codelineno-76-9" name="__codelineno-76-9" href="#__codelineno-76-9"></a>@exampl
+<a id="__codelineno-76-10" name="__codelineno-76-10" href="#__codelineno-76-10"></a>e.com',
+<a id="__codelineno-76-11" name="__codelineno-76-11" href="#__codelineno-76-11"></a>'passwo
+<a id="__codelineno-76-12" name="__codelineno-76-12" href="#__codelineno-76-12"></a>rd' =&gt;
+<a id="__codelineno-76-13" name="__codelineno-76-13" href="#__codelineno-76-13"></a>Hash::m
+<a id="__codelineno-76-14" name="__codelineno-76-14" href="#__codelineno-76-14"></a>ake('pa
+<a id="__codelineno-76-15" name="__codelineno-76-15" href="#__codelineno-76-15"></a>ssword'
+<a id="__codelineno-76-16" name="__codelineno-76-16" href="#__codelineno-76-16"></a>)]);
+</code></pre></div>
+<p><code>updat</code> Actualiza un <code>DB:tab</code> registro en la</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-77-1" name="__codelineno-77-1" href="#__codelineno-77-1"></a>e() le('use
+</code></pre></div>
+<p>tabla.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-78-1" name="__codelineno-78-1" href="#__codelineno-78-1"></a>rs')-
+<a id="__codelineno-78-2" name="__codelineno-78-2" href="#__codelineno-78-2"></a>&gt;where(
+<a id="__codelineno-78-3" name="__codelineno-78-3" href="#__codelineno-78-3"></a>'id',
+<a id="__codelineno-78-4" name="__codelineno-78-4" href="#__codelineno-78-4"></a>1)-
+<a id="__codelineno-78-5" name="__codelineno-78-5" href="#__codelineno-78-5"></a>&gt;update
+<a id="__codelineno-78-6" name="__codelineno-78-6" href="#__codelineno-78-6"></a>(['name
+<a id="__codelineno-78-7" name="__codelineno-78-7" href="#__codelineno-78-7"></a>' =&gt;
+<a id="__codelineno-78-8" name="__codelineno-78-8" href="#__codelineno-78-8"></a>'Pedro
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-79-1" name="__codelineno-79-1" href="#__codelineno-79-1"></a>Modific
+<a id="__codelineno-79-2" name="__codelineno-79-2" href="#__codelineno-79-2"></a>ado']);
+</code></pre></div>
+<p><code>delet</code> Elimina un <code>DB:tab</code> registro de la</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-80-1" name="__codelineno-80-1" href="#__codelineno-80-1"></a>e() le('use
+</code></pre></div>
+<p>tabla.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-81-1" name="__codelineno-81-1" href="#__codelineno-81-1"></a>rs')-
+<a id="__codelineno-81-2" name="__codelineno-81-2" href="#__codelineno-81-2"></a>&gt;where(
+<a id="__codelineno-81-3" name="__codelineno-81-3" href="#__codelineno-81-3"></a>'id',
+<a id="__codelineno-81-4" name="__codelineno-81-4" href="#__codelineno-81-4"></a>1)-
+<a id="__codelineno-81-5" name="__codelineno-81-5" href="#__codelineno-81-5"></a>&gt;delete
+<a id="__codelineno-81-6" name="__codelineno-81-6" href="#__codelineno-81-6"></a>();
+</code></pre></div>
+<p><code>get()</code> Recupera <code>DB:tab</code> todos los</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-82-1" name="__codelineno-82-1" href="#__codelineno-82-1"></a>le('use
+</code></pre></div>
+<p>registros de</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-83-1" name="__codelineno-83-1" href="#__codelineno-83-1"></a>rs')-
+</code></pre></div>
+<p>la tabla.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-84-1" name="__codelineno-84-1" href="#__codelineno-84-1"></a>&gt;get();
+</code></pre></div>
+<p><code>find(</code> Busca un <code>DB:tab</code> registro por</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-85-1" name="__codelineno-85-1" href="#__codelineno-85-1"></a>) le('use
+</code></pre></div>
+<p>su ID.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-86-1" name="__codelineno-86-1" href="#__codelineno-86-1"></a>rs')-
+<a id="__codelineno-86-2" name="__codelineno-86-2" href="#__codelineno-86-2"></a>&gt;find(1
+<a id="__codelineno-86-3" name="__codelineno-86-3" href="#__codelineno-86-3"></a>);
+</code></pre></div>
+<p><code>first</code> Recupera el <code>DB:tab</code> primer</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-87-1" name="__codelineno-87-1" href="#__codelineno-87-1"></a>() le('use
+</code></pre></div>
+<p>registro de la</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-88-1" name="__codelineno-88-1" href="#__codelineno-88-1"></a>rs')-
+</code></pre></div>
+<p>tabla.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-89-1" name="__codelineno-89-1" href="#__codelineno-89-1"></a>&gt;first(
+<a id="__codelineno-89-2" name="__codelineno-89-2" href="#__codelineno-89-2"></a>);
+</code></pre></div>
+<p><code>where</code> Filtra los <code>DB:tab</code> resultados</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-90-1" name="__codelineno-90-1" href="#__codelineno-90-1"></a>() le('use
+</code></pre></div>
+<p>según una condición. <code>rs')-</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-91-1" name="__codelineno-91-1" href="#__codelineno-91-1"></a>&gt;where(
+<a id="__codelineno-91-2" name="__codelineno-91-2" href="#__codelineno-91-2"></a>'age',
+<a id="__codelineno-91-3" name="__codelineno-91-3" href="#__codelineno-91-3"></a>'&gt;=',
+<a id="__codelineno-91-4" name="__codelineno-91-4" href="#__codelineno-91-4"></a>18)-
+<a id="__codelineno-91-5" name="__codelineno-91-5" href="#__codelineno-91-5"></a>&gt;get();
+</code></pre></div>
+<p><code>where</code> Filtra los <code>DB:tab</code> resultados</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-92-1" name="__codelineno-92-1" href="#__codelineno-92-1"></a>In() le('use
+</code></pre></div>
+<p>según una</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-93-1" name="__codelineno-93-1" href="#__codelineno-93-1"></a>rs')-
+</code></pre></div>
+<p>lista de</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-94-1" name="__codelineno-94-1" href="#__codelineno-94-1"></a>&gt;whereI
+</code></pre></div>
+<p>valores.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-95-1" name="__codelineno-95-1" href="#__codelineno-95-1"></a>n('zipC
+<a id="__codelineno-95-2" name="__codelineno-95-2" href="#__codelineno-95-2"></a>ode',
+<a id="__codelineno-95-3" name="__codelineno-95-3" href="#__codelineno-95-3"></a>[28080,
+<a id="__codelineno-95-4" name="__codelineno-95-4" href="#__codelineno-95-4"></a>28081])
+<a id="__codelineno-95-5" name="__codelineno-95-5" href="#__codelineno-95-5"></a>-
+<a id="__codelineno-95-6" name="__codelineno-95-6" href="#__codelineno-95-6"></a>&gt;get();
+</code></pre></div>
+<p><code>order</code> Ordena los <code>DB:tab</code> resultados</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-96-1" name="__codelineno-96-1" href="#__codelineno-96-1"></a>By() le('use
+</code></pre></div>
+<p>según un</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-97-1" name="__codelineno-97-1" href="#__codelineno-97-1"></a>rs')-
+</code></pre></div>
+<p>campo.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-98-1" name="__codelineno-98-1" href="#__codelineno-98-1"></a>&gt;orderB
+<a id="__codelineno-98-2" name="__codelineno-98-2" href="#__codelineno-98-2"></a>y('name
+<a id="__codelineno-98-3" name="__codelineno-98-3" href="#__codelineno-98-3"></a>')-
+<a id="__codelineno-98-4" name="__codelineno-98-4" href="#__codelineno-98-4"></a>&gt;get();
+</code></pre></div>
+<p><code>count</code> Cuenta el <code>DB:tab</code> número de</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-99-1" name="__codelineno-99-1" href="#__codelineno-99-1"></a>() le('use
+</code></pre></div>
+<p>registros de</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-100-1" name="__codelineno-100-1" href="#__codelineno-100-1"></a>rs')-
+</code></pre></div>
+<p>la tabla.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-101-1" name="__codelineno-101-1" href="#__codelineno-101-1"></a>&gt;count(
+<a id="__codelineno-101-2" name="__codelineno-101-2" href="#__codelineno-101-2"></a>);
+</code></pre></div>
+<p><code>sum()</code> Suma un <code>DB:tab</code> campo de la</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-102-1" name="__codelineno-102-1" href="#__codelineno-102-1"></a>le('use
+</code></pre></div>
+<p>tabla.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-103-1" name="__codelineno-103-1" href="#__codelineno-103-1"></a>rs')-
+<a id="__codelineno-103-2" name="__codelineno-103-2" href="#__codelineno-103-2"></a>&gt;sum('a
+<a id="__codelineno-103-3" name="__codelineno-103-3" href="#__codelineno-103-3"></a>ge');
+</code></pre></div>
+<p><code>avg()</code> Calcula el <code>DB:tab</code> promedio de</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-104-1" name="__codelineno-104-1" href="#__codelineno-104-1"></a>le('use
+</code></pre></div>
+<p>un campo de</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-105-1" name="__codelineno-105-1" href="#__codelineno-105-1"></a>rs')-
+</code></pre></div>
+<p>la tabla.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-106-1" name="__codelineno-106-1" href="#__codelineno-106-1"></a>&gt;avg('a
+<a id="__codelineno-106-2" name="__codelineno-106-2" href="#__codelineno-106-2"></a>ge');
+</code></pre></div>
+<p><code>max()</code> Devuelve el <code>DB:tab</code> valor</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-107-1" name="__codelineno-107-1" href="#__codelineno-107-1"></a>le('use
+</code></pre></div>
+<p>máximo de</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-108-1" name="__codelineno-108-1" href="#__codelineno-108-1"></a>rs')-
+</code></pre></div>
+<p>un campo de</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-109-1" name="__codelineno-109-1" href="#__codelineno-109-1"></a>&gt;max('a
+</code></pre></div>
+<p>la tabla.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-110-1" name="__codelineno-110-1" href="#__codelineno-110-1"></a>ge');
+</code></pre></div>
+<p><code>min()</code> Devuelve el <code>DB:tab</code> valor mínimo</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-111-1" name="__codelineno-111-1" href="#__codelineno-111-1"></a>le('use
+</code></pre></div>
+<p>de un campo</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-112-1" name="__codelineno-112-1" href="#__codelineno-112-1"></a>rs')-
+</code></pre></div>
+<p>de la tabla.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-113-1" name="__codelineno-113-1" href="#__codelineno-113-1"></a>&gt;min('a
+<a id="__codelineno-113-2" name="__codelineno-113-2" href="#__codelineno-113-2"></a>ge');
+</code></pre></div>
+<h3 id="comparativa">Comparativa<a class="headerlink" href="#comparativa" title="Permanent link">&para;</a></h3>
+<p>Eloquent Código Menos control limpio y sobre SQL fácil de generado. mantener.</p>
+<p>DB Raw Total Mayor riesgo control del de errores o SQL. inyecciones.</p>
+<p>DB Table Punto intermedio: estructura clara, control aceptable.</p>
+<h2 id="otras-opciones-orm-en-php">Otras Opciones ORM en PHP<a class="headerlink" href="#otras-opciones-orm-en-php" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong>Estilo activo ("Active Record")</strong>: Cada modelo representa una tabla y cada instancia una fila.</p>
+</li>
+<li>
+<p><strong>Simplicidad</strong>: Muy expresivo y fácil de aprender; integradísimo en Laravel.</p>
+</li>
+<li>
+<p><strong>Consultas rapidas</strong>: Métodos como <code>where</code>, <code>orderBy</code>, <code>first</code>, <code>get</code> son encadenables.</p>
+</li>
+<li>
+<p><strong>Relaciones</strong>: Define relaciones como <code>hasOne</code>, <code>hasMany</code>, <code>belongsTo</code>, etc.</p>
+</li>
+<li>
+<p><strong>Migraciones y Seeders</strong>: Integración directa para manejar la estructura y datos de la base.</p>
+</li>
+<li>
+<p><strong>Eventos del modelo</strong>: Hooks como <code>creating</code>, <code>updating</code>, <code>deleting</code>.</p>
+</li>
+<li>
+<p><strong>Carga perezosa y ansiosa</strong> ( <code>lazy/</code> <code>eager loading</code>): Optimización de consultas relacionadas.</p>
+</li>
+<li>
+<p><strong>Limitaciones</strong>: No es lo más flexible para consultas muy complejas o estructuras fuera del estándar relacional.</p>
+</li>
+<li>
+<p><strong>Estilo de "Data Mapper"</strong>: Los objetos son independientes de la base de datos.</p>
+</li>
+<li>
+<p><strong>ORM altamente flexible</strong>: Perfecto para proyectos con modelos complejos o sistemas DDD Domain-Driven Design).</p>
+</li>
+<li>
+<p><strong>Unit of Work</strong>: Maneja cambios en objetos y sincroniza en lote a la base de datos.</p>
+</li>
+<li>
+<p><strong>Consultas DQL (Doctrine Query</strong> <strong>Language)</strong>: Un lenguaje similar a SQL pero orientado a objetos.</p>
+</li>
+<li>
+<p><strong>Migraciones poderosas</strong>: Control detallado del esquema de la base de datos.</p>
+</li>
+<li>
+<p><strong>Muy configurado por anotaciones</strong>, <strong>XML o YAML</strong>: Más configuración que Eloquent, pero más potencia.</p>
+</li>
+<li>
+<p><strong>Más pesado de aprender</strong>: Pero excelente para proyectos grandes o altamente customizados.</p>
+</li>
+<li>
+<p><strong>Estilo activo (Active Record)</strong>: Como Eloquent, los objetos representan directamente filas.</p>
+</li>
+<li>
+<p><strong>Generador de código</strong>: Genera las clases PHP a partir de un esquema de base de datos o XML.</p>
+</li>
+<li>
+<p><strong>Consultas orientadas a objetos</strong>: Fluent interface para construir consultas.</p>
+</li>
+<li>
+<p><strong>Soporte para múltiples bases de</strong> <strong>datos</strong>: Puede trabajar con más de un motor en el mismo proyecto.</p>
+</li>
+<li>
+<p><strong>Migraciones</strong>: Sistema de migraciones incorporado.</p>
+</li>
+<li>
+<p><strong>Algo menos popular hoy</strong>: Ha sido desplazado en popularidad por Eloquent y Doctrine en nuevos proyectos.</p>
+</li>
+<li>
+<p><strong>Ideal para proyectos donde quieres</strong></p>
+</li>
+<li>
+<p><strong>Cero configuración</strong>: No defines esquemas ni modelos manualmente.</p>
+</li>
+<li>
+<p><strong>Auto-creacion de tablas y columnas</strong>: A medida que insertas datos, RedBeanPHP crea lo necesario.</p>
+</li>
+<li>
+<p><strong>Muy sencillo y rápido de usar</strong>: Perfecto para prototipos o pequeños proyectos.</p>
+</li>
+<li>
+<p><strong>Modo congelado ( freeze) para</strong> <strong>produccion</strong>: Para evitar cambios automáticos en el esquema.</p>
+</li>
+<li>
+<p><strong>ORM basado en Active Record</strong>: Pero muy dinámico (menos control sobre la estructura a mano).</p>
+</li>
+<li>
+<p><strong>Limitaciones</strong>: No es ideal para bases de datos muy complejas o requerimientos de optimización avanzada.</p>
+</li>
+</ul>
+<p><strong>Eloquent</strong> Active Aplicaciones S Record Laravel y f CRUD rápidos</p>
+<p><strong>Doctrine</strong> Data Grandes F Mapper sistemas, c arquitecturas complejas</p>
+<p><strong>Propel</strong> Active Sistemas G Record donde a defines d primero el esquema</p>
+<p><strong>RedBeanPHP</strong> Active Prototipos, C Record apps c (muy pequeñas dinámico)</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      IES JUAN DE GARAY - 2º DWES · Curso original de Beteta adaptado por Eva María Gómez Abad
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
