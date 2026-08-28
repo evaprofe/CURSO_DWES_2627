@@ -920,4 +920,3 @@ redirect()-
 
 - `JsonResponse` para APIs. `use` Illuminate\Http\JsonRespons e
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )

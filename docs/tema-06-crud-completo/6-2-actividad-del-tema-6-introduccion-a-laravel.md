@@ -233,4 +233,3 @@ ontrolle
 
 **Claridad en la** El código está 10 % **entrega** organizado y la entrega incluye capturas de pantalla claras de cada operación CRUD.
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )
