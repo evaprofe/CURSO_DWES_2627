@@ -219,4 +219,3 @@ Busca en la web oficial de PHP la última versión disponible.
     - Si usamos `php -v`, podemos comprobar si tenemos esa misma versión.
     - Algunas mejoras son: mayor rendimiento, validación de tipos más estricta, y nuevas funciones del lenguaje que facilitan la escritura de código más limpio.
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )
