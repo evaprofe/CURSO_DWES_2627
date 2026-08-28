@@ -624,4 +624,3 @@ Comprobamos la vista: http:// localhost:8080/products, vamos a ver los productos
 
 - Todo esto acelera y mejora el desarrollo realista de tu aplicación.
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )

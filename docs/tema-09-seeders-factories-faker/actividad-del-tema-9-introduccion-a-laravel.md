@@ -260,4 +260,3 @@ artisan
 
 `db:seed`) y datos visibles en la base de datos.
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )
