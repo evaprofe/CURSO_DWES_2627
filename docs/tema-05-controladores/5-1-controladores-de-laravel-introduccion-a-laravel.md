@@ -1303,4 +1303,3 @@ DB Table Punto intermedio: estructura clara, control aceptable.
 
 **RedBeanPHP** Active Prototipos, C Record apps c (muy pequeñas dinámico)
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )

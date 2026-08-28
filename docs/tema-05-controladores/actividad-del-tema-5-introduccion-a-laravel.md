@@ -289,4 +289,3 @@ Sube a la plataforma:
 
 **Claridad** Entrega 5 % **global** ordenada, capturas legibles y sin ambigüedades.
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )

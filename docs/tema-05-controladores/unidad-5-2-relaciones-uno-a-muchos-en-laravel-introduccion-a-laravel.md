@@ -326,4 +326,3 @@ $recurso)
 
 En esta sección hemos visto cómo definir y utilizar relaciones **uno a muchos** en Laravel. Hemos aprendido a crear migraciones con claves foráneas, definir los métodos de relación en los modelos, y acceder a los datos relacionados desde los controladores y las vistas. Esta es una parte fundamental del desarrollo de aplicaciones con Laravel, ya que la mayoría de las aplicaciones requieren manejar relaciones entre diferentes entidades.
 
-IES JUAN DE GARAY - 2º DWES (Curso original de Beteta adaptado por Eva María Gómez Abad )
