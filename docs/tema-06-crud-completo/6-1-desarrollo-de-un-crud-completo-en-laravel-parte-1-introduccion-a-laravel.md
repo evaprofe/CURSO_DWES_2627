@@ -1,20 +1,23 @@
 # Desarrollo de un CRUD
 
+!!! quote "Autoría"
+
+    Contenido original de **Javier Beteta** en el curso [*Introducción a Laravel*](https://jbeteta-ies.github.io/2025_Laravel_32/) ([ver esta página en el original](https://jbeteta-ies.github.io/2025_Laravel_32/content/T06/unidad06_01/)). Adaptado para 2º DAW del IES Juan de Garay por Eva María Gómez Abad.
+
 ## Introducción a CRUD
 
 El término **CRUD** corresponde a las operaciones básicas que se realizan en la mayoría de las aplicaciones que gestionan datos:
 
-- reate Crear Insertar nuevos datos.
-
-- ead Leer Consultar y visualizar datos.
-
-- pdate Actualizar): Modificar datos existentes.
-
-- elete Eliminar): Borrar datos.
+- **C**reate (Crear): Insertar nuevos datos.
+- **R**ead (Leer): Consultar y visualizar datos.
+- **U**pdate (Actualizar): Modificar datos existentes.
+- **D**elete (Eliminar): Borrar datos.
 
 En Laravel, la implementación de un CRUD completo nos permite comprender cómo los **Modelos**, **Controladores** y **Vistas** interactúan entre sí para ofrecer una experiencia de usuario completa.
 
-Dominar el desarrollo de CRUDs es básico para cualquier programador web, ya que casi todas las aplicaciones web tienen que manejar datos de algún tipo, y estas son las acciones fundamentales que se realizan sobre esos datos.
+!!! tip "Desarrollo de CRUDs"
+
+    Dominar el desarrollo de CRUDs es básico para cualquier programador web, ya que casi todas las aplicaciones web tienen que manejar datos de algún tipo, y estas son las acciones fundamentales que se realizan sobre esos datos.
 
 Además, este tema nos va a servir para aprender el funcionamiento de los formularios en Laravel.
 
@@ -22,228 +25,221 @@ Además, este tema nos va a servir para aprender el funcionamiento de los formul
 
 ### Parámetros dinámicos en rutas
 
-En Laravel, podemos definir rutas que aceptan **parámetros dinámicos**. Estos parámetros permiten que una misma ruta atienda solicitudes distintas según el valor proporcionado. Podemos permitirnos el símil de que el nombre de la ruta es el nombre de la función y los parámetros son los argumentos que recibe esa función. Por tanto nos va a permitir generar una respuesta dinámica en función de los parámetros que reciba.
+En Laravel, podemos definir rutas que aceptan **parámetros dinámicos**. Estos parámetros permiten que una misma ruta atienda solicitudes distintas según el valor proporcionado. Podemos permitirnos el *símil* de que el nombre de la ruta es el nombre de la función y los parámetros son los argumentos que recibe esa función. Por tanto nos va a permitir generar una respuesta dinámica en función de los parámetros que reciba.
 
-```text
+**Ejemplo sencillo:**
+
+```php title="Ruta con Parámetro Dinámico"
 <?php
-Route::get('/
-nota/{id}',
-function ($id) {
-return
-"Mostrando la
-nota con ID:
-$id";
+Route::get('/nota/{id}', function ($id) {
+    return "Mostrando la nota con ID: $id";
 });
 ```
 
-En este caso, `id` es un parámetro dinámico. Si accedemos a `http://` `localhost:8080/nota/5`, Laravel mostrará: "Mostrando la nota con ID 5".
+En este caso, `id` es un parámetro dinámico. Si accedemos a `http://localhost:8080/nota/5`, Laravel mostrará: "Mostrando la nota con ID: 5".
 
-```text
+**Múltiples parámetros:**
+
+```php title="Ruta con Múltiples Parámetros"
 <?php
-Route::get('/
-usuario/{id}/
-nota/{nota_id}',
-function ($id,
-$nota_id) {
-return
-"Usuario $id -
-Nota $nota_id";
+Route::get('/usuario/{id}/nota/{nota_id}', function ($id, $nota_id) {
+    return "Usuario $id - Nota $nota_id";
 });
 ```
 
-El orden de los parámetros en la URL debe coincidir exactamente con el orden de los parámetros en la función anónima o el controlador.
+!!! warning "Importante"
+
+    El orden de los parámetros en la URL debe coincidir exactamente con el orden de los parámetros en la función anónima o el controlador.
 
 ### Crear un circuito MVC rápido para rutas dinámicas
 
-**Modelo**: Vamos a utilizar una tabla `notes` con los campos:
+**Modelo:** Vamos a utilizar una tabla `notes` con los campos:
 
 - `id` (entero, autoincremental)
-
 - `title` (string)
-
 - `description` (text)
-
 - `date` (date)
-
 - `done` (boolean)
 
 Vamos a crear la migración de la nota y el controador:
 
-```text
-php artisan
-make:migration
-create_notes_table
-php artisan
-make:model Note
-```
+!!! note "Crear Migración y Modelo"
+
+    ```bash
+    php artisan make:migration create_notes_table
+    php artisan make:model Note
+    ```
 
 Podemos crearla migración y la nota con un solo comando:
 
-```text
-php artisan
-make:model Note -m
-```
+!!! note "Crear Modelo y Migración"
 
-Ahora vamos al archivo de migración `database/migrations/` `xxxx_xx_xx_create_notes_table.ph` `p` y añadimos los campos:
+    ```bash
+    php artisan make:model Note -m
+    ```
 
-```text
-<?php
-use
-Illuminate\Databa
-use Illuminate\Da
-use Illuminate\Su
+Ahora vamos al archivo de migración `database/migrations/xxxx_xx_xx_create_notes_table.php` y añadimos los campos:
 
-class CreateNotes
-{
-/**
-* Run the mi
-*
-* @return vo
-*/
-public functi
-{
-Schema::c
-(Blueprint $table
-$tabl
-$tabl
-$table->t
-$table->d
-$table->b
->default(false);
-$table->t
-});
-}
-public function d
-{
-Schema::drop
-}
-```
+!!! note "Migración"
+
+    ```php
+    <?php
+    use Illuminate\Database\Migrations\Migration;
+    use Illuminate\Database\Schema\Blueprint;
+    use Illuminate\Support\Facades\Schema;
+
+    class CreateNotesTable extends Migration
+    {
+        /**
+         * Run the migrations.
+         *
+         * @return void
+         */
+        public function up()
+        {
+            Schema::create('notes', function (Blueprint $table) {
+                $table->id();
+                $table->string('title');
+            $table->text('description');
+            $table->date('date');
+            $table->boolean('done')->default(false);
+            $table->timestamps();
+        });
+    }
+    public function down()
+    {
+        Schema::dropIfExists('notes');
+    }
+    ```
 
 Por último, ejecutamos la migración:
 
-```text
-php artisan migrate
-```
+!!! note "Ejecutar Migración"
+
+    ```bash
+    php artisan migrate
+    ```
 
 Si tenemos algún problema porque no hemos creado la base de datos desde 0, podemos eliminar las migraciones anteiores con:
 
-```text
-php artisan
-migrate:reset
-```
+!!! note "Resetear Migraciones"
+
+    ```bash
+    php artisan migrate:reset
+    ```
+
+**Modelo Note:**
 
 Ahora vamos a implementar el modelo `Note`. Vamos a definir los campos que se pueden asignar en masa y los que no:
 
-```text
-<?php
-namespace App\Mode
-use
-Illuminate\Databas
+!!! note "Modelo"
 
-class Note extends
-{
-protected $fil
-'description', 'da
-protected $gua
-}
-```
+    ```php
+    <?php
+    namespace App\Models;
+    use Illuminate\Database\Eloquent\Model;
+
+    class Note extends Model
+    {
+        protected $fillable = ['title', 'description', 'date', 'done'];
+        protected $guarded = ['id'];
+    }
+    ```
 
 - `$fillable`: Define qué campos se pueden asignar en masa.
-
 - `$guarded`: Define qué campos **no** se pueden asignar.
 
-```text
-php artisan
-make:controller
-NoteController
-```
+**Controlador NoteController:**
 
-Ahora codificamos el controlador `app/` `Http/Controllers/` `NoteController.php`:
+!!! note "Crear Controlador"
 
-```text
-<?php
-public function
-show($id)
-{
-return
-view('notes.show',
-compact('id'));
-}
-```
+    ```bash
+    php artisan make:controller NoteController
+    ```
 
-Ahora que ya tenemos el controlador y el método que manejará la ruta, y el modelo que se conectará con la base de datos, vamos a definir la ruta en `routes/` `web.php`:
+Ahora codificamos el controlador `app/Http/Controllers/NoteController.php`:
 
-```text
-<?php
-use
-App\Http\Controlle
+!!! note "método show, para mostrar un ID"
 
-Route::get('/note/
-[NoteController::c
->name('note.show'
-```
+    ```php
+    <?php
+    public function show($id)
+    {
+        return view('notes.show', compact('id'));
+    }
+    ```
+
+**Ruta asociada:**
+
+Ahora que ya tenemos el controlador y el método que manejará la ruta, y el modelo que se conectará con la base de datos, vamos a definir la ruta en `routes/web.php`:
+
+!!! note "Ruta con Parámetro Dinámico y Controlador"
+
+    ```php
+    <?php
+    use App\Http\Controllers\NoteController;
+
+    Route::get('/note/{id}', [NoteController::class, 'show'])->name('note.show');
+    ```
+
+**Vista `resources/views/notes/show.blade.php`:**
 
 Por último nos queda crear la vista que mostrará la información de la nota con el ID recibido:
 
-```text
-<h1>Detalle de
-Nota</h1>
-<p>El ID de la
-nota es: {{ $id
-}}</p>
-```
+!!! note "Vista show.blade.php"
+
+    ```html
+    <h1>Detalle de Nota</h1>
+    <p>El ID de la nota es: {{ $id }}</p>
+    ```
 
 Con esto, accediendo a `/note/5` veremos "El ID de la nota es: 5".
 
-La función `compact('variable')` crea un array asociativo `['variable' =>` `$variable]` que puede ser pasado a la vista. Es una forma rápida y limpia de pasar datos. Sólo la puedo utilizar si el valor de la clave es el mismo que el nombre de la variable.
+!!! success "imagen /note/5"
+
+    ![imagen /note/5](../assets/beteta/T06/img01.png)
+
+!!! tip "función compact()"
+
+    La función `compact('variable')` crea un array asociativo `['variable' => $variable]` que puede ser pasado a la vista. Es una forma rápida y limpia de pasar datos. Sólo la puedo utilizar si el valor de la clave es el mismo que el nombre de la variable.
 
 ### Parámetros opcionales y valores por defecto
 
 Podemos definir parámetros **opcionales** añadiendo un signo de interrogación `?`:
 
-```text
+```php title="Ruta con Parámetro Opcional"
 <?php
-Route::get('/
-saludo/
-{nombre?}',
-function ($nombre
-= 'Invitado') {
-return "Hola,
-$nombre";
+Route::get('/saludo/{nombre?}', function ($nombre = 'Invitado') {
+    return "Hola, $nombre";
 });
 ```
 
 - Si accedemos a `/saludo/Laura`, veremos "Hola, Laura".
-
 - Si accedemos a `/saludo`, veremos "Hola, Invitado".
 
-- El parámetro opcional debe ser el último de la URL.
+!!! warning "Reglas para Parámetros Opcionales"
 
-- Hay que asignar un **valor por defecto** en la función.
+    - El parámetro opcional debe ser el último de la URL.
+    - Hay que asignar un **valor por defecto** en la función.
 
 ### Importancia del orden de las rutas
 
-Laravel evalúa las rutas en el **orden en** **que se definen**.
+Laravel evalúa las rutas en el **orden en que se definen**.
 
-```text
+**Ejemplo de conflicto:**
+
+```php title="Orden de Rutas"
 <?php
-Route::get('/
-nota/nueva',
-function() {
-return 'Crear
-nueva nota'; });
-Route::get('/
-nota/{id}',
-function($id) {
-return "Nota ID:
-$id"; });
+Route::get('/nota/nueva', function() { return 'Crear nueva nota'; });
+Route::get('/nota/{id}', function($id) { return "Nota ID: $id"; });
 ```
 
 - Primero debe definirse `/nota/nueva` porque si no, Laravel intentará interpretar `nueva` como un `id`.
+- El orden correcto es siempre de **rutas más específicas a más generales**.
 
-- El orden correcto es siempre de **rutas** **más especificas a más generales**.
+!!! warning "Consejo"
 
-Primero define todas las rutas fijas y luego las rutas con parámetros dinámicos.
+    Primero define todas las rutas fijas y luego las rutas con parámetros dinámicos.
 
 ## Desarrollo del CRUD para notas
 
@@ -251,672 +247,593 @@ Primero define todas las rutas fijas y luego las rutas con parámetros dinámico
 
 Primero creamos la ruta y el método para listar todas las notas.
 
-```text
-<?php
-use
-App\Http\Controlle
+**Ruta:**
 
-Route::get('/',
-[NoteController::c
->name('note.index
-```
+!!! note "Ruta para Listar Notas"
 
-```text
-<?php
-use App\Models\Note;
-public function
-index()
-{
-$notes =
-Note::all();
-return
-view('notes.index',
-compact('notes'));
-}
-```
+    ```php
+    <?php
+    use App\Http\Controllers\NoteController;
+
+    Route::get('/', [NoteController::class, 'index'])->name('note.index');
+    ```
+
+**Controlador:**
+
+!!! note "método index, para listar todas las notas"
+
+    ```php
+    <?php
+    use App\Models\Note;
+    public function index()
+    {
+        $notes = Note::all();
+        return view('notes.index', compact('notes'));
+    }
+    ```
+
+**Explicación de @forelse vs @foreach:**
 
 - `@foreach` se utiliza para recorrer elementos, pero no gestiona si el array está vacío.
-
 - `@forelse` permite recorrer elementos y además definir qué hacer si no hay elementos.
 
 Ejemplo:
 
-```text
-@forelse ($notes
-as $note)
-<p>{{ $note-
->title }}</p>
+```html title="Listado de Notas"
+@forelse ($notes as $note)
+    <p>{{ $note->title }}</p>
 @empty
-<p>No hay
-notas
-disponibles.</p>
+    <p>No hay notas disponibles.</p>
 @endforelse
 ```
 
 En el ejemplo anterior, si `$notes` está vacío, se mostrará "No hay notas disponibles."
 
-```text
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta
-charset="UTF-8">
+**Crear layout base en `resources/views/layouts/app.blade.php`:**
 
-<title>@yield('ti
-title>
-</head>
-<body>
-<header>
-<h1>Mi
-Aplicación de Not
-<nav>
-<a h
-route('note.index
-}}">Inicio</a> |
-<a h
-route('note.creat
-}}">Crear Nota</a
-</nav>
-</header>
-<main>
+!!! note "Layout"
 
-@yield('content'
-</main>
-</body>
-</html>
-```
+    ```html
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>@yield('title')</title>
+    </head>
+    <body>
+        <header>
+            <h1>Mi Aplicación de Notas</h1>
+            <nav>
+                <a href="{{ route('note.index') }}">Inicio</a> |
+                <a href="{{ route('note.create') }}">Crear Nota</a>
+            </nav>
+        </header>
+        <main>
+            @yield('content')
+        </main>
+    </body>
+    </html>
+    ```
 
-En este formulario vamos a adelantar algunas cosas que ampliaremos más adelante. Para poner el enlace a leminar una nota, vamos a utilizar un formulario con el método `POST` y la directiva `@method('DELETE')`. Esta directiva simula el método HTTP DELETE en formularios HTML (que solo permiten GET y POST. Más adelante explicaremos esto con más detalle. Hasta aquí nada especialmente llmativo. Pero también veréis que está la directiva `@csrf`. Esta directiva genera un campo oculto con un token que protege el formulario contra ataques CSRF Cross-Site Request Forgery). Más adelante también explicaremos esto con más detalle. En `laravel` esta prtección es automática, pero hay que incluir la directiva `@csrf` en los formularios para que funcione correctamente.
+**Vista de Listado `resources/views/notes/index.blade.php`:**
 
-```text
-@extends('layouts
+En este formulario vamos a adelantar algunas cosas que ampliaremos más adelante. Para poner el enlace a leminar una nota, vamos a utilizar un formulario con el método `POST` y la directiva `@method('DELETE')`. Esta directiva simula el método HTTP DELETE en formularios HTML (que solo permiten GET y POST). Más adelante explicaremos esto con más detalle. Hasta aquí nada especialmente llmativo. Pero también veréis que está la directiva `@csrf`. Esta directiva genera un campo oculto con un token que protege el formulario contra ataques CSRF (Cross-Site Request Forgery). Más adelante también explicaremos esto con más detalle. En `laravel` esta prtección es automática, pero hay que incluir la directiva `@csrf` en los formularios para que funcione correctamente.
 
-@section('title'
-'Listado de Notas
+!!! note "Listado de Notas"
 
-@section('content
-<h2>Listado d
-Notas</h2>
+    ```html
+    @extends('layouts.app')
 
-@forelse ($no
-$note)
-<div>
-<h3><
-href="{{
-route('note.show
-$note->id) }}">{{
->title }}</a></h3
-<p>{{
->description }}</
-<smal
-$note->date }}</s
-<div>
-<
-href="{{
-route('note.edit
-$note->id) }}">Ed
-a>
-<
-action="{{
-route('note.dest
-$note->id) }}"
-method="POST"
-style="display:in
+    @section('title', 'Listado de Notas')
 
-@csrf
+    @section('content')
+        <h2>Listado de Notas</h2>
 
-@method('DELETE'
+        @forelse ($notes as $note)
+            <div>
+                <h3><a href="{{ route('note.show', $note->id) }}">{{ $note->title }}</a></h3>
+                <p>{{ $note->description }}</p>
+                <small>{{ $note->date }}</small>
+                <div>
+                    <a href="{{ route('note.edit', $note->id) }}">Editar</a>
+                    <form action="{{ route('note.destroy', $note->id) }}" method="POST" style="display:inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </div>
+            </div>
+        @empty
+            <p>No hay notas disponibles.</p>
+        @endforelse
+    @endsection
+    ```
 
-<button
-```
-
-```text
-type="submit">Eli
-button>
-<
-</div
-</div>
-@empty
-<p>No hay
-disponibles.</p>
-@endforelse
-@endsection
-```
+---
 
 ### Crear una Nueva Nota
 
 Para poder crear una nota necesitamos tres cosas:
 
-1. **1**. Una ruta que muestre el formulario de creación, `/note/create`.
+1. Una ruta que muestre el formulario de creación, `/note/create`.
+2. Un método en el controlador que maneje esa ruta y muestre la vista con el formulario: `function create()`.
+3. Una vista que contenga el formulario de creación: `resources/views/notes/create.blade.php`.
 
-2. **2**. Un método en el controlador que maneje esa ruta y muestre la vista con el formulario: `function create()`.
+**Ruta para formulario de creación:**
 
-3. **3**. Una vista que contenga el formulario de creación: `resources/views/` `notes/create.blade.php`.
+!!! note "Ruta para Crear Nota"
 
-```text
-<?php
-Route::get('/note/
-create',
-[NoteController::class,
-'create'])-
->name('note.create');
-```
+    ```php
+    <?php
+    Route::get('/note/create', [NoteController::class, 'create'])->name('note.create');
+    ```
 
-```text
-<?php
-public function
-create()
-{
-return
-view('notes.create
-}
-```
+**Controlador:**
 
-```text
-@extends('layouts
+!!! note "método create, para mostrar el formulario de creación"
 
-@section('title'
-'Crear Nueva Nota
+    ```php
+    <?php
+    public function create()
+    {
+        return view('notes.create');
+    }
+    ```
 
-@section('content
-<h2>Crear Not
-<form action=
-route('note.store
-method="POST">
-@csrf
+**Vista `resources/views/notes/create.blade.php`:**
 
-<label>Título:</l
-<input
-type="text"
-name="title" requ
-```
+!!! note "Formulario de Crear Nota"
 
-```text
-<label>Descripció
-label>
-<textarea
-name="descriptio
-required></texta
+    ```html
+    @extends('layouts.app')
 
-<label>Fe
-label>
-<input
-type="date" name=
-required>
-```
+    @section('title', 'Crear Nueva Nota')
 
-```text
-<label>Completada
-label>
-<input
-type="checkbox"
-name="done">
+    @section('content')
+        <h2>Crear Nota</h2>
+        <form action="{{ route('note.store') }}" method="POST">
+            @csrf
+            <label>Título:</label>
+            <input type="text" name="title" required>
 
-<button
-type="submit">Gua
-```
+            <label>Descripción:</label>
+            <textarea name="description" required></textarea>
 
-```text
-yp
-button>
-<a href=
-route('note.index
-}}">Cancelar</a>
-</form>
-@endsection
-```
+            <label>Fecha:</label>
+            <input type="date" name="date" required>
+
+            <label>Completada:</label>
+            <input type="checkbox" name="done">
+
+            <button type="submit">Guardar</button>
+            <a href="{{ route('note.index') }}">Cancelar</a>
+        </form>
+    @endsection
+    ```
+
+---
 
 ### Guardar la Nueva Nota
 
 Al igual que en el caso anterior, para guardar la nota necesitamos dos cosas. Una ruta que maneje el envío del formulario y un método en el controlador que procese los datos y guarde la nota en la base de datos. Al final, redirigiremos a la lista de notas.
 
-```text
-<?php
-Route::post('/note
-store',
-[NoteController::c
-'store'])-
->name('note.store
-```
+**Ruta para guardar:**
+
+!!! note "Ruta para Guardar Nota"
+
+    ```php
+    <?php
+    Route::post('/note/store', [NoteController::class, 'store'])->name('note.store');
+    ```
+
+**Controlador:**
 
 Para guardar la nota, podemos usar diferentes métodos. Aquí mostramos dos formas:
 
-```text
-<?php
-public function
-store(Request
-$request)
-{
-$note = new
-Note();
-$note->title
-$request-
->input('title');
-$note->descri
-= $request-
->input('descripti
-$note->date =
-$request-
->input('date');
-$note->done =
-$request-
->input('done') ?
-0;
-$note->save(
-// Redirigir
-lista de notas
-return redire
->route('note.inde
-}
-```
+!!! note "Guardar Nota"
+
+    ```php
+    <?php
+    public function store(Request $request)
+    {
+        $note = new Note();
+        $note->title = $request->input('title');
+        $note->description = $request->input('description');
+        $note->date = $request->input('date');
+        $note->done = $request->input('done') ? 1 : 0;
+        $note->save();
+        // Redirigir a la lista de notas
+        return redirect()->route('note.index');
+    }
+    ```
 
 O usando el método `create`:
 
-```text
-<?php
-public function
-store(Request
-$request)
-{
+!!! note "Guardar Nota"
 
-Note::create($requ
->all());
-return redirec
->route('note.index
-}
-```
+    ```php
+    <?php
+    public function store(Request $request)
+    {
+        Note::create($request->all());
+        return redirect()->route('note.index');
+    }
+    ```
 
-En el caso de los campos `checkbox`, si no se marca, no se envía ningún valor, es decir, en el request no existirá la clave `done` y por tanto este campo no se actualizará. Para solucionarlo, podemos usar una expresión ternaria:
+!!! tip "Nota sobre campos checkbox"
 
-```text
-$done = $request-
->input('done') ? 1:
-0;
-```
+    En el caso de los campos `checkbox`, si no se marca, no se envía ningún valor, es decir, en el request no existirá la clave `done` y por tanto este campo no se actualizará.
 
-para asignar un valor por defecto de `0` cuando no se marque el checkbox. O simplememnte comprobar si el campo existe en el request y asignar `1` si existe o `0` si no existe
+    Para solucionarlo, podemos usar una expresión ternaria:
+
+    ```php
+    $done = $request->input('done') ? 1 : 0;
+    ```
+
+    para asignar un valor por defecto de `0` cuando no se marque el checkbox. O simplememnte comprobar si el campo existe en el request y asignar `1` si existe o `0` si no existe
 
 Por tanto tenemos que modificar el método `store` para que el campo `done` se actualice correctamente:
 
-```text
-<?php
-public function
-store(Request
-$request)
-{
-$data = $requ
->all();
-$data['done'
-$request-
->has('done');
-```
+!!! note "Guardar Nota"
 
-```text
-Note::create($dat
+    ```php
+    <?php
+    public function store(Request $request)
+    {
+        $data = $request->all();
+        $data['done'] = $request->has('done');
 
-return
-redirect()-
->route('note.inde
-}
-```
+        Note::create($data);
 
-- `@csrf` protege contra ataques CSRF Cross-Site Request Forgery).
+        return redirect()->route('note.index');
+    }
+    ```
 
+**Explicaciones Adicionales:**
+
+- `@csrf` protege contra ataques CSRF (Cross-Site Request Forgery).
 - `$request->all()` devuelve todos los datos enviados en el formulario.
-
 - Laravel valida automáticamente que el token CSRF esté presente. Si no lo está, lanzará un error.
 
 ¿Cómo funciona CSRF?
 
 - Laravel genera un token único para cada sesión de usuario.
-
 - Este token se incluye en cada formulario generado por Laravel.
-
 - Cuando se envía el formulario, Laravel verifica que el token enviado coincida con el de la sesión.
-
-- Si no coinciden, Laravel lanza un error 419 Page Expired).
-
+- Si no coinciden, Laravel lanza un error 419 (Page Expired).
 - Esto previene que un atacante envíe formularios en nombre del usuario sin su consentimiento.
+
+---
 
 ### Editar una Nota
 
-```text
-Route::get('/note/edit/
-{note}',
-[NoteController::class,
-'edit'])-
->name('note.edit');
-```
+**Ruta para formulario de edición:**
+
+!!! note "Ruta para Editar Nota"
+
+    ```php
+    Route::get('/note/edit/{note}', [NoteController::class, 'edit'])->name('note.edit');
+    ```
+
+**Controlador:**
 
 Tenemos varias formas de recibir el parámetro `note`. En esta primer recibimos el ID y buscamos la nota, para poder pasarla a la vista:
 
-```text
-<?php
-public function
-edit($id)
-{
-$note =
-Note::findOrFail($
-return
-view('notes.edit'
-compact('note'));
-}
-```
+!!! note "método edit, para mostrar el formulario de edición"
+
+    ```php
+    <?php
+    public function edit($id)
+    {
+        $note = Note::findOrFail($id);
+        return view('notes.edit', compact('note'));
+    }
+    ```
 
 En esta segunda forma, recibimos el modelo `Note`. De esta manera es Laravel el que se encarga de buscar la nota. Cuando trabajamos con modelos, esta es la forma recomendada:
 
-```text
-<?php
-public function
-edit(Note $note)
-{
-return
-view('notes.edit'
-compact('note'));
-}
-```
+!!! note "método edit, con inyección de modelo"
 
-En este caso la ruta la hemos definido con el método `PUT`. Este método es el que se utiliza para actualizar los datos de un recurso existente. Pero ¿cómo hacerlo si las opciones de `form` solo permiten `GET` y `POST` ?. Laravel nos ofrece una solución sencilla: la directiva `@method('PUT')`. Esta directiva simula el método PUT en formularios HTML. Esta directiva debe estar dentro del formulario y antes de los inputs.
+    ```php
+    <?php
+    public function edit(Note $note)
+    {
+        return view('notes.edit', compact('note'));
+    }
+    ```
 
-```text
-<form id="sample-
-form"
-action="somepage.php
-method="POST">
-@csrf
-@method('PUT')
-<!-- Otros campo
-del formulario -->
+**Vista `resources/views/notes/edit.blade.php`:**
+
+En este caso la ruta la hemos definido con el método `PUT`. Este método es el que se utiliza para actualizar los datos de un recurso existente. Pero ¿cómo hacerlo si las opciones de `form` solo permiten `GET` y `POST`?. Laravel nos ofrece una solución sencilla: la directiva `@method('PUT')`. Esta directiva simula el método PUT en formularios HTML. Esta directiva debe estar dentro del formulario y antes de los inputs.
+
+```html title="Editar Nota"
+<form id="sample-form" action="somepage.php" method="POST">
+    @csrf
+    @method('PUT')
+    <!-- Otros campos del formulario -->
 </form>
 ```
 
 Con este formato el formulario se enviará como un PUT, aunque el método del formulario sea POST.
 
-```text
-@extends('layouts
+!!! note "Formulario de Editar Nota"
 
-@section('title'
-Nota')
+    ```html
+    @extends('layouts.app')
 
-@section('content
-<h2>Editar No
-<form action=
-route('note.updat
-$note->id) }}"
-method="POST">
-@csrf
-@method(
-<label>Tí
-label>
-<input ty
-name="title" valu
-$note->title }}"
-```
+    @section('title', 'Editar Nota')
 
-```text
-<label>Descripció
-label>
-<textarea
-name="descriptio
-required>{{ $note
->description }}</
+    @section('content')
+        <h2>Editar Nota</h2>
+        <form action="{{ route('note.update', $note->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <label>Título:</label>
+            <input type="text" name="title" value="{{ $note->title }}" required>
 
-<label>Fe
-label>
-<input ty
-name="date" value
-$note->date }}"
-```
+            <label>Descripción:</label>
+            <textarea name="description" required>{{ $note->description }}</textarea>
 
-```text
-<label>Completada
-<input
-type="checkbox"
-name="done" {{ $n
-? 'checked': ''
-```
+            <label>Fecha:</label>
+            <input type="date" name="date" value="{{ $note->date }}" required>
 
-```text
-<button
-type="submit">Act
-button>
-<a href=
-route('note.index
-}}">Cancelar</a>
-</form>
-@endsection
-```
+            <label>Completada:</label>
+            <input type="checkbox" name="done" {{ $note->done ? 'checked' : '' }}>
 
-- `@method('PUT')` simula el método HTTP PUT en formularios HTML (que solo permiten GET y POST.
+            <button type="submit">Actualizar</button>
+            <a href="{{ route('note.index') }}">Cancelar</a>
+        </form>
+    @endsection
+    ```
+
+    -
+
+    @method('PUT')
+
+    simula el método HTTP PUT en formularios HTML (que solo permiten GET y POST).
+
+---
 
 ### Actualizar la Nota
 
-```text
-<?php
-Route::put('/note/
-update/{note}',
-[NoteController::c
-'update'])-
->name('note.update
-```
+**Ruta para actualizar:**
 
-En este caso también tenemos dos formas de recibir el parámetro `Note $note`. En esta primer caso recibimos la nota y `laravel` por inyección de modelo la busca por nosotros y en el segundo caso recibimos el ID y buscamos la nota nosotros.
+!!! note "Ruta para Actualizar Nota"
 
-```text
-<?php
-public function
-update(Request
-$request, Note $no
-{
-$note-
->update($request-
->all());
-return
-redirect()-
->route('note.index
-}
-```
+    ```php
+    <?php
+    Route::put('/note/update/{note}', [NoteController::class, 'update'])->name('note.update');
+    ```
 
-```text
-<?php
-public function
-update(Request
-$request, $id)
-{
-$note =
-Note::findOrFail($
-$note-
->update($request-
->all());
-return redirec
->route('note.index
-}
-```
+**Controlador:**
 
-En este caso tenemos el mismo problema que en el método `store` con el campo `done`. Si no se marca el checkbox, no se envía ningún valor y por tanto este campo no se actualizará. Para solucionarlo, podemos usar una expresión ternaria para asignar un valor por defecto de `0` cuando no se marque el checkbox. O simplememnte comprobar si el campo existe en el request y asignar `1` si existe o `0` si no existe.
+En este caso también tenemos dos formas de recibir el parámetro `Note $note`. En esta primer caso recibimos la *nota* y `laravel` por inyección de modelo la busca por nosotros y en el segundo caso recibimos el *ID* y buscamos la nota nosotros.
 
-```text
-<?php
-public function
-update(Request
-$request, Note $no
-{
-$data = $reque
->all();
-$data['done']
-$request-
->has('done');
-$note-
->update($data);
-return
-redirect()-
->route('note.index
-}
-```
+!!! note "método update, con inyección de modelo"
+
+    ```php
+    <?php
+    public function update(Request $request, Note $note)
+    {
+        $note->update($request->all());
+        return redirect()->route('note.index');
+    }
+    ```
+
+!!! note "método update, buscando por ID"
+
+    ```php
+    <?php
+    public function update(Request $request, $id)
+    {
+        $note = Note::findOrFail($id);
+        $note->update($request->all());
+        return redirect()->route('note.index');
+    }
+    ```
+
+!!! tip "Problema con los checkbox en update"
+
+    En este caso tenemos el mismo problema que en el método `store` con el campo `done`. Si no se marca el checkbox, no se envía ningún valor y por tanto este campo no se actualizará. Para solucionarlo, podemos usar una expresión ternaria para asignar un valor por defecto de `0` cuando no se marque el checkbox. O simplememnte comprobar si el campo existe en el request y asignar `1` si existe o `0` si no existe.
+
+!!! note "método update, con solución para checkbox"
+
+    ```php
+    <?php
+    public function update(Request $request, Note $note)
+    {
+        $data = $request->all();
+        $data['done'] = $request->has('done');          
+        $note->update($data);
+        return redirect()->route('note.index');
+    }
+    ```
 
 ### Mostrar una Nota Individual
 
-```text
-<?php
-Route::get('/note/show/
-{note}',
-[NoteController::class,
-'show'])-
->name('note.show');
-```
+**Ruta para mostrar:**
 
-En este caso también tenemos dos formas de recibir el parámetro `Note $note`. En esta primer caso recibimos la nota y `laravel` por inyección de modelo la busca por nosotros y en el segundo caso recibimos el ID y buscamos la nota nosotros.
+!!! note "Ruta para Mostrar Nota"
 
-```text
-<?php
-public function
-show($id)
-{
-$note =
-Note::findOrFail($
-return
-view('notes.show'
-compact('note'));
-}
-```
+    ```php
+    <?php
+    Route::get('/note/show/{note}', [NoteController::class, 'show'])->name('note.show');
+    ```
 
-```text
-<?php
-public function
-show(Note $note)
-{
-return
-view('notes.show'
-compact('note'));
-}
-```
+**Controlador:**
 
-```text
-@extends('layouts
+En este caso también tenemos dos formas de recibir el parámetro `Note $note`. En esta primer caso recibimos la *nota* y `laravel` por inyección de modelo la busca por nosotros y en el segundo caso recibimos el *ID* y buscamos la nota nosotros.
 
-@section('title'
-'Detalle de Nota
+!!! note "método show, buscando por ID"
 
-@section('content
-<h2>{{ $note
-}}</h2>
-<p>{{ $note-
->description }}</
-<p>Fecha: {{
->date }}</p>
-<p>Estado: {{
-$note->done ?
-'Completada':
-'Pendiente' }}</p
-<a href="{{
-route('note.index
-}}">Volver</a>
-@endsection
-```
+    ```php
+    <?php
+    public function show($id)
+    {
+        $note = Note::findOrFail($id);
+        return view('notes.show', compact('note'));
+    }
+    ```
+
+!!! note "método show, para mostrar una nota individual"
+
+    ```php
+    <?php
+    public function show(Note $note)
+    {
+        return view('notes.show', compact('note'));
+    }
+    ```
+
+**Vista `resources/views/notes/show.blade.php` actualizada:**
+
+!!! note "Mostrar Nota"
+
+    ```html
+    @extends('layouts.app')
+
+    @section('title', 'Detalle de Nota')
+
+    @section('content')
+        <h2>{{ $note->title }}</h2>
+        <p>{{ $note->description }}</p>
+        <p>Fecha: {{ $note->date }}</p>
+        <p>Estado: {{ $note->done ? 'Completada' : 'Pendiente' }}</p>
+        <a href="{{ route('note.index') }}">Volver</a>
+    @endsection
+    ```
+
+---
 
 ### Eliminar una Nota
 
-```text
-<?php
-Route::delete('/note/
-destroy/{note}',
-[NoteController::class,
-'destroy'])-
->name('note.destroy');
-```
+**Ruta para eliminar:**
 
-Como en los casos anteriores, tenemos dos formas de recibir el parámetro `Note` `$note`. En esta primer caso recibimos la nota y `laravel` por inyección de modelo la busca por nosotros y en el segundo caso recibimos el ID y buscamos la nota nosotros.
+!!! note "Ruta para Eliminar Nota"
 
-```text
-<?php
-public function
-destroy($id)
-{
-$note =
-Note::findOrFail($
-$note->delete
-return redirec
->route('note.index
-}
-```
+    ```php
+    <?php
+    Route::delete('/note/destroy/{note}', [NoteController::class, 'destroy'])->name('note.destroy');
+    ```
 
-```text
-<?php
-public function
-destroy(Note $note
-{
-$note->delete
-return
-redirect()-
->route('note.index
-}
-```
+**Controlador:**
 
-- El método `delete()` elimina el registro de la base de datos.
+Como en los casos anteriores, tenemos dos formas de recibir el parámetro `Note $note`. En esta primer caso recibimos la *nota* y `laravel` por inyección de modelo la busca por nosotros y en el segundo caso recibimos el *ID* y buscamos la nota nosotros.
+
+!!! note "método destroy, buscando por ID"
+
+    ```php
+    <?php
+    public function destroy($id)
+    {
+        $note = Note::findOrFail($id);
+        $note->delete();
+        return redirect()->route('note.index');
+    }
+    ```
+
+!!! note "método destroy, para eliminar una nota"
+
+    ```php
+    <?php
+    public function destroy(Note $note)
+    {
+        $note->delete();
+        return redirect()->route('note.index');
+    }
+    ```
+
+    - El método `delete()` elimina el registro de la base de datos.
 
 ### Prueba completa del CRUD
 
-Ahora vamos probar todas las funcionalidades del CRUD
+Ahora vamos probar todas las funcionalidades del CRUD:
 
-Al no utilizar nada de CSS, el aspecto es muy básico. En un proyecto real, se debería aplicar estilos CSS para mejorar la apariencia y usabilidad.
+!!! info "Aspecto del ejemplo"
 
-1. **Listar Notas**: Accede a la ruta `/` para ver el listado de notas.
+    Al no utilizar nada de CSS, el aspecto es muy básico. En un proyecto real, se debería aplicar estilos CSS para mejorar la apariencia y usabilidad.
 
-2. **Crear Nota**: Haz clic en "Crear Nota", rellena el formulario y envíalo.
+1. **Listar Notas:** Accede a la ruta `/` para ver el listado de notas.
 
-Al hacer click en "Crear Nota" se accede a `/note/create`:
+    !!! success "imagen /"
 
-Una vez rellenado el formulario lo enviamos al servidor (ruta `/note/` `store`) y volvemos al listado de notas.
+        ![imagen /](../assets/beteta/T06/img02.png)
 
-Podemos ver la nota creada y como aparecen los enlaces para editar y eliminar.
+2. **Crear Nota:** Haz clic en "Crear Nota", rellena el formulario y envíalo.
 
-3. **Editar Nota**: Haz clic en "Editar" junto a una nota, modifica los datos y envía el formulario.
+    Al hacer click en "Crear Nota" se accede a `/note/create`:
 
-Al hacer click en "Editar" se accede a `/note/edit/{id}`:
+    !!! success "imagen /note/create"
 
-Una vez modificado el formulario lo enviamos al servidor (ruta `/note/`
+        ![imagen /](../assets/beteta/T06/img03.png)
 
-`update/{id}`) que actualiza la nota y nos redirecciona al listado de notas.
+    Una vez rellenado el formulario lo enviamos al servidor (ruta `/note/store`) y volvemos al listado de notas.
 
-4. **Mostrar Nota**: Haz clic en el título de una nota para ver sus detalles.
+    !!! success "imagen /"
 
-Al hacer click en el título de una nota se accede a `/note/show/{id}`:
+        ![imagen /](../assets/beteta/T06/img04.png)
 
-Una vez vista pulsamos volver y nos redirecciona al listado de notas.
+    Podemos ver la nota creada y como aparecen los enlaces para editar y eliminar.
 
-5. **Eliminar Nota**: Haz clic en "Eliminar" junto a una nota. Al hacer click en "Eliminar" se envía un formulario con método `DELETE` a la ruta `/note/` `destroy/{id}` que elimina la nota y nos redirecciona al listado de notas.
+3. **Editar Nota:** Haz clic en "Editar" junto a una nota, modifica los datos y envía el formulario.
 
-En un proyecto real, es recomendable añadir una confirmación antes de eliminar una nota para evitar eliminaciones accidentales.
+    Al hacer click en "Editar" se accede a `/note/edit/{id}`:
+
+    !!! success "imagen /note/edit/1"
+
+        ![imagen /](../assets/beteta/T06/img06.png)
+
+    Una vez modificado el formulario lo enviamos al servidor (ruta `/note/update/{id}`) que actualiza la nota y nos redirecciona al listado de notas.
+
+    !!! success "imagen /"
+
+        ![imagen /](../assets/beteta/T06/img07.png)
+
+4. **Mostrar Nota:** Haz clic en el título de una nota para ver sus detalles.
+
+    Al hacer click en el título de una nota se accede a `/note/show/{id}`:
+
+    !!! success "imagen /"
+
+        ![imagen /](../assets/beteta/T06/img09.png)
+
+    !!! success "imagen /note/show/1"
+
+        ![imagen /](../assets/beteta/T06/img10.png)
+
+    Una vez vista pulsamos volver y nos redirecciona al listado de notas.
+
+5. **Eliminar Nota:** Haz clic en "Eliminar" junto a una nota. Al hacer click en "Eliminar" se envía un formulario con método `DELETE` a la ruta `/note/destroy/{id}` que elimina la nota y nos redirecciona al listado de notas.
+
+    !!! warning "Confirmación de Eliminación"
+
+        En un proyecto real, es recomendable añadir una confirmación antes de eliminar una nota para evitar eliminaciones accidentales.
+
+    !!! success "imagen /"
+
+        ![imagen /](../assets/beteta/T06/img08.png)
 
 ### Tipado en los métodos del controlador
 
-```text
+**Ejemplo de tipado correcto:**
+
+```php
 <?php
-public function
-update(
-Request
-$request,
-Note
-$note
-):
-RedirectResponse
+public function update(
+            Request $request, 
+            Note $note
+        ): RedirectResponse
 {
-$note-
->update($request-
->all());
-return
-redirect()-
->route('note.index')
+    $note->update($request->all());
+    return redirect()->route('note.index');
 }
 ```
 
 - Tipar los parámetros mejora la legibilidad y control de errores.
-
 - Tipar el tipo de retorno ayuda a Laravel a validar internamente las respuestas.
 
-- `View` para devolver vistas. `use` Illuminate\View\View
+!!! tip "Tipos comunes de retorno"
 
-- `RedirectResponse` para redirecciones. `use` Illuminate\Http\RedirectRes ponse
-
-- `JsonResponse` para APIs. `use` Illuminate\Http\JsonRespons e
-
+    - `View` para devolver vistas. `use Illuminate\View\View`
+    - `RedirectResponse` para redirecciones. `use Illuminate\Http\RedirectResponse`
+    - `JsonResponse` para APIs. `use Illuminate\Http\JsonResponse`

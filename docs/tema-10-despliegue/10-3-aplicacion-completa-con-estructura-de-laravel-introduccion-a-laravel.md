@@ -1,5 +1,9 @@
 # Aplicación completa con estructura de laravel
 
+!!! quote "Autoría"
+
+    Contenido original de **Javier Beteta** en el curso [*Introducción a Laravel*](https://jbeteta-ies.github.io/2025_Laravel_32/) ([ver esta página en el original](https://jbeteta-ies.github.io/2025_Laravel_32/content/T10/unidad10_03/)). Adaptado para 2º DAW del IES Juan de Garay por Eva María Gómez Abad.
+
 En esta sección, vamos a crear una aplicación completa de Laravel, con su estructura de carpetas y archivos necesarios para su funcionamiento. Vamos a realizar el despliegue en un servidor remoto utilizando GitHub Actions y configurando los secretos necesarios para que la aplicación funcione correctamente.
 
 EL proceso va a ser muy similar al que hemos visto en la unidad anterior, pero con algunas diferencias debido a la estructura de Laravel y a los archivos necesarios para su funcionamiento.
@@ -12,50 +16,43 @@ Antes de comenzar, necesitamos tener instalado Docker y Docker Compose en nuestr
 
 Como vimos en los primeros temas, vamos a arrancar el entorno de desarrollo, Instalaremos Laravel y comprobar que todo funciona correctamente en local antes de realizar el despliegue en el servidor remoto.
 
-Podéis acudir al tema 2, puntos 2.2, 2.3 y
-
-2. 4 para ver como crear el entorno de desarrollo con Docker, instalar Laravel y comprobar que todo funciona correctamente en local.
+Podéis acudir al tema 2, puntos 2.2, 2.3 y 2.4 para ver como crear el entorno de desarrollo con Docker, instalar Laravel y comprobar que todo funciona correctamente en local.
 
 También podéis descargar el proyecto inicial:
 
-```text
-git clone https://
-github.com/jbeteta-ies/
-phpDeployTest.git
+```bash
+git clone https://github.com/jbeteta-ies/phpDeployTest.git
 cd phpDeployTest
 ```
 
-Si habéis clonado el proyecto lo primero que debéis eliminar son los ficheros `*.txt` que encontraréis en las carpetas `mysql/data/` y 'mysql/tmp/'. Estos ficheros están únicamente para que al clonar el proyecto se suban las carpetas ya que si están vacías git no las sube.
+!!! failure "Ficheros a eliminar"
+
+    Si habéis clonado el proyecto lo primero que debéis eliminar son los ficheros `*.txt`que encontraréis en las carpetas `mysql/data/` y 'mysql/tmp/'. Estos ficheros están únicamente para que al clonar el proyecto se suban las carpetas ya que si están vacías git no las sube.
 
 ### Crear el entorno de desarrollo
 
 Creamos el entorno de desarrollo:
 
-```text
-docker-compose up -d --
-build
+```bash
+docker-compose up -d --build
 ```
 
 Y accedemos al contenedor, para instalar las dependencias de Laravel con Composer:
 
-```text
-docker compose exec php
-bash
+```bash
+docker compose exec php bash
 composer install
 ```
 
-Si al ejecutar el comando anterior, nos da un error de timeout, es posible que sea debido a que Docker no tiene suficiente memoria asignada. Para solucionarlo, podemos aumentar la memoria asignada a Docker desde la configuración de Docker Desktop. Lo ideal es asignar al menos 4 GB de memoria.
+!!! failure "Error de timeout"
 
-```text
-# Establecer un
-tiempo de espera
-mayor para Composer
-(2000 segundos)
-composer config --
-global process-
-timeout 2000
-composer install
-```
+    Si al ejecutar el comando anterior, nos da un error de timeout, es posible que sea debido a que Docker no tiene suficiente memoria asignada. Para solucionarlo, podemos aumentar la memoria asignada a Docker desde la configuración de Docker Desktop. Lo ideal es asignar al menos 4 GB de memoria.
+
+    ```bash
+    # Establecer un tiempo de espera mayor para Composer (2000 segundos)
+    composer config --global process-timeout 2000
+    composer install
+    ```
 
 ### Crear y configurar la base de datos
 
@@ -63,21 +60,14 @@ Creamos la base de datos `laravel` y le damos permisos al usuario `alumno` si es
 
 Para conectar:
 
-```text
-# la constraseña de
-`root` con la
-configuración del curso
-es 'administrador'
-docker compose exec
-mysql mysql -u root -p
+```bash
+# la constraseña de `root` con la configuración del curso es 'administrador'
+docker compose exec mysql mysql -u root -p 
 ```
 
-```text
-CREATE DATABASE IF NOT
-EXISTS laravel;
-GRANT ALL PRIVILEGES ON
-*.* TO 'alumno'@'%' WITH
-GRANT OPTION;
+```sql
+CREATE DATABASE IF NOT EXISTS laravel;
+GRANT ALL PRIVILEGES ON *.* TO 'alumno'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 ```
 
@@ -87,30 +77,24 @@ Lo primero será entrar en el fichero `.env` y configurar los datos de conexión
 
 Entramos en el contenedor `php`:
 
-```text
-docker compose exec php
-bash
-# copiamos el fichero
-.env.example a.env
-cp.env.example.env
-# recuerda que nunca se
-debe subir el fichero
-.env a un repositorio
-público
-# Generamos la clave de
-la aplicación
+```bash
+docker compose exec php bash
+# copiamos el fichero .env.example a .env
+cp .env.example .env
+# recuerda que nunca se debe subir el fichero .env a un repositorio público
+# Generamos la clave de la aplicación
 php artisan key:generate
 ```
 
 Modificamos el fichero `.env`, con la siguiente configuración (la Key es la que nos ha generado el comando anterior, no hay que copiar la que aparece aquí):
 
-```text
+```bash
 APP_NAME=Laravel
 APP_ENV=local
-APP_KEY=base64:xxxxxxxxxxxx
+APP_KEY=base64:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
 APP_DEBUG=true
-APP_URL=http://localhost:80
-# Base de datos........
+APP_URL=http://localhost:8080
+# Base de datos ........
 DB_CONNECTION=mysql
 DB_HOST=mysql
 DB_PORT=3306
@@ -123,35 +107,51 @@ DB_PASSWORD=alumno
 
 Hacemos la migración de la base de datos:
 
-```text
+```bash
 php artisan migrate
 ```
 
 ### Verificar que todo funciona correctamente
 
-Comprobamos que todo funciona correctamente accediendo a la siguiente URL
+Comprobamos que todo funciona correctamente accediendo a la siguiente URL:
 
 ```text
 http://localhost:8080
 ```
 
-Ahora debemos crear un repositorio en GitHub y subir el proyecto a GitHub. Ya que necesitaremos `github actions` para realizar el despliegue en el servidor remoto.
+Ahora debemos crear un repositorio en GitHub y subir el proyecto a GitHub. Ya que necesitaremos
+
+github actions
+
+para realizar el despliegue en el servidor remoto.
+
+!!! info "Vista local"
+
+    ![Laravel local](../assets/beteta/T10/imagen08.png)
 
 ## Estructura de carpetas en local
 
-Si hemos conseguido arrancar nuestro proyecto de laravel, la estructura de carpetas debería ser similar a la siguiente Sólo las de laravel, el resto no importan para subir a producción):
+Si hemos conseguido arrancar nuestro proyecto de laravel, la estructura de carpetas debería ser similar a la siguiente (Sólo las de laravel, el resto no importan para subir a producción):
 
-```text
+```bash
 phpDeployTest/
+├── src/
+│   ├── app/
+│   ├── config/
+│   ├── database/
+│   ├── public/
+              ├── index.php
+│   ├── resources/
+│   ├── routes/
+│   ├── storage/
+│   ├── tests/
+│   ├── vendor/
+│   ├── .env
+│   ├── artisan
+│   ├── composer.json
+│   ├── composer.lock
+│   ├── phpunit.xml
 ```
-
-├── `src/` │ ├── `app/` │ ├── `config/` │ ├── `database/` │ ├── `public/` ├──
-
-```text
-index.php
-```
-
-│ ├── `resources/` │ ├── `routes/` │ ├── `storage/` │ ├── `tests/` │ ├── `vendor/` │ ├── `.env` │ ├── `artisan` │ ├── `composer.json` │ ├── `composer.lock` │ ├── `phpunit.xml`
 
 ## Estructura de carpetas en el servidor remoto
 
@@ -159,27 +159,55 @@ Recordemos que la situación es igual a la del punto anterior 10.2, tenemos un s
 
 La estructura de carpetas en el servidor remoto será similar a la de local, pero con algunas diferencias. La carpeta `public` se moverá a `htdocs` para que sea accesible desde la web. La estructura del servidor remoto será la siguiente:
 
-```text
+```bash
 phpDeployTest/
+├── htdocs/
+│   ├── src/
+│       ├── app/
+│       ├── config/
+│       ├── database/
+│       ├── resources/
+│       ├── routes/
+│       ├── storage/
+│       ├── tests/
+│       ├── vendor/
+│       ├── .env
+│       ├── artisan
+│       ├── composer.json
+│       ├── composer.lock
+│       ├── phpunit.xml
+    ├── index.php
 ```
 
-├── `htdocs/` │ ├── `src/` │ ├── `app/` │ ├── `config/` │ ├── `database/` │ ├── `resources/` │ ├── `routes/` │ ├── `storage/` │ ├── `tests/` │ ├── `vendor/` │ ├── `.env` │ ├── `artisan` │ ├──
+La carpeta
 
-```text
-composer.json
-```
+public
 
-│ ├──
+desaparece y su contenido se mueve a
 
-```text
-composer.lock
-```
+htdocs
 
-│ ├── `phpunit.xml` ├── `index.php`
-
-La carpeta `public` desaparece y su contenido se mueve a `htdocs` para que sea accesible desde la web.
+para que sea accesible desde la web.
 
 ## Despliegue en producción
+
+### Posible error en la migración
+
+!!! failure "Posible error en la migración"
+
+    Si al ejecutar la migración nos encontramos con un error de longitud de clave, podemos consultar el anexo "Error en la migración" para solucionarlo. Este error ocurre porque la longitud máxima de la clave primaria en MySQL es de 1000 bytes, y al usar el conjunto de caracteres `utf8mb4`, cada carácter puede ocupar hasta 4 bytes. Por lo tanto, una columna `varchar(255)` puede ocupar hasta 1020 bytes, lo que excede el límite permitido para la clave primaria.
+
+    La solución está explicada en: [Anexo 10.1](anexo-error-en-la-migracion.md)
+
+Podemos hacer el siguiente cambio si no queremos esperar a ver el error en la migración. En el archivo `AppServiceProvider.php` que se encuentra en la carpeta `app/Providers`, dentro del método `boot`, agregamos la siguiente línea de código:
+
+```php
+use Illuminate\Support\Facades\Schema;
+public function boot()
+{
+    Schema::defaultStringLength(191);
+}
+```
 
 ### Prepacación de GitHub
 
@@ -189,628 +217,348 @@ Aunque en el punto anterior 10.2 ya manejamos secretos, esn este tema vamos a ne
 
 La información necesaria sobre `FTP` la tenemos en el panel de control de `InfinityFree` y la información sobre la base de datos la tenemos en la sección de `MySQL Databases` del panel de control de `InfinityFree`. Tenemos que crear la base de datos antes de continuar.
 
+!!! info "Vista de InfinityFree"
+
+    ![InfinityFree](../assets/beteta/T10/imagen09.png)
+
 Al crear la base de datos, nos proporcionan la información necesaria para conectarnos a la base de datos. Esta información es la que necesitamos guardar en los secretos de GitHub. La contraseña es la misma que utilizamos para acceder al panel de control de `InfinityFree`.
 
-Recordar que estos secretos los podemos configurar en el repositorio de GitHub, en la sección de `Settings` **>** `Secrets` `and variables` **>** `Actions` **>** `Repository secret`.
+Recordar que estos secretos los podemos configurar en el repositorio de GitHub, en la sección de `Settings` -> `Secrets and variables` -> `Actions` -> `Repository secret`.
 
-`APP_K` `APP_K` Clave de la `ba` aplicación
+| Campo | Secreto | Descripción | Ejemplo |
+|---|---|---|---|
+| `APP_KEY` | `APP_KEY` | Clave de la aplicación Laravel. | `base64:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=` |
+| `APP_URL` | `APP_URL` | URL de la aplicación en producción. | `https://laravel-simple-test.wuaze.com` |
+| `DB_CONNECTION` | `DB_CONNECTION` | Tipo de conexión a la base de datos. | `mysql` |
+| `DB_HOST` | `DB_HOST` | Host de la base de datos. | `sql100.infinityfree.com` |
+| `DB_PORT` | `DB_PORT` | Puerto de la base de datos. | `3306` |
+| `DB_DATABASE` | `DB_DATABASE` | Nombre de la base de datos. | `if0_40138844_laravel` |
+| `DB_USERNAME` | `DB_USERNAME` | Usuario de la base de datos. | `if0_40138844` |
+| `DB_PASSWORD` | `DB_PASSWORD` | Contraseña de la base de datos. | `*********` |
 
-```text
-EY EY 4:
-```
+!!! tip "Correción de datos"
 
-Laravel.
-
-```text
-xx
-xx
-xx
-xx
-xx
-xx
-xx
-xx
-=
-```
-
-`APP_U` `APP_U` URL de la `ht` aplicación
-
-```text
-RL RL:/
-```
-
-en
-
-```text
-la
-```
-
-producción.
-
-```text
-el
-si
-e-
-te
-wu
-.c
-```
-
-`DB_CO` `DB_CO` Tipo de `my` conexión a
-
-```text
-NNECT NNECT
-```
-
-la base de
-
-```text
-ION ION
-```
-
-datos.
-
-`DB_HO` `DB_HO` Host de la `sq` base de
-
-```text
-ST ST 0.
-```
-
-datos.
-
-```text
-in
-fr
-co
-```
-
-`DB_PO` `DB_PO` Puerto de la `33` base de
-
-```text
-RT RT
-```
-
-datos.
-
-`DB_DA` `DB_DA` Nombre de `if` la base de
-
-```text
-TABAS TABAS 01
-```
-
-datos.
-
-```text
-E E 44
-ra
-```
-
-`DB_US` `DB_US` Usuario de `if` la base de
-
-```text
-ERNAM ERNAM 01
-```
-
-datos.
-
-```text
-E E 44
-```
-
-`DB_PA` `DB_PA` Contraseña `**` de la base
-
-```text
-SSWOR SSWOR **
-```
-
-de datos.
-
-```text
-D D
-```
-
-Asegúrate de que los datos son correctos y que la base de datos está configurada correctamente. Estos datos son necesarios para que Laravel pueda conectarse a la base de datos en producción. Los datos mostrados son un ejemplo de un servidor de pruebas gratuito, `InfinityFree`, que permite desplegar aplicaciones web de forma gratuita.
+    Asegúrate de que los datos son correctos y que la base de datos está configurada correctamente. Estos datos son necesarios para que Laravel pueda conectarse a la base de datos en producción. Los datos mostrados son un ejemplo de un servidor de pruebas gratuito, `InfinityFree`, que permite desplegar aplicaciones web de forma gratuita.
 
 ### Archivo de despliegue deploy.yaml
 
 Para realizar el despliegue en producción, utilizaremos GitHub Actions para automatizar el proceso. El archivo `deploy.yaml` se encargará de subir los archivos al servidor remoto.
 
-Si han clonado el repositorio el archivo debe estar en la carpeta `.github/` `workflows/deploy.yaml`. Si no es así, lo creamos.
+Si han clonado el repositorio el archivo debe estar en la carpeta `.github/workflows/deploy.yaml`. Si no es así, lo creamos.
 
 El contenido del archivo `deploy.yaml` es el siguiente:
 
-```text
-name: Deploy to
-on:
-push:
-branches:
-- main
+!!! note "deploy.yaml"
 
-jobs:
-ftp-deploy:
-runs-on: ubun
+    ```yaml
+    name: Deploy to InfinityFree
+    on:
+      push:
+        branches:
+          - main
 
-steps:
-# 1. Checko
-código
-- name: Che
-uses: act
-checkout@v3
+    jobs:
+      ftp-deploy:
+        runs-on: ubuntu-latest
 
-# 2. Instal
-Composer (solo pa
-vendor la primera
-- name: Set
-with composer
-uses: shi
-setup-php@v2
-with:
-php-ve
-extensi
-mbstring, intl
-tools:
+        steps:
+          # 1. Checkout del código
+          - name: Checkout code
+            uses: actions/checkout@v3
 
-- name: Ins
-dependencies with
-working-d
-./src
-run: comp
-install --no-dev
-autoloader
+          # 2. Instalar PHP y Composer (solo para generar vendor la primera vez)
+          - name: Set up PHP with composer
+            uses: shivammathur/setup-php@v2
+            with:
+              php-version: '8.4'
+              extensions: mbstring, intl
+              tools: composer
 
-# 3. Subir
-```
+          - name: Install dependencies with composer
+            working-directory: ./src
+            run: composer install --no-dev --optimize-autoloader
 
-```text
-archivos públicos
-- name: Upl
-files to htdocs/
-uses: Sam
-FTP-Deploy-Action
-with:
-server
-secrets.FTP_SERV
-usernam
-secrets.FTP_USERN
-passwo
-secrets.FTP_PASSW
-local-d
-public/
-server
-htdocs/
-dangero
-slate: false #
-archivo de estado
-log-lev
+          # 3. Subir los archivos públicos a /htdocs/
+          - name: Upload public files to htdocs/
+            uses: SamKirkland/FTP-Deploy-Action@4.1.0
+            with:
+              server: ${{ secrets.FTP_SERVER }}
+              username: ${{ secrets.FTP_USERNAME }}
+              password: ${{ secrets.FTP_PASSWORD }}
+              local-dir: ./src/public/
+              server-dir: /htdocs/
+              dangerous-clean-slate: false   # mantiene el archivo de estado
+              log-level: minimal
 
-# 4. Prepa
-código fuente sin
-"public"
-- name: Pre
-without public
-run: |
-mkdir t
-shopt
-cp -r s
-(public) temp_src
-shell: ba
+          # 4. Preparar el código fuente sin la carpeta "public"
+          - name: Prepare src without public
+            run: |
+              mkdir temp_src
+              shopt -s extglob
+              cp -r src/!(public) temp_src/
+            shell: bash
 
-# 5. Subir
-del proyecto Lara
-htdocs/src/
-- name: Upl
-(except public) t
-src/
-uses: Sam
-FTP Deploy Action
-```
+          # 5. Subir el resto del proyecto Laravel a /htdocs/src/
+          - name: Upload src (except public) to htdocs/src/
+            uses: SamKirkland/FTP-Deploy-Action@4.1.0
+            with:
+              server: ${{ secrets.FTP_SERVER }}
+              username: ${{ secrets.FTP_USERNAME }}
+              password: ${{ secrets.FTP_PASSWORD }}
+              local-dir: ./temp_src/
+              server-dir: /htdocs/src/
+              dangerous-clean-slate: false   # evita borrar y mantiene sync incremental
+              log-level: minimal
 
-```text
-FTP-Deploy-Action
-with:
-server
-secrets.FTP_SERV
-usernam
-secrets.FTP_USERN
-passwo
-secrets.FTP_PASSW
-local-d
-temp_src/
-server
-htdocs/src/
-dangero
-slate: false #
-borrar y mantiene
-incremental
-log-lev
+          # 6. Crear el archivo .env
+          - name: Create .env file in temp folder
+            run: |
+              mkdir temp_env
+              echo "APP_NAME=Laravel" > temp_env/.env
+              echo "APP_ENV=production" >> temp_env/.env
+              echo "APP_KEY=${{ secrets.APP_KEY }}" >> temp_env/.env
+              echo "APP_DEBUG=false" >> temp_env/.env
+              echo "APP_URL=${{ secrets.APP_URL }}" >> temp_env/.env
+              echo "" >> temp_env/.env
+              echo "LOG_CHANNEL=stack" >> temp_env/.env
+              echo "" >> temp_env/.env
+              echo "DB_CONNECTION=${{ secrets.DB_CONNECTION }}" >> temp_env/.env
+              echo "DB_HOST=${{ secrets.DB_HOST }}" >> temp_env/.env
+              echo "DB_PORT=${{ secrets.DB_PORT }}" >> temp_env/.env
+              echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> temp_env/.env
+              echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> temp_env/.env
+              echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> temp_env/.env
+              echo "" >> temp_env/.env
+              echo "BROADCAST_DRIVER=log" >> temp_env/.env
+              echo "CACHE_DRIVER=file" >> temp_env/.env
+              echo "FILESYSTEM_DISK=local" >> temp_env/.env
+              echo "QUEUE_CONNECTION=sync" >> temp_env/.env
+              echo "SESSION_DRIVER=file" >> temp_env/.env
+              echo "SESSION_LIFETIME=120" >> temp_env/.env
+              echo "" >> temp_env/.env
+              echo "MAIL_MAILER=smtp" >> temp_env/.env
+              echo "MAIL_HOST=smtp.mailtrap.io" >> temp_env/.env
+              echo "MAIL_PORT=2525" >> temp_env/.env
+              echo "MAIL_USERNAME=null" >> temp_env/.env
+              echo "MAIL_PASSWORD=null" >> temp_env/.env
+              echo "MAIL_ENCRYPTION=null" >> temp_env/.env
+              echo "MAIL_FROM_ADDRESS=null" >> temp_env/.env
+              echo "MAIL_FROM_NAME=\"\${APP_NAME}\"" >> temp_env/.env
 
-# 6. Crear
-.env
-- name: Cre
-file in temp fold
-run: |
-mkdir t
-echo
-"APP_NAME=Laravel
-temp_env/.env
-echo
-"APP_ENV=producti
-temp_env/.env
-echo "A
-secrets.APP_KEY }
-temp_env/.env
-echo
-"APP_DEBUG=false
-temp_env/.env
-echo "A
-secrets.APP_URL }
-temp_env/.env
-echo "
-temp_env/.env
-```
+          # 7. Subir el .env sin tocar el resto
+          - name: Upload .env via FTP manually
+            run: |
+              curl -T ./temp_env/.env ftp://${{ secrets.FTP_SERVER }}/htdocs/src/.env \
+                --user "${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD}}"
+    ```
 
-```text
-echo
-"LOG_CHANNEL=stac
-temp_env/.env
-echo "
-temp_env/.env
-echo
-"DB_CONNECTION=${
-secrets.DB_CONNEC
-temp_env/.env
-echo "
-secrets.DB_HOST }
-temp_env/.env
-echo "
-secrets.DB_PORT }
-temp_env/.env
-echo
-"DB_DATABASE=${{
-secrets.DB_DATABA
-temp_env/.env
-echo
-"DB_USERNAME=${{
-secrets.DB_USERNA
-temp_env/.env
-echo
-"DB_PASSWORD=${{
-secrets.DB_PASSWO
-temp_env/.env
-echo "
-temp_env/.env
-echo
-"BROADCAST_DRIVER
-temp_env/.env
-echo
-"CACHE_DRIVER=fil
-temp_env/.env
-echo
-"FILESYSTEM_DISK=
-temp_env/.env
-echo
-"QUEUE_CONNECTION
-temp env/.env
-```
-
-```text
-temp_env/.env
-echo
-"SESSION_DRIVER=f
-temp_env/.env
-echo
-"SESSION_LIFETIM
-temp_env/.env
-echo "
-temp_env/.env
-echo
-"MAIL_MAILER=smtp
-temp_env/.env
-echo
-"MAIL_HOST=smtp.m
->> temp_env/.env
-echo
-"MAIL_PORT=2525"
-temp_env/.env
-echo
-"MAIL_USERNAME=nu
-temp_env/.env
-echo
-"MAIL_PASSWORD=nu
-temp_env/.env
-echo
-"MAIL_ENCRYPTION=
-temp_env/.env
-echo
-"MAIL_FROM_ADDRES
-temp_env/.env
-echo
-"MAIL_FROM_NAME=\
-${APP_NAME}\"" >>
-temp_env/.env
-
-# 7. Subir
-tocar el resto
-- name: Upl
-via FTP manually
-run: |
-curl -T
-temp env/ env ftp
-```
-
-```text
-temp_env/.env ftp
-secrets.FTP_SERV
-htdocs/src/.env \
---use
-secrets.FTP_USERN
-secrets.FTP_PASSW
-```
-
-También en GitHub necesitamos crear un **token de acceso personal** PAT) con permisos de `repo` y `workflow` para que el flujo de trabajo pueda acceder a los secretos y realizar el despliegue. Si lo hiciste en el punto anterior 10.2 no es necesario que lo vuelvas a hacer.
+También en GitHub necesitamos crear un **token de acceso personal** (PAT) con permisos de `repo` y `workflow` para que el flujo de trabajo pueda acceder a los secretos y realizar el despliegue. Si lo hiciste en el punto anterior 10.2 no es necesario que lo vuelvas a hacer.
 
 ### Explicación del archivo deploy.yaml
 
-Este archivo YAML define un **flujo de** **trabajo (workflow)** de **GitHub Actions** que se ejecuta automáticamente cada vez que se hace un push a la rama `main`. El objetivo es **desplegar el proyecto PHP/** **Laravel** en el hosting gratuito **InfinityFree** mediante FTP.
+Este archivo YAML define un **flujo de trabajo (workflow)** de **GitHub Actions** que se ejecuta automáticamente cada vez que se hace un *push* a la rama `main`. El objetivo es **desplegar el proyecto PHP/Laravel** en el hosting gratuito **InfinityFree** mediante FTP.
 
-Configuración general
+#### Configuración general
 
-- **name: Deploy to InfinityFree** Nombre del flujo de trabajo.
+- **`name: Deploy to InfinityFree`** Nombre del flujo de trabajo.
 
-- **on: push -> branches: main** Indica que el flujo se ejecuta
+- **`on: push -> branches: main`** Indica que el flujo se ejecuta **automáticamente cuando se suben cambios a la rama principal (`main`)**.
 
-**cambios a la rama principal ( main**.
+- **`runs-on: ubuntu-latest`** GitHub usa una **máquina virtual Ubuntu** para realizar todas las acciones.
 
-- **runs-on: ubuntu-Latest** GitHub usa una **máquina virtual Ubuntu** para realizar todas las acciones.
+#### Paso 1 – Checkout del código
 
-Paso 1 Checkout del código
-
-```text
+```yaml
 - name: Checkout code
-uses: actions/
-checkout@v3
+  uses: actions/checkout@v3
 ```
 
-**Qué hace**: Descarga el código fuente del repositorio en la máquina virtual de GitHub. Es el paso inicial para que las siguientes acciones puedan acceder a los archivos del proyecto.
+**Qué hace:** Descarga el código fuente del repositorio en la máquina virtual de GitHub. Es el paso inicial para que las siguientes acciones puedan acceder a los archivos del proyecto.
 
-**Referencia**: actions/checkout
+**Referencia:** [actions/checkout](https://github.com/actions/checkout)
 
-Paso 2 **-** Instalar PHP y Composer
+---
 
-```text
-- name: Set up PHP with
-composer
-uses: shivammathur/
-setup-php@v2
+#### Paso 2 – Instalar PHP y Composer
+
+```yaml
+- name: Set up PHP with composer
+  uses: shivammathur/setup-php@v2
 ```
 
-**Qué hace**: Instala una versión específica de **PHP (8.4)** y **Composer**, la herramienta que maneja las dependencias de PHP. También activa extensiones necesarias ( `mbstring`, `intl`) para Laravel.
+**Qué hace:** Instala una versión específica de **PHP (8.4)** y **Composer**, la herramienta que maneja las dependencias de PHP. También activa extensiones necesarias (`mbstring`, `intl`) para Laravel.
 
-**Objetivo**: preparar el entorno para poder ejecutar `composer install`.
+**Objetivo:** preparar el entorno para poder ejecutar `composer install`.
 
-**Referencia**: shivammathur/setup-php
+**Referencia:** [shivammathur/setup-php](https://github.com/shivammathur/setup-php)
 
-Paso 3 **-** Instalar dependencias del proyecto
+---
 
-```text
-- name: Install
-dependencies with
-composer
-working-directory:./
-src
-run: composer install
---no-dev --optimize-
-autoloader
+#### Paso 3 – Instalar dependencias del proyecto
+
+```yaml
+- name: Install dependencies with composer
+  working-directory: ./src
+  run: composer install --no-dev --optimize-autoloader
 ```
 
-**Qué hace**: Ejecuta `composer install` dentro de la carpeta `src` para generar la carpeta `vendor` (que contiene las librerías PHP. La opción `--no-dev` evita instalar dependencias de desarrollo, y `--` `optimize-autoloader` mejora el rendimiento del autoload de Laravel.
+**Qué hace:** Ejecuta `composer install` dentro de la carpeta `src` para generar la carpeta `vendor` (que contiene las librerías PHP). La opción `--no-dev` evita instalar dependencias de desarrollo, y `--optimize-autoloader` mejora el rendimiento del autoload de Laravel.
 
-Paso 4 Subir archivos públicos a `/` `htdocs/`
+---
 
-```text
-- name: Upload public
-files to htdocs/
-uses: SamKirkland/FTP-
-Deploy-Action@4.1.0
+#### Paso 4 – Subir archivos públicos a `/htdocs/`
+
+```yaml
+- name: Upload public files to htdocs/
+  uses: SamKirkland/FTP-Deploy-Action@4.1.0
 ```
 
-**Qué hace**: Sube **solo la carpeta public/** al directorio `/htdocs/` del servidor (la raíz pública de InfinityFree). Usa el **plugin** **FTP Deploy Action** que sincroniza los archivos por FTP.
+**Qué hace:** Sube **solo la carpeta `public/`** al directorio `/htdocs/` del servidor (la raíz pública de InfinityFree). Usa el **plugin FTP Deploy Action** que sincroniza los archivos por FTP.
+
+**Claves usadas:**
 
 - `${{ secrets.FTP_SERVER }}` → dirección del servidor FTP
-
 - `${{ secrets.FTP_USERNAME }}`, `${{ secrets.FTP_PASSWORD }}` → credenciales guardadas en GitHub Secrets
 
-```text
-dangerous-clean-slate:
+**Nota:** `dangerous-clean-slate: false` significa que **no borra todo antes de subir**, sino que solo actualiza los archivos modificados.
+
+---
+
+#### Paso 5 – Preparar el código fuente sin la carpeta `public`
+
+```yaml
+- name: Prepare src without public
+  run: |
+    mkdir temp_src
+    shopt -s extglob
+    cp -r src/!(public) temp_src/
 ```
 
-`false` significa que **no borra todo antes** **de subir**, sino que solo actualiza los archivos modificados.
+**Qué hace:** Crea una carpeta temporal (`temp_src`) que **copia todo el contenido de `src` excepto la carpeta `public/`**. Esto se hace porque los archivos públicos ya se subieron en el paso anterior y no deben duplicarse.
 
-Paso 5 Preparar el código fuente sin la carpeta `public`
+**Herramienta usada:** `shopt -s extglob` activa una opción de Bash para usar patrones avanzados de exclusión.
 
-```text
-- name: Prepare src
-without public
-run: |
-mkdir temp_src
-shopt -s extglob
-cp -r src/!(public)
-temp_src/
+---
+
+#### Paso 6 – Subir el resto del código a `/htdocs/src/`
+
+```yaml
+- name: Upload src (except public) to htdocs/src/
+  uses: SamKirkland/FTP-Deploy-Action@4.1.0
 ```
 
-**Qué hace**: Crea una carpeta temporal ( `temp_src`) que **copia todo el contenido** **de src excepto lacarpeta public/**. Esto se hace porque los archivos públicos ya se subieron en el paso anterior y no deben duplicarse.
+**Qué hace:** Sube el contenido de `temp_src/` al servidor en la ruta `/htdocs/src/`. Ahí queda alojada la parte “interna” del proyecto Laravel (controladores, modelos, vistas, etc.).
 
-```text
-shopt -s extglob
-```
+**Importante:** De nuevo, `dangerous-clean-slate: false` asegura que **solo se sincronizan los cambios**, sin borrar todo.
 
-activa una opción de Bash para usar patrones avanzados de exclusión.
+---
 
-Paso 6 **-** Subir el resto del código a `/` `htdocs/src/`
+#### Paso 7 – Crear y subir el archivo `.env`
 
-```text
-- name: Upload src
-(except public) to
-htdocs/src/
-uses: SamKirkland/FTP-
-Deploy-Action@4.1.0
-```
+Primero se **genera un archivo `.env` temporal** con las variables del entorno (datos de configuración y credenciales), luego se **sube manualmente por FTP**.
 
-**Qué hace**: Sube el contenido de `temp_src/` al servidor en la ruta `/` `htdocs/src/`. Ahí queda alojada la parte “interna” del proyecto Laravel (controladores, modelos, vistas, etc.).
-
-**Importante**: De nuevo, `dangerous-` `clean-slate: false` asegura que **solo** **se sincronizan los cambios**, sin borrar todo.
-
-Paso 7 **-** Crear y subir el archivo `.env`
-
-Primero se **genera un archivo.env** **temporal** con las variables del entorno (datos de configuración y credenciales), luego se **sube manualmente por FTP**.
-
-```text
-- name: Create.env file
-in temp folder
-run: |
-mkdir temp_env
-echo
-"APP_NAME=Laravel" >
-temp_env/.env
-...
+```yaml
+- name: Create .env file in temp folder
+  run: |
+    mkdir temp_env
+    echo "APP_NAME=Laravel" > temp_env/.env
+    ...
 ```
 
 y después:
 
-```text
-- name: Upload.env via
-FTP manually
-run: |
-curl -T./
-temp_env/.env ftp://${{
-secrets.FTP_SERVER }}/
-htdocs/src/.env \
---user "${{
-secrets.FTP_USERNAME }}:
-${{
-secrets.FTP_PASSWORD}}"
+```yaml
+- name: Upload .env via FTP manually
+  run: |
+    curl -T ./temp_env/.env ftp://${{ secrets.FTP_SERVER }}/htdocs/src/.env \
+      --user "${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD}}"
 ```
 
-- Crea un `.env` nuevo con las variables que Laravel necesita APP_KEY, DB, MAIL, etc.), usando los valores almacenados como **secrets** en GitHub.
+**Qué hace:**
 
+- Crea un `.env` nuevo con las variables que Laravel necesita (APP_KEY, DB, MAIL, etc.), usando los valores almacenados como **secrets** en GitHub.
 - Sube ese archivo al servidor mediante **curl** y el protocolo FTP.
 
-**Por qué no se sube con el resto**: El `.env` contiene **información sensible** (contraseñas, claves API, etc.), y se maneja aparte para mayor control.
+**Por qué no se sube con el resto:** El `.env` contiene **información sensible** (contraseñas, claves API, etc.), y se maneja aparte para mayor control.
 
-Resultado final
+---
+
+#### Resultado final
 
 Al terminar, el servidor de InfinityFree tendrá esta estructura:
 
 ```text
 /htdocs/
+│
+├── index.php        ← Archivos accesibles desde la web
+│
+└── src/           ← Código del proyecto Laravel
+    ├── app/
+    ├── vendor/
+    ├── routes/
+    ├── ...
+    └── .env       ← Configuración del entorno
 ```
 
-│ ├── `index.php` ←
-
-```text
-Archivos accesibles
-desde la web
-```
-
-│ └── `src/` ←
-
-```text
-Código del proyecto
-Laravel
-```
-
-├── `app/` ├── `vendor/` ├── `routes/` ├── `.` └── `.env` ←
-
-```text
-Configuración del
-entorno
-```
-
-El sitio queda actualizado automáticamente cada vez que se hace un push a la rama `main`.
+El sitio queda actualizado automáticamente cada vez que se hace un *push* a la rama `main`.
 
 ## Página principal de laravel
 
 la página `index.php` de laravel se encuentra en la carpeta `public`, por lo que al acceder a la URL del servidor remoto deberíamos ver la página de bienvenida de laravel. En el servidor la tendremos en `htdocs`. Hemos tenido que modificar la página `index.php` que viene por defecto con laravel para que funcione en nuestro servidor remoto y en local sin tener que mantener dos versiones diferentes.
 
-En este caso el script lo que hace es detectar si estamos en un entorno local o en producción, y cargar el autoloader de Composer y el bootstrap de Laravel desde la ruta correcta. El contenido del archivo `index.php` es el siguiente:
+En este caso el *script* lo que hace es detectar si estamos en un entorno local o en producción, y cargar el *autoloader* de Composer y el *bootstrap* de Laravel desde la ruta correcta. El contenido del archivo `index.php` es el siguiente:
 
-```text
-<?php
-use
-Illuminate\Founda
-use Illuminate\Ht
+!!! abstract "index.php modificado"
 
-define('LARAVEL_S
-microtime(true))
+    ```php
+    <?php
+    use Illuminate\Foundation\Application;
+    use Illuminate\Http\Request;
 
-// Detectar ento
-producción según
-carpeta o archivo
-if (file_exists(_
-vendor/autoload.p
-// Estamos e
-(estructura están
-$basePath =
-'/../');
-//echo "Ejecu
-local<br>";
-} elseif (file_ex
-src/vendor/autolo
-// Estamos e
-InfinityFree con
-modificada
-$basePath =
-'/src/');
-//echo "Ejecu
-producción<br>";
-} else {
-die("No se ha
-el entorno de eje
-realpath(__DIR__
-}
+    define('LARAVEL_START', microtime(true));
 
-// Modo mantenimi
-if (file_exists($
-$basePath. 'sto
-maintenance.php'
-require $mai
-```
+    // Detectar entorno local o producción según existencia de carpeta o archivo
+    if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
+        // Estamos en entorno local (estructura estándar Laravel)
+        $basePath = realpath(__DIR__ . '/../');
+        //echo "Ejecución en local<br>";
+    } elseif (file_exists(__DIR__ . '/src/vendor/autoload.php')) {
+        // Estamos en producción en InfinityFree con estructura modificada
+        $basePath = realpath(__DIR__ . '/src/');
+        //echo "Ejecución en producción<br>";
+    } else {
+        die("No se ha podido detectar el entorno de ejecución. Path:" . realpath(__DIR__ . '/src/'));
+    }
 
-```text
-q $
-}
+    // Modo mantenimiento
+    if (file_exists($maintenance = $basePath . 'storage/framework/maintenance.php')) {
+        require $maintenance;
+    }
 
-// Autoloader de
-require $basePath
-autoload.php';
+    // Autoloader de Composer
+    require $basePath . '/vendor/autoload.php';
 
-// Bootstrap Lara
-la petición
-/** @var Applicat
-$app = require_on
-bootstrap/app.php
+    // Bootstrap Laravel y manejo de la petición
+    /** @var Application $app */
+    $app = require_once $basePath . '/bootstrap/app.php';
 
-// Capturar la pe
-manejarla
-$response = $app
-$request = Re
-);
+    // Capturar la petición HTTP y manejarla
+    $response = $app->handle(
+        $request = Request::capture()
+    );
 
-$response->send(
+    $response->send();
 
-$app->terminate($
-$response);
-```
+    $app->terminate($request, $response);
+    ```
 
 ## Realizar el commit y push a GitHub
 
 Una vez que tenemos el archivo `deploy.yaml` y hemos configurado los secretos en GitHub, podemos realizar el commit y push a GitHub para que se inicie el flujo de trabajo de GitHub Actions y se realice el despliegue en el servidor remoto.
 
-```text
-git add.
-git commit -m
-"Despliegue inicial de
-Laravel"
+```bash
+git add .
+git commit -m "Despliegue inicial de Laravel"
 git push origin main
 ```
 
@@ -818,108 +566,118 @@ Esta acción debe iniciar el flujo de trabajo de GitHub Actions y realizar el de
 
 `GitHub Actions` lleva un control de los archivos subidos y de las versiones, por lo que en los siguientes despliegues solo subirá los archivos que hayan cambiado, haciendo el proceso mucho más rápido.
 
-Una vez podamos ver en `github` `actions` que el flujo de trabajo ha terminado correctamente, podemos pasar al siguiente punto ya qu antes de acceder a la aplicación necesitamos ejecutar las migraciones para crear las tablas necesarias en la base de datos.
+Una vez podamos ver en `github actions` que el flujo de trabajo ha terminado correctamente, podemos pasar al siguiente punto ya qu antes de acceder a la aplicación necesitamos ejecutar las migraciones para crear las tablas necesarias en la base de datos.
+
+!!! info "flujo de trabajo"
+
+    ![Flujo de trabajo](../assets/beteta/T10/imagen11.png)
 
 ## Migraciones
 
 Llegados a este punto, tenemos la aplicación desplegada y la base de datos creada. Pero la base de datos está vacía ya que necesitamos ejecutar las migraciones para crear las tablas necesarias. Tenemos dos maneras de hacerlo, la primera manualmente, crear las tablas y datos necesarios en la base de datos remota. Esta la descartamos porque no automatiza nada y está expuest a múltiples errores humanos. La segunda es crear un script que se encargue de ejecutar las migraciones de Laravel de forma automática. Para ello, creamos un archivo `migrate.php` en la carpeta `htdocs` con el siguiente contenido:
 
-```text
-<?php
-ini_set('display_
-ini_set('display_
-error_reporting(
+!!! abstract "migrate.php"
 
-use Illuminate\Fo
-use Illuminate\Co
-ArtisanConsole;
+    ```php
+    <?php
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 
-require __DIR__
+    use Illuminate\Foundation\Application;
+    use Illuminate\Console\Application as ArtisanConsole;
 
-// Definir la cla
-define('SECRET_K
+    require __DIR__ . '/src/vendor/autoload.php';
 
-// Validar key y
-$key = $_GET['key
-$action = $_GET[
+    // Definir la clave para acceder
+    define('SECRET_KEY', '123456');
 
-if ($key !== SECR
-http_response
-exit('Acceso
-}
+    // Validar key y acción
+    $key = $_GET['key'] ?? '';
+    $action = $_GET['action'] ?? '';
 
-$allowedActions =
+    if ($key !== SECRET_KEY) {
+        http_response_code(403);
+        exit('Acceso denegado.');
+    }
 
-if (!in_array($ac
-http_response
-exit('Acción
-}
+    $allowedActions = ['migrate', 'reset', 'fresh'];
 
-$basePath = __DI
+    if (!in_array($action, $allowedActions)) {
+        http_response_code(400);
+        exit('Acción no permitida.');
+    }
 
-// Bootstrap de l
-$app = require_on
-app.php';
+    $basePath = __DIR__ . '/src';
 
-$kernel = $app-
->make(Illuminate\
-```
+    // Bootstrap de la aplicación Laravel
+    $app = require_once $basePath . '/bootstrap/app.php';
 
-```text
-// Capturar la sa
-ob_start();
+    $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
 
-try {
-switch ($acti
-case 'mig
-$exit
-['--force' => tru
-brea
-case 'res
-$exit
->call('migrate:re
-brea
-case 'fre
-$exit
->call('migrate:f
-brea
-}
-} catch (Exceptio
-ob_end_clean
-http_response
-exit("Error e
-$e->getMessage()
-}
+    // Capturar la salida
+    ob_start();
 
-$output = ob_get_
+    try {
+        switch ($action) {
+            case 'migrate':
+                $exitCode = $kernel->call('migrate', ['--force' => true]);
+                break;
+            case 'reset':
+                $exitCode = $kernel->call('migrate:reset', ['--force' => true]);
+                break;
+            case 'fresh':
+                $exitCode = $kernel->call('migrate:fresh', ['--force' => true]);
+                break;
+        }
+    } catch (Exception $e) {
+        ob_end_clean();
+        http_response_code(500);
+        exit("Error ejecutando comando Artisan: " . $e->getMessage());
+    }
 
-// Enviar resulta
-header('Content-T
-echo "Ejecutando
-echo $output;
-```
+    $output = ob_get_clean();
+
+    // Enviar resultado
+    header('Content-Type: text/plain; charset=utf-8');
+    echo "Ejecutando comando: $action\n\n";
+    echo $output;
+    ```
 
 Este script permite ejecutar las migraciones, con los siguientes parámetros:
 
 - `key`: Clave de acceso para ejecutar el script. En este caso, `123456`.
-
 - `action`: Acción a realizar. Puede ser `migrate`, `reset` o `fresh`. Para ejecutar las migraciones, simplemente accedemos a la URL del script con los parámetros necesarios. Por ejemplo:
 
 ```text
-http://localhost:8080/
-migrate.php?
-key=123456&action=migrate
+http://localhost:8080/migrate.php?key=123456&action=migrate
 ```
 
-Esto ejecutará las migraciones en la base de datos configurada en el archivo `.env` de Laravel. Asegúrate de que la base de datos está configurada correctamente y que los datos son correctos.
+Esto ejecutará las migraciones en la base de datos configurada en el archivo
+
+.env
+
+de Laravel. Asegúrate de que la base de datos está configurada correctamente y que los datos son correctos.
 
 Igual que hemos hecho con migrate podemos crar otros scripts o ampliar este para ejecutar comandos de Artisan, como `db:seed` o `cache:clear`, siguiendo la misma estructura.
 
-Por último ir a la base de datos de InfinityFree y comprobar que las tablas se han creado correctamente.
+!!! info "Vista de migraciones"
+
+    ![Migraciones](../assets/beteta/T10/imagen10.png)
+
+Por último ir a la base de datos de *InfinityFree* y comprobar que las tablas se han creado correctamente.
+
+!!! info "Vista de base de datos"
+
+    ![Base de datos](../assets/beteta/T10/imagen12.png)
 
 Una vez que hemos ejecutado las migraciones, podemos acceder a la aplicación y ver que las tablas se han creado correctamente en la base de datos. Si todo ha ido bien, deberíamos ver la página de bienvenida de Laravel y no deberíamos tener ningún error.
 
-Por último accediendo a nuestro dominio deberíamos ver la página de bienvenida de Laravel: https://laravel-simple- test.wuaze.com
+Por último accediendo a nuestro dominio deberíamos ver la página de bienvenida de Laravel: [https://laravel-simple-test.wuaze.com](https://laravel-simple-test.wuaze.com)
+
+!!! info "Vista de laravel en remoto"
+
+    ![Laravel remoto](../assets/beteta/T10/imagen13.png)
 
 ## protección del sitio
 
@@ -932,4 +690,3 @@ Hemos creado una aplicación Laravel completa, con su estructura de carpetas y a
 No perdamos de vista el objetivo inicial, que es conseguir que la aplicación que tenemos en local y que estamos desarrollando, se pueda desplegar en un servidor remoto de forma automática y sin necesidad de realizar cambios manuales en el código. Esto nos permitirá tener una aplicación siempre actualizada y lista para ser utilizada por los usuarios.
 
 Aun que nosotros por abreviar hemos desplegado los cambios en la rama `main`, Lo ideal sería tener una rama de desarrollo y una rama de producción. De esta forma, podemos realizar los cambios en la rama de desarrollo y, una vez que estén listos, hacer un merge a la rama de producción para que se desplieguen automáticamente en el servidor remoto. Pero eso queda para los cursos de `git`.
-

@@ -44,7 +44,12 @@ markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
-  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
 
@@ -65,17 +70,7 @@ nav:
       - "2.4 Estructura de un Proyecto Laravel": tema-02-frameworks-laravel/2-4-estructura-y-elementos-de-un-proyecto-laravel.md
       - "📝 Actividad 2 · Introducción a Laravel": tema-02-frameworks-laravel/2-5-actividad-del-tema-2.md
       - "Anexo · Tailwind CSS": tema-02-frameworks-laravel/anexos-tailwind-css.md
-      - "Guía del Entorno": tema-02-frameworks-laravel/instrucciones.md
-      - "🚀 Proyecto Guiado · Entorno Laravel":
-          - "Presentación": tema-02-frameworks-laravel/proyecto-github/docs/index.md
-          - "Introducción": tema-02-frameworks-laravel/proyecto-github/introduccion.md
-          - "Requisitos": tema-02-frameworks-laravel/proyecto-github/requisitos.md
-          - "Paso 1 · Preparación": tema-02-frameworks-laravel/proyecto-github/paso1-preparacion.md
-          - "Paso 7 · Docker": tema-02-frameworks-laravel/proyecto-github/paso7-docker.md
-          - "Paso 9 · MySQL": tema-02-frameworks-laravel/proyecto-github/paso9-mysql-cli.md
-          - "Paso 10 · Xdebug": tema-02-frameworks-laravel/proyecto-github/paso10-xdebug.md
-          - "Instrucciones": tema-02-frameworks-laravel/proyecto-github/instrucciones.md
-          - "Conclusión": tema-02-frameworks-laravel/proyecto-github/conclusion.md
+      - "Anexo · Laravel en Windows 11": tema-02-frameworks-laravel/anexo-laravel-windows-11.md
   - "3. Vistas con Blade":
       - "3.1 Creación de Vistas con Blade": tema-03-vistas-blade/3-1-vistas-con-blade-introduccion-a-laravel.md
       - "📝 Actividad 3 · Agencia de Viajes": tema-03-vistas-blade/3-2-actividad-del-tema-3-introduccion-a-laravel.md
@@ -105,5 +100,6 @@ nav:
       - "10.3 Aplicación Laravel Completa": tema-10-despliegue/10-3-aplicacion-completa-con-estructura-de-laravel-introduccion-a-laravel.md
       - "10.4 Despliegue en Render": tema-10-despliegue/10-4-despliegue-en-paas-render-introduccion-a-laravel.md
       - "📝 Actividad 10 · Despliegue": tema-10-despliegue/10-5-actividad-del-tema-10-introduccion-a-laravel.md
+      - "Anexo · Error en la migración": tema-10-despliegue/anexo-error-en-la-migracion.md
 
 copyright: IES JUAN DE GARAY - 2º DWES · Curso original de Beteta adaptado por Eva María Gómez Abad
