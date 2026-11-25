@@ -101,5 +101,8 @@ nav:
       - "10.4 Despliegue en Render": tema-10-despliegue/10-4-despliegue-en-paas-render-introduccion-a-laravel.md
       - "📝 Actividad 10 · Despliegue": tema-10-despliegue/10-5-actividad-del-tema-10-introduccion-a-laravel.md
       - "Anexo · Error en la migración": tema-10-despliegue/anexo-error-en-la-migracion.md
+  - "11. Login y Roles":
+      - "11.1 Login y roles con Breeze": tema-11-login-roles/11-1-login-y-roles.md
+      - "📝 Actividad 11 · Login y roles en tu tienda": tema-11-login-roles/11-2-actividad-login-y-roles.md
 
 copyright: IES JUAN DE GARAY - 2º DWES · Curso original de Beteta adaptado por Eva María Gómez Abad
