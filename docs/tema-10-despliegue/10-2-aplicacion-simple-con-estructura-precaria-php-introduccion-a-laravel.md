@@ -1,9 +1,5 @@
 # Aplicación simple con estructura precaria php
 
-!!! quote "Autoría"
-
-    Contenido original de **Javier Beteta** en el curso [*Introducción a Laravel*](https://jbeteta-ies.github.io/2025_Laravel_32/) ([ver esta página en el original](https://jbeteta-ies.github.io/2025_Laravel_32/content/T10/unidad10_02/)). Adaptado para 2º DAW del IES Juan de Garay por Eva María Gómez Abad.
-
 En esta parte del tema vamos a crear una aplicación simple con una estructura de carpetas precaria, que nos servirá para aprender a desplegar aplicaciones web en un servidor remoto. La aplicación será una simple página que muestra información del servidor y de la base de datos.
 
 Para esta aplicación no es necesario utilizar los contenedorres, solo vamos a tener 3 archivos PHP, están verificados y veremos que funcionan correctamente en remoto (no hace falta probar en local). La idea de esta práctica es aprender a desplegar aplicaciones web en un servidor remoto, y enfrentarnos a los problemas propios del despiegue no a los problemas de la aplicación en sí.

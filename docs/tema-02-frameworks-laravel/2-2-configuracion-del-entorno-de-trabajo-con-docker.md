@@ -1,9 +1,5 @@
 # **Guía paso a paso: Configuración del entorno de trabajo con Docker**
 
-!!! quote "Autoría"
-
-    Contenido original de **Javier Beteta** en el curso [*Introducción a Laravel*](https://jbeteta-ies.github.io/2025_Laravel_32/) ([ver esta página en el original](https://jbeteta-ies.github.io/2025_Laravel_32/content/T02/unidad02_02/)). Adaptado para 2º DAW del IES Juan de Garay por Eva María Gómez Abad.
-
 ## Introducción
 
 Para todo desarrollo `web`, es fundamental contar con un entorno de trabajo adecuado que facilite la creación, prueba y despliegue de aplicaciones. Al final lo que necesitamos básicamente es:

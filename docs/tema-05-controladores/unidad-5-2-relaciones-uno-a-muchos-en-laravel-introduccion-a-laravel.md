@@ -1,9 +1,5 @@
 # Relaciones en Laravel.
 
-!!! quote "Autoría"
-
-    Contenido original de **Javier Beteta** en el curso [*Introducción a Laravel*](https://jbeteta-ies.github.io/2025_Laravel_32/) ([ver esta página en el original](https://jbeteta-ies.github.io/2025_Laravel_32/content/T05/unidad05_02/)). Adaptado para 2º DAW del IES Juan de Garay por Eva María Gómez Abad.
-
 En Laravel, las relaciones entre modelos se definen utilizando métodos específicos en cada modelo. Estas relaciones permiten acceder a los datos relacionados de manera sencilla y eficiente. En esta sección, como ejemplo, nos centraremos en la relación **uno a muchos**, que es una de las más comunes en el desarrollo de aplicaciones.
 
 ## Objetivo

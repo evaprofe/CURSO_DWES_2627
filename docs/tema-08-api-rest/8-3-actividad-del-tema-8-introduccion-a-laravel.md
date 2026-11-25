@@ -1,9 +1,5 @@
 # Práctica: Creación de una API REST para *Products*
 
-!!! quote "Autoría"
-
-    Contenido original de **Javier Beteta** en el curso [*Introducción a Laravel*](https://jbeteta-ies.github.io/2025_Laravel_32/) ([ver esta página en el original](https://jbeteta-ies.github.io/2025_Laravel_32/content/T08/actividad08/)). Adaptado para 2º DAW del IES Juan de Garay por Eva María Gómez Abad.
-
 ## Objetivo de la actividad
 
 ![Actividad en el aula virtual](../assets/beteta/comun/tarea.png)

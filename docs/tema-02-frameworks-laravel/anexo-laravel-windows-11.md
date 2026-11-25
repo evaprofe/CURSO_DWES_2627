@@ -1,9 +1,5 @@
 # Entorno de desarrollo e instalación de Laravel en Windows 11
 
-!!! quote "Autoría"
-
-    Contenido original de **Javier Beteta** en el curso [*Introducción a Laravel*](https://jbeteta-ies.github.io/2025_Laravel_32/) ([ver esta página en el original](https://jbeteta-ies.github.io/2025_Laravel_32/content/T02/anexos/anexo04/)). Adaptado para 2º DAW del IES Juan de Garay por Eva María Gómez Abad.
-
 ## Introducción
 
 El sistema de permisos en Windows es diferente al de Linux, lo que puede causar problemas al ejecutar Laravel en un entorno de desarrollo local. En algunos casos siguiendo el manual al iniciar `laravel` aparece una pantalla de error:

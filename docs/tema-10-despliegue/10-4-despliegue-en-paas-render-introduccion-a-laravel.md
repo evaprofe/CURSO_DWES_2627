@@ -1,9 +1,5 @@
 # Despliegue en PaaS **Render**
 
-!!! quote "Autoría"
-
-    Contenido original de **Javier Beteta** en el curso [*Introducción a Laravel*](https://jbeteta-ies.github.io/2025_Laravel_32/) ([ver esta página en el original](https://jbeteta-ies.github.io/2025_Laravel_32/content/T10/unidad10_04/)). Adaptado para 2º DAW del IES Juan de Garay por Eva María Gómez Abad.
-
 En este apartado hemos elegido **Render** como plataforma de despliegue para nuestra aplicación. **Render** es una plataforma de alojamiento que permite desplegar aplicaciones web, bases de datos y servicios de forma sencilla y rápida.
 
 Principales características de **Render**:

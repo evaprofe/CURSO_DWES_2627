@@ -1,9 +1,5 @@
 # Aplicación completa con estructura de laravel
 
-!!! quote "Autoría"
-
-    Contenido original de **Javier Beteta** en el curso [*Introducción a Laravel*](https://jbeteta-ies.github.io/2025_Laravel_32/) ([ver esta página en el original](https://jbeteta-ies.github.io/2025_Laravel_32/content/T10/unidad10_03/)). Adaptado para 2º DAW del IES Juan de Garay por Eva María Gómez Abad.
-
 En esta sección, vamos a crear una aplicación completa de Laravel, con su estructura de carpetas y archivos necesarios para su funcionamiento. Vamos a realizar el despliegue en un servidor remoto utilizando GitHub Actions y configurando los secretos necesarios para que la aplicación funcione correctamente.
 
 EL proceso va a ser muy similar al que hemos visto en la unidad anterior, pero con algunas diferencias debido a la estructura de Laravel y a los archivos necesarios para su funcionamiento.

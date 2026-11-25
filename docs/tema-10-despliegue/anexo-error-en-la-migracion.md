@@ -1,9 +1,5 @@
 # Error en la migración
 
-!!! quote "Autoría"
-
-    Contenido original de **Javier Beteta** en el curso [*Introducción a Laravel*](https://jbeteta-ies.github.io/2025_Laravel_32/) ([ver esta página en el original](https://jbeteta-ies.github.io/2025_Laravel_32/content/T10/anexos/anexo10_01/)). Adaptado para 2º DAW del IES Juan de Garay por Eva María Gómez Abad.
-
 En la última migración, la base de datos ha saltado con un error que impide que se complete el proceso. En este caso el error es el siguinte:
 
 ```text

@@ -1,9 +1,5 @@
 # Instalación y puesta en marcha de Laravel
 
-!!! quote "Autoría"
-
-    Contenido original de **Javier Beteta** en el curso [*Introducción a Laravel*](https://jbeteta-ies.github.io/2025_Laravel_32/) ([ver esta página en el original](https://jbeteta-ies.github.io/2025_Laravel_32/content/T02/unidad02_04/)). Adaptado para 2º DAW del IES Juan de Garay por Eva María Gómez Abad.
-
 ## Introducción
 
 En este apartado vamos a instalar Laravel dentro del entorno de desarrollo que hemos preparado previamente. Utilizaremos Composer para crear un nuevo proyecto Laravel y realizaremos las configuraciones necesarias en el servidor Nginx para que nuestra aplicación funcione correctamente.

@@ -1,9 +1,5 @@
 # Estructura y Elementos de un Proyecto Laravel
 
-!!! quote "Autoría"
-
-    Contenido original de **Javier Beteta** en el curso [*Introducción a Laravel*](https://jbeteta-ies.github.io/2025_Laravel_32/) ([ver esta página en el original](https://jbeteta-ies.github.io/2025_Laravel_32/content/T02/unidad02_05/)). Adaptado para 2º DAW del IES Juan de Garay por Eva María Gómez Abad.
-
 ## Introducción al Patrón MVC en Laravel
 
 Laravel sigue el patrón **MVC (Modelo - Vista - Controlador)**, una forma de organizar el código para separar responsabilidades:

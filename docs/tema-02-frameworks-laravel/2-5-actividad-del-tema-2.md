@@ -1,9 +1,5 @@
 # **Actividad: Primer proyecto Laravel**
 
-!!! quote "Autoría"
-
-    Contenido original de **Javier Beteta** en el curso [*Introducción a Laravel*](https://jbeteta-ies.github.io/2025_Laravel_32/) ([ver esta página en el original](https://jbeteta-ies.github.io/2025_Laravel_32/content/T02/actividad02/)). Adaptado para 2º DAW del IES Juan de Garay por Eva María Gómez Abad.
-
 Ahora que hemos aprendido sobre la estructura y los elementos básicos de un proyecto Laravel, es momento de poner en práctica lo aprendido con una actividad que consolidará tus conocimientos.
 
 ![Actividad en el aula virtual](../assets/beteta/T02/tarea.png)

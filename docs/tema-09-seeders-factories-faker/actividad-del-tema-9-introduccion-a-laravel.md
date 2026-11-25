@@ -1,9 +1,5 @@
 # Práctica: Generación de Datos Aleatorios con Factory, Seeder y Faker
 
-!!! quote "Autoría"
-
-    Contenido original de **Javier Beteta** en el curso [*Introducción a Laravel*](https://jbeteta-ies.github.io/2025_Laravel_32/) ([ver esta página en el original](https://jbeteta-ies.github.io/2025_Laravel_32/content/T09/actividad09/)). Adaptado para 2º DAW del IES Juan de Garay por Eva María Gómez Abad.
-
 ## Objetivo de la actividad
 
 El objetivo de esta práctica es que el alumno aprenda a **automatizar la creación de datos en la base de datos** mediante el uso de **factories, seeders y Faker** en Laravel.

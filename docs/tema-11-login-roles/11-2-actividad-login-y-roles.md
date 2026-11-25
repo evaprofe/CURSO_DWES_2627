@@ -1,9 +1,5 @@
 # Actividad: login y roles en tu tienda
 
-!!! quote "Autoría"
-
-    Actividad nueva para 2º DAW del IES Juan de Garay (Eva María Gómez Abad), sobre el proyecto de productos del curso [*Introducción a Laravel*](https://jbeteta-ies.github.io/2025_Laravel_32/) de **Javier Beteta**.
-
 ## Objetivo
 
 Añadir a tu tienda en Laravel el registro y el login de usuarios, y conseguir que **solo el administrador** pueda crear, editar y borrar productos. Sigue la lección [Login y roles en Laravel con Breeze](11-1-login-y-roles.md).

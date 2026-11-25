@@ -1,8 +1,8 @@
 # Login y roles en Laravel con Breeze
 
-!!! quote "Autoría"
+!!! quote "Autoría de este tema"
 
-    Lección nueva escrita para 2º DAW del IES Juan de Garay (Eva María Gómez Abad). Continúa el proyecto de productos del curso [*Introducción a Laravel*](https://jbeteta-ies.github.io/2025_Laravel_32/) de **Javier Beteta** (temas 6, 7 y 9).
+    Lección y actividad nuevas, escritas para 2º DAW del IES Juan de Garay (Eva María Gómez Abad). Continúa el proyecto de productos del curso [*Introducción a Laravel*](https://jbeteta-ies.github.io/2025_Laravel_32/) de **Javier Beteta** (temas 6, 7 y 9).
 
 !!! abstract "Qué vas a conseguir"
 

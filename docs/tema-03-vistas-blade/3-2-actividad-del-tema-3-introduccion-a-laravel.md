@@ -1,9 +1,5 @@
 # **Actividad: “Agencia de Viajes”**
 
-!!! quote "Autoría"
-
-    Contenido original de **Javier Beteta** en el curso [*Introducción a Laravel*](https://jbeteta-ies.github.io/2025_Laravel_32/) ([ver esta página en el original](https://jbeteta-ies.github.io/2025_Laravel_32/content/T03/actividad03/)). Adaptado para 2º DAW del IES Juan de Garay por Eva María Gómez Abad.
-
 ## Objetivo
 
 Construir un mini-sitio con **Home (landing)**, **Contact** y **Services** utilizando **Blade** con **layout común** y **partials** y **componentes**, aplicando un **CSS básico** (puedes reutilizar el del tema anterior).

@@ -1,9 +1,5 @@
 # Integración de Tailwind en Laravel 12
 
-!!! quote "Autoría"
-
-    Contenido original de **Javier Beteta** en el curso [*Introducción a Laravel*](https://jbeteta-ies.github.io/2025_Laravel_32/) ([ver esta página en el original](https://jbeteta-ies.github.io/2025_Laravel_32/content/T02/anexos/anexo02/)). Adaptado para 2º DAW del IES Juan de Garay por Eva María Gómez Abad.
-
 En este documento se trata de mostrar cómo integrar `Tailwind CSS` en un proyecto `Laravel 12` que ya está funcionando dentro de un entorno Dockerizado, sin necesidad de modificar la configuración de los contenedores (docker-compose.yml).
 
 Se ha seguido instrucciones de la documentación oficial de `tailwindcss` y `Laravel Vite Plugin`, adaptándolas al entorno Docker.
