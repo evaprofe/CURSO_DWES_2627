@@ -1,5 +1,9 @@
 # **Actividad: Primer proyecto Laravel**
 
+!!! tip "¿Te sale un error?"
+
+    Consulta [Problemas frecuentes del entorno](anexo-problemas-frecuentes.md): recoge los errores más habituales al montar Docker e instalar Laravel en Windows, con su solución.
+
 Ahora que hemos aprendido sobre la estructura y los elementos básicos de un proyecto Laravel, es momento de poner en práctica lo aprendido con una actividad que consolidará tus conocimientos.
 
 ![Actividad en el aula virtual](../assets/beteta/T02/tarea.png)

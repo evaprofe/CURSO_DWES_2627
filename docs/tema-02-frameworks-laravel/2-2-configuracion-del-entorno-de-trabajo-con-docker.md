@@ -1,5 +1,9 @@
 # **Guía paso a paso: Configuración del entorno de trabajo con Docker**
 
+!!! tip "¿Te sale un error?"
+
+    Consulta [Problemas frecuentes del entorno](anexo-problemas-frecuentes.md): recoge los errores más habituales al montar Docker e instalar Laravel en Windows, con su solución.
+
 ## Introducción
 
 Para todo desarrollo `web`, es fundamental contar con un entorno de trabajo adecuado que facilite la creación, prueba y despliegue de aplicaciones. Al final lo que necesitamos básicamente es:

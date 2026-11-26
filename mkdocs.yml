@@ -69,6 +69,7 @@ nav:
       - "2.3 Instalación y Puesta en Marcha": tema-02-frameworks-laravel/2-3-instalacion-y-puesta-en-marcha-de-laravel.md
       - "2.4 Estructura de un Proyecto Laravel": tema-02-frameworks-laravel/2-4-estructura-y-elementos-de-un-proyecto-laravel.md
       - "📝 Actividad 2 · Introducción a Laravel": tema-02-frameworks-laravel/2-5-actividad-del-tema-2.md
+      - "🛠 Problemas frecuentes del entorno": tema-02-frameworks-laravel/anexo-problemas-frecuentes.md
       - "Anexo · Tailwind CSS": tema-02-frameworks-laravel/anexos-tailwind-css.md
       - "Anexo · Laravel en Windows 11": tema-02-frameworks-laravel/anexo-laravel-windows-11.md
   - "3. Vistas con Blade":

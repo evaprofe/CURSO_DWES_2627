@@ -1,5 +1,9 @@
 # Instalación y puesta en marcha de Laravel
 
+!!! tip "¿Te sale un error?"
+
+    Consulta [Problemas frecuentes del entorno](anexo-problemas-frecuentes.md): recoge los errores más habituales al montar Docker e instalar Laravel en Windows, con su solución.
+
 ## Introducción
 
 En este apartado vamos a instalar Laravel dentro del entorno de desarrollo que hemos preparado previamente. Utilizaremos Composer para crear un nuevo proyecto Laravel y realizaremos las configuraciones necesarias en el servidor Nginx para que nuestra aplicación funcione correctamente.
