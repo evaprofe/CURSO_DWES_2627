@@ -411,13 +411,11 @@ Podemos resumir el contenido del `Dockerfile` en los siguientes puntos:
 
 Vamos a crear un archivo PHP simple para testear el entorno de trabajo. En un archivo vamos a conseguir:
 
-```text
 - a) Probar si nginx funciona correctamente.
-- b) Probar si PHP funciona correctamente (Debe ejecutar código PHP).
+- b) Probar si PHP funciona correctamente (debe ejecutar código PHP).
 - c) Probar si PHP se conecta correctamente a MySQL usando PDO.
-```
 
-1. **Abre el archivo `src/index.php`**.
+1. **Abre el archivo `src/index.php`** (el que creaste vacío en el paso 1). Tiene que estar en `src/`, porque es la única carpeta que ve el servidor: en `docker-compose.yml`, `./src` se monta como `/var/www/html`. Un `index.php` en cualquier otra carpeta, como `docker/php/`, no se ejecuta nunca.
 
 2. **Pega el siguiente contenido** para crear un archivo PHP que se conecte a MySQL:
 
