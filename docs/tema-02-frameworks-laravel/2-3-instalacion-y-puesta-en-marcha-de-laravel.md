@@ -157,7 +157,7 @@ src/
 
 Laravel está diseñado para servir su aplicación a través de la carpeta `public/`. Por lo tanto, es necesario ajustar la configuración de Nginx para apuntar correctamente a esta carpeta.
 
-Edita el archivo `nginx/default.conf` y modifica la directiva `root`:
+Edita el archivo `docker/nginx/default.conf` y modifica la directiva `root`:
 
 Antes:
 
@@ -209,12 +209,12 @@ Ejecuta los siguientes comandos desde la raíz del proyecto:
 !!! note "Reiniciar Docker"
 
     ```bash
-    docker-compose down
-    docker-compose up -d
+    docker compose down
+    docker compose up -d
     ```
 
-- `docker-compose down` detiene y elimina los contenedores actuales.
-- `docker-compose up -d` vuelve a levantar los servicios en segundo plano.
+- `docker compose down` detiene y elimina los contenedores actuales.
+- `docker compose up -d` vuelve a levantar los servicios en segundo plano.
 
 ## Verificar instalación de Laravel
 

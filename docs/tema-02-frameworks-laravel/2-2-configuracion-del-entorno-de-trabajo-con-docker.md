@@ -80,6 +80,17 @@ Seguramente cada desarrollador habrá encontrado su propia solución, pero en es
         touch src/index.php
         ```
 
+    !!! warning "En Windows: usa Git Bash, no PowerShell"
+
+        Estos comandos son de Linux (bash). En PowerShell no existe `touch` y `mkdir -p` no funciona igual. Abre la terminal de VS Code con **Git Bash** (flecha ˅ junto al **+** de la terminal) o usa WSL.
+
+        Si prefieres PowerShell, estos dos comandos hacen lo mismo:
+
+        ```powershell
+        mkdir docker/mysql/init, docker/nginx, docker/php, docker/scripts, src
+        New-Item -ItemType File docker-compose.yml, docker/mysql/init/01-grants.sql, docker/nginx/default.conf, docker/php/Dockerfile, docker/php/xdebug.ini, docker/scripts/.gitkeep, src/index.php
+        ```
+
     Una vez creada la estructura, debería verse así:
 
     ```text
@@ -441,9 +452,20 @@ Para completar los permisos del usuario vamos a utilizar el fichero `docker/mysq
 Recuerda que el usuario se crea durante la inicialización del contenedor de MySQL. Ahora lo que hacemos es completar los permisos de este usuario para poder utilizarlo desde nuestras aplicaciones.
 
 ```sql
-GRANT ALL PRIVILEGES ON *.* TO 'alumno'@'%' IDENTIFIED BY 'alumno' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'alumno'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 ```
+
+!!! warning "MySQL 8: sin `IDENTIFIED BY` en el `GRANT`"
+
+    En MySQL 8 ya no se puede poner `IDENTIFIED BY` dentro de un `GRANT` (daba `ERROR 1064` y el contenedor de MySQL se paraba). No hace falta: el usuario `alumno` y su contraseña ya los crea Docker con las variables `MYSQL_USER` y `MYSQL_PASSWORD` del `docker-compose.yml`.
+
+    Si tu contenedor de MySQL se paró por este error, corrige el archivo y borra la base de datos a medio crear para que el script se vuelva a ejecutar:
+
+    ```bash
+    docker compose down -v
+    docker compose up -d
+    ```
 
 ---
 
@@ -504,6 +526,24 @@ FLUSH PRIVILEGES;
         ```bash
         docker compose up --build
         ```
+
+    !!! failure "Error «port is already allocated»"
+
+        Si al levantar el entorno aparece `Bind for 0.0.0.0:3306 failed: port is already allocated`, el puerto 3306 de tu ordenador ya lo usa otro MySQL: el de XAMPP o el contenedor de otro proyecto de Docker. Para ver si es un contenedor:
+
+        ```bash
+        docker ps --filter "publish=3306"
+        ```
+
+        Puedes parar ese MySQL o, mejor, cambiar el puerto de este entorno en `docker-compose.yml` a `"3307:3306"`. Laravel no se entera, porque se conecta por dentro de Docker (`DB_HOST=mysql`, puerto 3306); el 3307 solo se usa si te conectas desde Windows con un programa como HeidiSQL. Lo mismo vale para el puerto `8080` de Nginx.
+
+    !!! tip "Comprueba que los tres contenedores están en marcha"
+
+        ```bash
+        docker compose ps -a
+        ```
+
+        `php`, `nginx` y `mysql` deben aparecer como `running` (o `Up`). Si alguno sale como `Exited`, mira su registro, por ejemplo `docker compose logs mysql --tail 30`. Si MySQL no está en marcha, la página de prueba dirá `getaddrinfo for mysql failed`.
 
 ---
 

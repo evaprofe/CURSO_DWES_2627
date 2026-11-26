@@ -15,9 +15,9 @@ El objetivo de esta actividad es que puedas crear un proyecto Laravel desde cero
     - Si no lo has hecho ya, crea un nuevo proyecto Laravel utilizando Composer. Puedes hacerlo ejecutando el siguiente comando en tu terminal:
 
         ```bash
-        composer create-project laravel/laravel nombre-del-proyecto
+        composer create-project laravel/laravel:^12.0 .
         ```
-    - Asegúrate de reemplazar `nombre-del-proyecto` con el nombre que desees para tu proyecto. Sigue las instrucciones del tema 2.4 para crear el proyecto dentro del entorno Docker.
+    - Ejecútalo **dentro del contenedor `php`**, en la carpeta `/var/www/html` (tu carpeta `src`), que debe estar vacía. El punto final (`.`) instala Laravel en esa carpeta y no en una subcarpeta nueva. Sigue las instrucciones del apartado 2.3 para crear el proyecto dentro del entorno Docker.
 
 2. **Crea 3 vistas**:
 
