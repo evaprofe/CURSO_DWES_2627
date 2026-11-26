@@ -200,7 +200,7 @@ SELECT * FROM users;
 
 Más adelante nos pararemos a ver estos métodos estáticos que ofrecen los modelos de Eloquent.
 
-El quivalente a la sentencia SQL anterior en Eloquent es:
+El equivalente a la sentencia SQL anterior en Eloquent es:
 
 ```php
 <?php

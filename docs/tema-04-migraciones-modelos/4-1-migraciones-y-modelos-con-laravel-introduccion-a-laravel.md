@@ -151,7 +151,7 @@ Si no lo hiciste anteriormente es el momento de crear la base de datos `Laravel`
         DEFAULT CHARACTER SET = 'utf8mb4';
     ```
 
-Recueda que en nuestro entorno para ejecutar comandos de Artisan, debes entrar en el contenedor de PHP. Para ello, ejecuta:
+Recuerda que en nuestro entorno para ejecutar comandos de Artisan, debes entrar en el contenedor de PHP. Para ello, ejecuta:
 
 ```bash
 docker compose exec nombre_servicio bash      # recomendado
@@ -237,7 +237,7 @@ Es importante seguir la convención de nombres para las migraciones. El nombre d
 
 Fijemonos que el nombre de la entidad que queremos crear está en mínusculas y en plural `...notes...`.
 
-Para crear una nueva migración primero dbemos crear el fichero de migración. Para ello, usamos el comando:
+Para crear una nueva migración primero debemos crear el fichero de migración. Para ello, usamos el comando:
 
 !!! note "Crear migración"
 
@@ -432,7 +432,7 @@ Parámetros comunes:
 
 ## Crear una Migración para actualizar una tabla
 
-En el ejemplo anterior hemos modificado una tabla añadiento un campo `deadline`. Pero lo hemos hecho modificando la migración original. Pero esto no siempre es posible y por tanto no es una buena práctica. Imaginemos por un momento que la tabla `notes` ya está en producción y tiene datos. Si modificamos la migración original y ejecutamos `php artisan migrate:refresh`, perderemos todos los datos de la tabla. Por tanto, lo correcto es crear una nueva migración para modificar la tabla.
+En el ejemplo anterior hemos modificado una tabla añadiendo un campo `deadline`. Pero lo hemos hecho modificando la migración original. Pero esto no siempre es posible y por tanto no es una buena práctica. Imaginemos por un momento que la tabla `notes` ya está en producción y tiene datos. Si modificamos la migración original y ejecutamos `php artisan migrate:refresh`, perderemos todos los datos de la tabla. Por tanto, lo correcto es crear una nueva migración para modificar la tabla.
 
 !!! failure "Eliminar y volver a crear la tabla"
 
@@ -586,7 +586,7 @@ Pero la antes, `¿Dónde ponemos este código?`, si aún no hemos visto los cont
 - Puedes crear un carchivo php y ejecutarlo desde la línea de comandos.
 - Puedes crear una ruta temporal en `routes/web.php` y ejecutar el código desde ahí.
 
-Vamos a tomar la seguna opción, por tanto iermos a `routes/web.php` y añadimos la siguiente ruta:
+Vamos a tomar la segunda opción, por tanto iremos a `routes/web.php` y añadimos la siguiente ruta:
 
 !!! note "Ruta temporal para crear una nota"
 

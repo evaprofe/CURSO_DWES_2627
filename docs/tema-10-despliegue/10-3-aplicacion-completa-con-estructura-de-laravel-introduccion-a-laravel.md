@@ -57,7 +57,7 @@ Creamos la base de datos `laravel` y le damos permisos al usuario `alumno` si es
 Para conectar:
 
 ```bash
-# la constraseña de `root` con la configuración del curso es 'administrador'
+# la contraseña de `root` con la configuración del curso es 'administrador'
 docker compose exec mysql mysql -u root -p 
 ```
 
@@ -558,7 +558,7 @@ Una vez podamos ver en `github actions` que el flujo de trabajo ha terminado cor
 
 ## Migraciones
 
-Llegados a este punto, tenemos la aplicación desplegada y la base de datos creada. Pero la base de datos está vacía ya que necesitamos ejecutar las migraciones para crear las tablas necesarias. Tenemos dos maneras de hacerlo, la primera manualmente, crear las tablas y datos necesarios en la base de datos remota. Esta la descartamos porque no automatiza nada y está expuest a múltiples errores humanos. La segunda es crear un script que se encargue de ejecutar las migraciones de Laravel de forma automática. Para ello, creamos un archivo `migrate.php` en la carpeta `htdocs` con el siguiente contenido:
+Llegados a este punto, tenemos la aplicación desplegada y la base de datos creada. Pero la base de datos está vacía ya que necesitamos ejecutar las migraciones para crear las tablas necesarias. Tenemos dos maneras de hacerlo, la primera manualmente, crear las tablas y datos necesarios en la base de datos remota. Esta la descartamos porque no automatiza nada y está expuesta a múltiples errores humanos. La segunda es crear un script que se encargue de ejecutar las migraciones de Laravel de forma automática. Para ello, creamos un archivo `migrate.php` en la carpeta `htdocs` con el siguiente contenido:
 
 !!! abstract "migrate.php"
 
@@ -639,7 +639,7 @@ http://localhost:8080/migrate.php?key=123456&action=migrate
 
 Esto ejecutará las migraciones en la base de datos configurada en el archivo `.env` de Laravel. Asegúrate de que la base de datos está configurada correctamente y que los datos son correctos.
 
-Igual que hemos hecho con migrate podemos crar otros scripts o ampliar este para ejecutar comandos de Artisan, como `db:seed` o `cache:clear`, siguiendo la misma estructura.
+Igual que hemos hecho con migrate podemos crear otros scripts o ampliar este para ejecutar comandos de Artisan, como `db:seed` o `cache:clear`, siguiendo la misma estructura.
 
 !!! info "Vista de migraciones"
 
@@ -661,7 +661,7 @@ Por último accediendo a nuestro dominio deberíamos ver la página de bienvenid
 
 ## protección del sitio
 
-El servidor elegido `InfinityFree` nos obliga a colocar los archivos en la carpeta `htdocs`. Por lo que quedan expuestos, cosa que va en contra de la filosofia de Laravel. Ahora nos queda pendiente como protecger la carpeta `src` y su contenido. Solo deben ser accesibles los scripts que se encuentren en la carpeta `htdocs`. Para ello, podemos crear un archivo `.htaccess` en la carpeta `htdocs` con el siguiente contenido:
+El servidor elegido `InfinityFree` nos obliga a colocar los archivos en la carpeta `htdocs`. Por lo que quedan expuestos, cosa que va en contra de la filosofía de Laravel. Ahora nos queda pendiente como protecger la carpeta `src` y su contenido. Solo deben ser accesibles los scripts que se encuentren en la carpeta `htdocs`. Para ello, podemos crear un archivo `.htaccess` en la carpeta `htdocs` con el siguiente contenido:
 
 ## Resumen.
 

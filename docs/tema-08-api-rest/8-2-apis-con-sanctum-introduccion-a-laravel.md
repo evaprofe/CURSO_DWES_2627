@@ -210,7 +210,7 @@ Para poder probar la autenticación necesitamos usuarios.
 
 Podemos reutilizar la tabla `users` que Laravel crea por defecto. Para ello vamos a crear una ruta que nos permita crear usuarios de prueba.
 
-Para crear los usuarios que utilzaremos en el ejmplo podemos hacerlo bien utilizando **Tinker** o creando una ruta temporal.
+Para crear los usuarios que utilizaremos en el ejemplo podemos hacerlo bien utilizando **Tinker** o creando una ruta temporal.
 
 !!! tip "tinker"
 
@@ -248,7 +248,7 @@ Para crear los usuarios que utilzaremos en el ejmplo podemos hacerlo bien utiliz
         return 'Usuarios creados';
         ```
 
-        Una vez ejecutado el cógio podemos comprobar que los usuarios se han creado correctamente en la base de datos. Si ejecutamos: `User::All();` deberíamos ver algo como esto:
+        Una vez ejecutado el código podemos comprobar que los usuarios se han creado correctamente en la base de datos. Si ejecutamos: `User::All();` deberíamos ver algo como esto:
 
         ```php
         <?php
@@ -427,7 +427,7 @@ Necesitamos añadir la relación con el modelo `User` y permitir la asignación 
 
 !!! tip "¿Qué es un *`trait`*?"
 
-    Para que Sanctum pueda generar tokens, el modelo `User` debe usar el *trait* `HasApiTokens`. Explicar que un *trait* es una forma de reutilizar código en PHP. Podríamos decir, salvando las diferencias, que es paracido a una herencia, pero más flexible. En este caso, el *trait* `HasApiTokens` añade a nuestro modelo `User` la capacidad de generar y gestionar tokens de acceso para la API.
+    Para que Sanctum pueda generar tokens, el modelo `User` debe usar el *trait* `HasApiTokens`. Explicar que un *trait* es una forma de reutilizar código en PHP. Podríamos decir, salvando las diferencias, que es parecido a una herencia, pero más flexible. En este caso, el *trait* `HasApiTokens` añade a nuestro modelo `User` la capacidad de generar y gestionar tokens de acceso para la API.
 
     Veamos un ejemplo sencillo de cómo funciona un *trait*:
 
@@ -1025,7 +1025,7 @@ Código HTTP esperado:
 
 !!! tip "Respuesta de error 403 completa"
 
-    Puede ser que la respuesta de error 403 incluya mucha más información, como un código de error personalizado o detalles adicionales. Esto es porque tenemo `debug` activado en Laravel, lo que hace que se devuelva una respuesta más detallada en caso de errores. En producción, con `debug` desactivado, la respuesta sería más simple y no incluiría detalles técnicos. Para simular la respuesta de producción, podemos desactivar el modo debug temporalmente en el archivo `.env` cambiando:
+    Puede ser que la respuesta de error 403 incluya mucha más información, como un código de error personalizado o detalles adicionales. Esto es porque tenemos `debug` activado en Laravel, lo que hace que se devuelva una respuesta más detallada en caso de errores. En producción, con `debug` desactivado, la respuesta sería más simple y no incluiría detalles técnicos. Para simular la respuesta de producción, podemos desactivar el modo debug temporalmente en el archivo `.env` cambiando:
 
     ```bash
     APP_DEBUG=true

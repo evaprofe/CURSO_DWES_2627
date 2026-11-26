@@ -145,7 +145,7 @@ Esto instalará el comando `laravel` de forma global.
 
 Ejemplos de uso del comando `laravel`:
 
-Verificar la instalción:
+Verificar la instalación:
 
 !!! note "Comprobar la versión del instalador de Laravel"
 
@@ -263,7 +263,7 @@ Este ejemplo define una ruta que responde a la URL `/home` y devuelve la vista `
 
 ### `Route::post()`
 
-Responde a peticiones HTTP POST (envíos de formularios). En este caso vamos a responser con un simple texto. Esto lo utilizaremos al principio para ver que las rutas están funcionando correctamente. Luego ya cambiaremos el texto por una vista o por un controlador.
+Responde a peticiones HTTP POST (envíos de formularios). En este caso vamos a responder con un simple texto. Esto lo utilizaremos al principio para ver que las rutas están funcionando correctamente. Luego ya cambiaremos el texto por una vista o por un controlador.
 
 ```php
 <?php
@@ -358,7 +358,7 @@ Edita el archivo `routes/web.php` y añade:
     Route::view('/about', 'landing.about')-> name('about');
     ```
 
-A las rutas les hemos dado un nombre para poder referenciarlas más fácilmente en el futuro. Esto nos será de mucha utilidad más adelate.
+A las rutas les hemos dado un nombre para poder referenciarlas más fácilmente en el futuro. Esto nos será de mucha utilidad más adelante.
 
 ### 3. Probar las rutas
 

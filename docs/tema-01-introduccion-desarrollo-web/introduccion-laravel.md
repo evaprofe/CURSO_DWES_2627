@@ -88,7 +88,7 @@ Inicialmente los servidores web solo servían archivos estáticos (HTML, imágen
 
 ## **3. Lenguajes embebidos**
 
-Como ya hemos viste existen gran variedad de lenguajes en el lado del servidor. Una carácterística que los diferencia son aquellos que son **embebidos** y los que no.
+Como ya hemos visto existen gran variedad de lenguajes en el lado del servidor. Una característica que los diferencia son aquellos que son **embebidos** y los que no.
 
 Embebidos son por ejemplo: `PHP`, `ASP`, `JSP`.
 

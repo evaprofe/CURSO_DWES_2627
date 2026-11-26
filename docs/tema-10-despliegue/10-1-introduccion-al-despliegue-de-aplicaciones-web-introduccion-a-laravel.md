@@ -133,7 +133,7 @@ Antes de hablar de requisitos, es importante entender los tipos de servidores do
     - Menor control: no puedes modificar configuraciones del servidor a bajo nivel.
     - Posibles problemas de seguridad: compartes el entorno con otros usuarios.
 
-Más baratos pero con limitaciones en configuración y permisos. Laravel puede funcionar si se estructura correctamente. Estos servidores suelen ofrecer un panel de control como cPanel o Plesk. Pero dependiendo del plan contratado nos podemos enconrrar con limitaciones como:
+Más baratos pero con limitaciones en configuración y permisos. Laravel puede funcionar si se estructura correctamente. Estos servidores suelen ofrecer un panel de control como cPanel o Plesk. Pero dependiendo del plan contratado nos podemos encontrar con limitaciones como:
 
 - Plan gratuito: No acceso a SSH, FTP limitado, sin acceso a Composer.
 - Plan de pago: Acceso a SSH, FTP completo, acceso a Composer.
@@ -203,7 +203,7 @@ En estos servidores, Laravel puede desplegarse con total libertad, ya que tenemo
 
 !!! tip "Requisitos específicos"
 
-    En este punto estamos hablando de generalidades del despliegue centrandonos en Laravel. Pero en cada caso tenemos que adaptar a las particularidades del servidor y del proyecto. tamién hemos puesto unas versiones de `PHP` y `MySQL` que son las mínimas recomendadas, pero siempre es mejor usar las últimas versiones estables para aprovechar mejoras de rendimiento y seguridad. Hay que revisar la documetnación oficial de `Laravel` o del `Framework` que estemos usando para ver los requisitos específicos.
+    En este punto estamos hablando de generalidades del despliegue centrandonos en Laravel. Pero en cada caso tenemos que adaptar a las particularidades del servidor y del proyecto. también hemos puesto unas versiones de `PHP` y `MySQL` que son las mínimas recomendadas, pero siempre es mejor usar las últimas versiones estables para aprovechar mejoras de rendimiento y seguridad. Hay que revisar la documentación oficial de `Laravel` o del `Framework` que estemos usando para ver los requisitos específicos.
 
 ### **1. Servidor Compartido**
 
@@ -345,7 +345,7 @@ Después del despliegue:
 
 ## Estrategias para mantener la estructura de Laravel en entornos restrictivos
 
-Nos podemos encontrar con servidores donde no podemos respetar la estructura de Laravel, especialmente en servidores compartidos o con restricciones de acceso. Por ejempo, hay servidores que no permiten la instalación de ficheros fuera de la carpeta `public_html` o `www`. Laravel, por defecto, espera que la carpeta `public/` sea el punto de entrada, y el resto de carpetas no denerían ser accesibles públicamente (seguridad). En estos casos, debemos adaptar la estructura o usar técnicas alternativas para mantener la seguridad y funcionalidad de la aplicación. En el siguiente tema veremos como instalar Laravel en un servidor compartido modificando la estructura de carpetas.
+Nos podemos encontrar con servidores donde no podemos respetar la estructura de Laravel, especialmente en servidores compartidos o con restricciones de acceso. Por ejemplo, hay servidores que no permiten la instalación de ficheros fuera de la carpeta `public_html` o `www`. Laravel, por defecto, espera que la carpeta `public/` sea el punto de entrada, y el resto de carpetas no denerían ser accesibles públicamente (seguridad). En estos casos, debemos adaptar la estructura o usar técnicas alternativas para mantener la seguridad y funcionalidad de la aplicación. En el siguiente tema veremos como instalar Laravel en un servidor compartido modificando la estructura de carpetas.
 
 En este tipo de entornos (`hostil`) debemos:
 
@@ -384,7 +384,7 @@ En los entornos *hostiles* (no tengamos acceso a línea de comando y no podamos 
 
 Es posible que no podamos ejecutar `composer install` directamente en el servidor. Tampoco podemos ejecutar comandos Artisan directamente si no tenemos acceso SSH. Es recomendable preparar el proyecto en local y subirlo ya preparado, no es lo ideal, tendremos que aplicar parches y medidas de seguridad adicionales. Pero es una opción viable. Como he dicho anteriormente, en el siguiente tema veremos un ejemplo práctico de despliegue en un servidor compartido, donde adaptaremos la estructura de Laravel para que funcione correctamente.
 
-Normalmente las licencias gratuitos suelen poner muchos problemas para instalar aplicaciones complejas como `Laravel`, incluso en algunos casos direntamente no es posible. Lo ideal es usar un plan de pago, aunque sea el más básico, ya que suelen permitir instalar `Laravel` sin problemas.
+Normalmente las licencias gratuitos suelen poner muchos problemas para instalar aplicaciones complejas como `Laravel`, incluso en algunos casos directamente no es posible. Lo ideal es usar un plan de pago, aunque sea el más básico, ya que suelen permitir instalar `Laravel` sin problemas.
 
 ## Herramientas útiles para el despliegue
 

@@ -21,7 +21,7 @@ Las dos principales características que nos interesan son el despliegue automá
 
     En nuestro caso, para aprovechar el despliegue automático, es necesario que el repositorio de la aplicación esté en GitHub. Si no tienes una cuenta en GitHub, puedes crear una de forma gratuita.
 
-Por tanto para empezar tenemos un proyecto de Laravel (recien creado, sin modificaciones), si desplegamos este proyecto, el despliegue nos servirá para cualquier proyecto de Laravel que tengamos, ya que el proceso de despliegue es el mismo. Eso sí, lo tenemos que tener en GitHub.
+Por tanto para empezar tenemos un proyecto de Laravel (recién creado, sin modificaciones), si desplegamos este proyecto, el despliegue nos servirá para cualquier proyecto de Laravel que tengamos, ya que el proceso de despliegue es el mismo. Eso sí, lo tenemos que tener en GitHub.
 
 Podemos utilizar el proyecto creado para el curso, que está en el siguiente repositorio:
 
@@ -29,7 +29,7 @@ Podemos utilizar el proyecto creado para el curso, que está en el siguiente rep
 https://github.com/jbeteta-ies/phpDeployTest
 ```
 
-En este caso el repositorio es privado (cada alumno debe tener su propio repositorio ya sea púbico o privado). Lo conveniente sería clonar el repositorios y subirlo a una cuenta de GitHub propia, será necesario para poder hacer el despliegue.
+En este caso el repositorio es privado (cada alumno debe tener su propio repositorio ya sea público o privado). Lo conveniente sería clonar el repositorios y subirlo a una cuenta de GitHub propia, será necesario para poder hacer el despliegue.
 
 ## Creación de la cuenta en **Render**
 
@@ -101,13 +101,13 @@ Para ello y para no mezclar el código de la aplicación con el código de `Rend
 
 ### Crear la rama `Render`
 
-El nombre de `Render` es completamenta aleatorio. Simplemente es tener una rama sobre la que guardar los cambios necesarios y activar el despliegue automático. Por ejemplo, en nuesta aplicación podemos trabajar con una rama `develop` y una rama `main`. Durante el desarrlllo y pruebebas de aplicaciones podemos trabajar en la rama `develop` y cuando tengamos una versión estable, la pasamos a `main`.
+El nombre de `Render` es completamente aleatorio. Simplemente es tener una rama sobre la que guardar los cambios necesarios y activar el despliegue automático. Por ejemplo, en nuestra aplicación podemos trabajar con una rama `develop` y una rama `main`. Durante el desarrollo y pruebebas de aplicaciones podemos trabajar en la rama `develop` y cuando tengamos una versión estable, la pasamos a `main`.
 
 Cuando queramos desplegar la aplicación, simplemente hacemos un `merge` de `develop` a `Render` y **Render** se encargará de desplegar la aplicación automáticamente.
 
 Yo voy a trabajar directamente en la rama `Render`. El manejo de ramas es algo que dejo para cursos más específicos sobre control de versiones y Git.
 
-Lo primero que tenemos que hacer antes de crear la rama es tener nustro proyecto limpio, es decir, hemos hecho `commit` de todos los cambios y no tenemos cambios pendientes.
+Lo primero que tenemos que hacer antes de crear la rama es tener nuestro proyecto limpio, es decir, hemos hecho `commit` de todos los cambios y no tenemos cambios pendientes.
 
 Crear la rama `Render` es sencillo, simplemente ejecutamos el siguiente comando en la terminal:
 
@@ -184,7 +184,7 @@ Y editamos el archivo para configurar la conexión a la base de datos. Vamos a u
 
 !!! info "Secretos"
 
-    Como vimos ya en el tema anterior, sería recomendabla modificar el acrivo anterior y utilizar `secretos` para las credenciales de la base de datos. Pero para simplificar el proceso, vamos a utilizar el archivo `.env.render` directamente. En puntos anteriores ya hemos visto como utilizar secretos en GitHub Actions.
+    Como vimos ya en el tema anterior, sería recomendable modificar el activo anterior y utilizar `secretos` para las credenciales de la base de datos. Pero para simplificar el proceso, vamos a utilizar el archivo `.env.render` directamente. En puntos anteriores ya hemos visto como utilizar secretos en GitHub Actions.
 
 ### Creación del archivo `Dockerfile`
 
@@ -460,7 +460,7 @@ Una vez seleccionado el repositorio, **Render** te pedirá que configures el ser
 | Dockerfile Path | Ruta al archivo Dockerfile | `./render/Dockerfile` |
 | Intace type | Tipo de instancia | `Free` |
 
-En la parte inferior de la página, encontrarás una sección llamada "Environment Variables" (Variables de entorno). Aquí podemos añadir las variables de entorno, incluso nos permite subirlas desde un archico `.env`. En nuestro caso, vamos a subir el archivo `.env.render` que hemos creado anteriormente. Dejamos esta opción vacía y para pruebas posteriores ya que es más segura que tener nuestro archivo con datos sensibles en el repositorio.
+En la parte inferior de la página, encontrarás una sección llamada "Environment Variables" (Variables de entorno). Aquí podemos añadir las variables de entorno, incluso nos permite subirlas desde un archivo `.env`. En nuestro caso, vamos a subir el archivo `.env.render` que hemos creado anteriormente. Dejamos esta opción vacía y para pruebas posteriores ya que es más segura que tener nuestro archivo con datos sensibles en el repositorio.
 
 Una vez completados todos los campos, haz clic en el botón "Create Web Service" (Crear servicio web). **Render** comenzará a construir la imagen de Docker y desplegará tu aplicación.
 
@@ -473,7 +473,7 @@ Nos pueden aparecer otros campos como:
 | Auto deploy | Activar el despliegue automático al hacer push a la rama seleccionada | `on Commit` |
 | Deploy hook | URL del webhook para el despliegue automático | `https://api.render.com/deploy/srv-xxxxxx` |
 
-Principalmente no hay que tocar nada de esto. **Render** se encargará de construir la imagen de Docker y desplegar tu aplicación automáticamente. Como en la últia línea de `Dockerfile` hemos indicado que se ejecute el comando `php artisan serve`, **Render** iniciará el servidor embebido de Laravel en el puerto 1000.
+Principalmente no hay que tocar nada de esto. **Render** se encargará de construir la imagen de Docker y desplegar tu aplicación automáticamente. Como en la última línea de `Dockerfile` hemos indicado que se ejecute el comando `php artisan serve`, **Render** iniciará el servidor embebido de Laravel en el puerto 1000.
 
 ## Puesta en marcha del despliegue
 

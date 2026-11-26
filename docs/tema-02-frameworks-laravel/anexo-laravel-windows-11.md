@@ -14,7 +14,7 @@ Existen dos maneras de aboardar este problema:
 
 - La primera: es, seguir la instalación de `Laravel` tal y como la encontramos en los apuntes y una vez obtenido el error, dar los permisos necesarios a algunas de las carpetas de `Laravel` para que pueda crear los archivos temporales necesarios.
 
-    - Quitar los permios de solo lectura `ro` de las diferentes carpetas compartidas en el fichero `docker-compose.yml`. Y volver a crear los contenedores con `docker compose up -d --build`.
+    - Quitar los permisos de solo lectura `ro` de las diferentes carpetas compartidas en el fichero `docker-compose.yml`. Y volver a crear los contenedores con `docker compose up -d --build`.
     - Ahora crear el fichero de base de datos `sqlite` dentro de la carpeta `database` de Laravel, y darle permisos de escritura a ese fichero.
 
         ```bash

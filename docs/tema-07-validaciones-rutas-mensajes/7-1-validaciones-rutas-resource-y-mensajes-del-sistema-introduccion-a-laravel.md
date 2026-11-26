@@ -56,7 +56,7 @@ Cuando la validación falla, Laravel redirige automáticamente al formulario ant
 <input name="title" value="{{ old('title') }}">
 ```
 
-Haremos esto en todos los campos. Cuídado con los `textarea` que no tienen `value` y con los `checkbox`. Por ejemlo, para el `checkbox`:
+Haremos esto en todos los campos. Cuidado con los `textarea` que no tienen `value` y con los `checkbox`. Por ejemplo, para el `checkbox`:
 
 ```html
 <input type="checkbox" name="done" value="1" {{ old('done') ? 'checked' : '' }}>
@@ -78,7 +78,7 @@ Esto mostrará el checkbox marcado si el valor anterior era `1`.
 
 ### Crear una clase de validación personalizada
 
-Aunque en la documentación oficial de Laravel podemos encontrar un sinfín de reglas de validación, a veces necesitamos una validación más compleja o personalizada. Para ello como ejemplo vamos a crear una vlase de validación para un DNI español, que tiene un formato específico de 8 dígitos seguidos de una letra mayúscula.
+Aunque en la documentación oficial de Laravel podemos encontrar un sinfín de reglas de validación, a veces necesitamos una validación más compleja o personalizada. Para ello como ejemplo vamos a crear una clase de validación para un DNI español, que tiene un formato específico de 8 dígitos seguidos de una letra mayúscula.
 
 1. Primer paso, crear la clase de validación personalizada:
 
@@ -163,7 +163,7 @@ Este método define si el usuario tiene permiso para hacer esta petición. Para 
 
 **Método `rules()`**
 
-Ahora vamos a definir unas reglas de validación de ejmeplo para nuestro ejemplo de notas:
+Ahora vamos a definir unas reglas de validación de ejemplo para nuestro ejemplo de notas:
 
 !!! note "Ejemplo de reglas"
 

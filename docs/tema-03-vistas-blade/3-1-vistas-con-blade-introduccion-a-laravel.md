@@ -8,7 +8,7 @@
 
 **Blade** es el motor de plantillas simple pero potente incluido en Laravel. A diferencia de otros motores de plantillas PHP, Blade no te impide usar código PHP simple en tus plantillas. De hecho, todas las plantillas de Blade se compilan en código PHP simple y se almacenan en caché hasta que se modifican, lo que significa que Blade prácticamente no añade ninguna sobrecarga a tu aplicación. Los archivos de plantilla de Blade usan la extensión `.blade.php` y suelen almacenarse en el directorio `resources/views`.
 
-Durante este tema iremos realizaremos una práctica completa para entender cómo funciona Blade y cómo podemos usarlo para crear vistas en Laravel.
+Durante este tema realizaremos una práctica completa para entender cómo funciona Blade y cómo podemos usarlo para crear vistas en Laravel.
 
 ### Ventajas principales de Blade
 
@@ -286,7 +286,7 @@ Para ello, vamos a modificar la plantilla y vamos a añadir un menú de navegaci
     </header>   
     ```
 
-Podemos probarlo y puede funionar. Pero no es la mejor forma de hacerlo. Puede dar problemas, por ejemplo, si cambiamos la URL de una de las páginas, tendríamos que cambiarlo en todas las vistas. Para evitar esto, Laravel nos permite nombrar las rutas y usar esos nombres para generar los enlaces. En resumen, en lugar de escribir las URLs directamente, usamos el nombre de la ruta.
+Podemos probarlo y puede funcionar. Pero no es la mejor forma de hacerlo. Puede dar problemas, por ejemplo, si cambiamos la URL de una de las páginas, tendríamos que cambiarlo en todas las vistas. Para evitar esto, Laravel nos permite nombrar las rutas y usar esos nombres para generar los enlaces. En resumen, en lugar de escribir las URLs directamente, usamos el nombre de la ruta.
 
 !!! tip "Nombres de rutas"
 

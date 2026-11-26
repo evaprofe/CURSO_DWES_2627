@@ -44,7 +44,7 @@ Esto nos asegura que la carpeta `src/` esté vacía y lista para recibir el proy
 
 Para instalar Laravel correctamente, es necesario ejecutar Composer **desde dentro del contenedor de PHP**.
 
-1. Abre una terminal en Visual Studio Code. (O utilza Docker Desktop si lo prefieres).
+1. Abre una terminal en Visual Studio Code. (O utiliza Docker Desktop si lo prefieres).
 
 2. Ejecuta el siguiente comando para acceder al contenedor `php`:
 
