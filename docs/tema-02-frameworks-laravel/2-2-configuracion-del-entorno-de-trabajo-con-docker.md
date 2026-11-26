@@ -594,10 +594,11 @@ El servidor mostrará las bases de datos disponibles.
 
 ## Paso 10: Configurar Visual Studio Code para depuración con Xdebug
 
-1. Abre la carpeta del proyecto en Visual Studio Code.
-2. Ve a la pestaña de `Run and Debug` (o presiona `Ctrl+Shift+D`).
-3. Haz clic en `create a launch.json file` y selecciona `PHP`.
-4. Reemplaza el contenido del archivo `launch.json` con el siguiente:
+1. Instala la extensión **PHP Debug** (autor: *Xdebug*, identificador `xdebug.php-debug`) desde la vista de extensiones (`Ctrl+Shift+X`). Sin ella, la opción `PHP` no aparece en el paso 4.
+2. Abre la carpeta del proyecto en Visual Studio Code.
+3. Ve a la pestaña de `Run and Debug` (o presiona `Ctrl+Shift+D`).
+4. Haz clic en `create a launch.json file` y selecciona `PHP`. Si VS Code te propone otro depurador (por ejemplo, uno de SQL porque tienes abierto un `.sql`), cierra ese aviso: no hace falta.
+5. Reemplaza el contenido del archivo `launch.json` con el siguiente:
 
 ```json
 {
