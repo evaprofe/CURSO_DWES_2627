@@ -46,19 +46,7 @@ Recuerda, antes de tocar el fichero `.env`, hacer una copia del mismo como `.env
 cp .env .env.example
 ```
 
-Esto crea una copia del archivo
-
-.env
-
-como
-
-.env.example
-
-. Este último puede ser compartido en el repositorio, pero no debe contener información sensible. Puedes añadir comentarios en el
-
-.env.example
-
-para explicar cada parámetro.
+Esto crea una copia del archivo `.env` como `.env.example`. Este último puede ser compartido en el repositorio, pero no debe contener información sensible. Puedes añadir comentarios en el `.env.example` para explicar cada parámetro.
 
 Luego, cada desarrollador puede copiar el `.env.example` a `.env` y modificarlo según sus necesidades.
 
@@ -136,11 +124,7 @@ Puedes comprobar `SHOW DATABASES;` para ver que la base de datos ha sido creada 
     FLUSH PRIVILEGES;
     ```
 
-    Ahora puedes volver a crear la base de datos
-
-    Laravel
-
-    sin problemas.
+    Ahora puedes volver a crear la base de datos `Laravel` sin problemas.
 
 ## Migraciones por Defecto en Laravel
 
@@ -170,31 +154,19 @@ Si no lo hiciste anteriormente es el momento de crear la base de datos `Laravel`
 Recueda que en nuestro entorno para ejecutar comandos de Artisan, debes entrar en el contenedor de PHP. Para ello, ejecuta:
 
 ```bash
-docker exec -it nombre_contenedor_php bash # uno de los dos comandos
-docker compose exec nombre_servicio bash # uno de los dos comandos
+docker compose exec nombre_servicio bash      # recomendado
+docker exec -it nombre_contenedor_php bash    # alternativa
 ```
 
-Donde
-
-nombre_contenedor_php
-
-es el nombre del contenedor PHP que has creado. Puedes encontrarlo con el comando
-
-docker ps
-
-, y el
-
-nombre_servicio
-
-es el nombre dado en docker-compose al contenedor de MySql.
+Donde `nombre_contenedor_php` es el nombre del contenedor PHP que has creado. Puedes encontrarlo con el comando `docker ps`, y el `nombre_servicio` es el nombre del servicio PHP en el `docker-compose.yml` (`php`).
 
 Para nuestro caso:
 
 !!! note "Acceder al contenedor PHP"
 
     ```bash
-    docker exec -it dk_php bash    # elegir uno de estos dos comandos
-    docker compose exec php bash
+    docker compose exec php bash                    # recomendado
+    docker exec -it actividades-laravel-php-1 bash  # alternativa: nombre real del contenedor (docker ps)
     ```
 
 Vamos a comenzar por ejecutar las migraciones por defecto. Para ello, ejecuta el siguiente comando:
@@ -363,15 +335,7 @@ Los modificadores se pueden combinar. Por ejemplo:
 $table->string('title', 255)->notNullable()->unique();
 ```
 
-Esto crea un campo
-
-title
-
-de tipo
-
-string
-
-con una longitud máxima de 255 caracteres, que no puede ser nulo y debe ser único en la tabla.
+Esto crea un campo `title` de tipo `string` con una longitud máxima de 255 caracteres, que no puede ser nulo y debe ser único en la tabla.
 
 ## Ejemplo Práctico: Crear Tabla `notes`
 
@@ -391,11 +355,7 @@ Una vez tengamos el fichero de migración creado, podemos ejecutarlo con el sigu
 php artisan migrate
 ```
 
-Esto ejecutará la migración y creará la tabla
-
-notes
-
-en la base de datos. Puedes verificarlo conectándote a la base de datos con tu herramienta preferida y comprobando que la tabla ha sido creada correctamente.
+Esto ejecutará la migración y creará la tabla `notes` en la base de datos. Puedes verificarlo conectándote a la base de datos con tu herramienta preferida y comprobando que la tabla ha sido creada correctamente.
 
 ## Cómo Eliminar una Migración (función down())
 
@@ -706,23 +666,7 @@ protected $casts = [
 ];
 ```
 
-Esto significa que el campo
-
-fecha
-
-se convertirá automáticamente a un objeto
-
-Carbon
-
-, que es una biblioteca de PHP para trabajar con fechas y horas. Esto nos permite trabajar con fechas de forma más sencilla y rápida, utilizando métodos como
-
-format()
-
-,
-
-addDays()
-
-, entre otros.
+Esto significa que el campo `fecha` se convertirá automáticamente a un objeto `Carbon`, que es una biblioteca de PHP para trabajar con fechas y horas. Esto nos permite trabajar con fechas de forma más sencilla y rápida, utilizando métodos como `format()`, `addDays()`, entre otros.
 
 Si la clave primaria no es `id`, podemos especificar el nombre de la clave primaria:
 

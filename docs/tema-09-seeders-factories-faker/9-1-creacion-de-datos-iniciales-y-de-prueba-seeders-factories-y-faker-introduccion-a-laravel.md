@@ -349,11 +349,7 @@ Al probar su aplicación o sembrar su base de datos, es posible que necesites in
 php artisan make:factory ProductFactory --model=Product
 ```
 
-Este comando debe crear el archivo
-
-database/factories/ProductFactory.php
-
-.
+Este comando debe crear el archivo `database/factories/ProductFactory.php`.
 
 Definición simple:
 

@@ -42,18 +42,18 @@ Para instalar Laravel correctamente, es necesario ejecutar Composer **desde dent
 
 1. Abre una terminal en Visual Studio Code. (O utilza Docker Desktop si lo prefieres).
 
-2. Ejecuta el siguiente comando para acceder al contenedor `dk_php`:
+2. Ejecuta el siguiente comando para acceder al contenedor `php`:
 
     !!! note "Acceder al contenedor PHP"
 
         ```bash
-        docker exec -it laravel_app_php_1 bash
+        docker compose exec php bash
         ```
 
-        o
+        o, con el nombre real del contenedor (míralo con `docker ps`):
 
         ```bash
-        docker compose exec php bash
+        docker exec -it actividades-laravel-php-1 bash
         ```
 
     Esto abrirá una consola dentro del contenedor.
@@ -126,10 +126,10 @@ Composer descargará todo el framework, instalará las dependencias necesarias, 
 
 | Acción | Comando |
 |---|---|
-| Entrar al contenedor PHP | `docker exec -it docker_php bash` |
+| Entrar al contenedor PHP | `docker compose exec php bash` |
 | Comprobar Composer | `composer --version` |
 | Ir a la carpeta de trabajo | `cd /var/www/html` |
-| Instalar Laravel | `composer create-project laravel/laravel .` |
+| Instalar Laravel | `composer create-project laravel/laravel:^12.0 .` |
 
 Al finalizar el proceso, la carpeta `src/` tendrá la siguiente estructura principal:
 
@@ -157,7 +157,7 @@ src/
 
 Laravel está diseñado para servir su aplicación a través de la carpeta `public/`. Por lo tanto, es necesario ajustar la configuración de Nginx para apuntar correctamente a esta carpeta.
 
-Edita el archivo `docker/nginx/default.conf` y modifica la directiva `root`:
+Edita el archivo `nginx/default.conf` y modifica la directiva `root`:
 
 Antes:
 
@@ -209,12 +209,12 @@ Ejecuta los siguientes comandos desde la raíz del proyecto:
 !!! note "Reiniciar Docker"
 
     ```bash
-    docker compose down
-    docker compose up -d
+    docker-compose down
+    docker-compose up -d
     ```
 
-- `docker compose down` detiene y elimina los contenedores actuales.
-- `docker compose up -d` vuelve a levantar los servicios en segundo plano.
+- `docker-compose down` detiene y elimina los contenedores actuales.
+- `docker-compose up -d` vuelve a levantar los servicios en segundo plano.
 
 ## Verificar instalación de Laravel
 

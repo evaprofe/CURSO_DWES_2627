@@ -586,11 +586,7 @@ Con este formato el formulario se enviará como un PUT, aunque el método del fo
     @endsection
     ```
 
-    -
-
-    @method('PUT')
-
-    simula el método HTTP PUT en formularios HTML (que solo permiten GET y POST).
+    - `@method('PUT')` simula el método HTTP PUT en formularios HTML (que solo permiten GET y POST).
 
 ---
 

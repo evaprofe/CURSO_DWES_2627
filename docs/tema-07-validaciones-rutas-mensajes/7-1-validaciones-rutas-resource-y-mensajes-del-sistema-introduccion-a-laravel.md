@@ -62,11 +62,7 @@ Haremos esto en todos los campos. Cuídado con los `textarea` que no tienen `val
 <input type="checkbox" name="done" value="1" {{ old('done') ? 'checked' : '' }}>
 ```
 
-Esto mostrará el checkbox marcado si el valor anterior era
-
-1
-
-.
+Esto mostrará el checkbox marcado si el valor anterior era `1`.
 
 #### Reglas comunes de validación:
 
@@ -446,11 +442,7 @@ En la función `update()`:
 return redirect()->route('note.index')->with('success', 'Nota actualizada correctamente.');
 ```
 
-En la función
-
-destroy()
-
-:
+En la función `destroy()`:
 
 ```php
 <?php

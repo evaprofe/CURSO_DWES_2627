@@ -111,13 +111,7 @@ Por defecto, este grupo incluye la resolución de *route model binding* mediante
     });
     ```
 
-    Accediendo a
-
-    http://localhost:8000/api/notes
-
-    , obtendrás:
-
-    { "mensaje": "Esta es la API de notas" }
+    Accediendo a `http://localhost:8000/api/notes`, obtendrás: `{ "mensaje": "Esta es la API de notas" }`
 
 Hay que fijarse que no es necesario añadir `/api` en la ruta, Laravel lo añade automáticamente. Pero sí hay que ponerlo en las peticiones.
 
@@ -283,11 +277,7 @@ Después de editar la migración, ejecuta el siguiente comando para crear la tab
 php artisan migrate
 ```
 
-Esto creará la tabla
-
-notes
-
-en tu base de datos.
+Esto creará la tabla `notes` en tu base de datos.
 
 También podemos crear el modelo `Note` con el siguiente comando:
 
@@ -295,15 +285,7 @@ También podemos crear el modelo `Note` con el siguiente comando:
 php artisan make:model Note
 ```
 
-Esto generará el modelo
-
-Note
-
-en
-
-app/Models/Note.php
-
-.
+Esto generará el modelo `Note` en `app/Models/Note.php`.
 
 ### Generar un controlador API
 
@@ -379,15 +361,7 @@ Route::apiResource('notes', NoteController::class)->only([
 ]);
 ```
 
-Esto generará automáticamente las rutas necesarias para el controlador
-
-NoteController
-
-usando el método
-
-apiResource
-
-. Laravel se encarga de crear las rutas RESTful para los métodos del controlador.
+Esto generará automáticamente las rutas necesarias para el controlador `NoteController` usando el método `apiResource`. Laravel se encarga de crear las rutas RESTful para los métodos del controlador.
 
 Esto define rutas como:
 

@@ -660,15 +660,7 @@ Primero tenemos el método ::table() que nos permite acceder a una tabla especí
 $usuarios = DB::table('users')->get();
 ```
 
-Esto nos devolverá una colección de usuarios. A partir de aquí, podemos usar los métodos de la clase
-
-QueryBuilder
-
-para realizar consultas a la base de datos. Por ejemplo, para filtrar los usuarios por edad, podemos usar el método
-
-where()
-
-:
+Esto nos devolverá una colección de usuarios. A partir de aquí, podemos usar los métodos de la clase `QueryBuilder` para realizar consultas a la base de datos. Por ejemplo, para filtrar los usuarios por edad, podemos usar el método `where()`:
 
 | Método | Descripción | Ejemplo |
 |---|---|---|

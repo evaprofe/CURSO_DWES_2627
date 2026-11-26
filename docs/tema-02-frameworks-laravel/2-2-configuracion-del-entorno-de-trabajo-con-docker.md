@@ -80,17 +80,6 @@ Seguramente cada desarrollador habrá encontrado su propia solución, pero en es
         touch src/index.php
         ```
 
-    !!! warning "En Windows: usa Git Bash, no PowerShell"
-
-        Estos comandos son de Linux (bash). En PowerShell no existe `touch` y `mkdir -p` no funciona igual. Abre la terminal de VS Code con **Git Bash** (flecha ˅ junto al **+** de la terminal) o usa WSL.
-
-        Si prefieres PowerShell, estos dos comandos hacen lo mismo:
-
-        ```powershell
-        mkdir docker/mysql/init, docker/nginx, docker/php, docker/scripts, src
-        New-Item -ItemType File docker-compose.yml, docker/mysql/init/01-grants.sql, docker/nginx/default.conf, docker/php/Dockerfile, docker/php/xdebug.ini, docker/scripts/.gitkeep, src/index.php
-        ```
-
     Una vez creada la estructura, debería verse así:
 
     ```text
@@ -452,20 +441,9 @@ Para completar los permisos del usuario vamos a utilizar el fichero `docker/mysq
 Recuerda que el usuario se crea durante la inicialización del contenedor de MySQL. Ahora lo que hacemos es completar los permisos de este usuario para poder utilizarlo desde nuestras aplicaciones.
 
 ```sql
-GRANT ALL PRIVILEGES ON *.* TO 'alumno'@'%' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'alumno'@'%' IDENTIFIED BY 'alumno' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 ```
-
-!!! warning "MySQL 8: sin `IDENTIFIED BY` en el `GRANT`"
-
-    En MySQL 8 ya no se puede poner `IDENTIFIED BY` dentro de un `GRANT` (daba `ERROR 1064` y el contenedor de MySQL se paraba). No hace falta: el usuario `alumno` y su contraseña ya los crea Docker con las variables `MYSQL_USER` y `MYSQL_PASSWORD` del `docker-compose.yml`.
-
-    Si tu contenedor de MySQL se paró por este error, corrige el archivo y borra la base de datos a medio crear para que el script se vuelva a ejecutar:
-
-    ```bash
-    docker compose down -v
-    docker compose up -d
-    ```
 
 ---
 
@@ -527,24 +505,6 @@ FLUSH PRIVILEGES;
         docker compose up --build
         ```
 
-    !!! failure "Error «port is already allocated»"
-
-        Si al levantar el entorno aparece `Bind for 0.0.0.0:3306 failed: port is already allocated`, el puerto 3306 de tu ordenador ya lo usa otro MySQL: el de XAMPP o el contenedor de otro proyecto de Docker. Para ver si es un contenedor:
-
-        ```bash
-        docker ps --filter "publish=3306"
-        ```
-
-        Puedes parar ese MySQL o, mejor, cambiar el puerto de este entorno en `docker-compose.yml` a `"3307:3306"`. Laravel no se entera, porque se conecta por dentro de Docker (`DB_HOST=mysql`, puerto 3306); el 3307 solo se usa si te conectas desde Windows con un programa como HeidiSQL. Lo mismo vale para el puerto `8080` de Nginx.
-
-    !!! tip "Comprueba que los tres contenedores están en marcha"
-
-        ```bash
-        docker compose ps -a
-        ```
-
-        `php`, `nginx` y `mysql` deben aparecer como `running` (o `Up`). Si alguno sale como `Exited`, mira su registro, por ejemplo `docker compose logs mysql --tail 30`. Si MySQL no está en marcha, la página de prueba dirá `getaddrinfo for mysql failed`.
-
 ---
 
 ## Paso 8: Verificar el entorno
@@ -571,29 +531,26 @@ Para conectarnos al contenedor MySQL ejecutando el cliente `mysql` tenemos dos o
 
 !!! note "Conectarse a MySQL"
 
-    ```bash
-    docker exec -it nombre_del_contenedor mysql -uroot -p
-    ```
-
-    Cambiar `nombre_del_contenedor` por el nombre real del contenedor MySQL. Puedes obtener el nombre del contenedor ejecutando `docker ps` en la terminal.
+    **Opción recomendada**, con el nombre del servicio:
 
     ```bash
     docker compose exec mysql mysql -uroot -p
     ```
 
-    En la segunda opción el primer
+    El primer `mysql` es el nombre del servicio definido en el `docker-compose.yml`. El segundo `mysql` es el comando que queremos ejecutar dentro del contenedor.
 
-    mysql
+    **Otra opción**, con el nombre real del contenedor:
 
-    es el nombre del servicio definido en el
+    ```bash
+    docker exec -it actividades-laravel-mysql-1 mysql -uroot -p
+    ```
 
-    docker-compose.yml
+    Cambia `actividades-laravel-mysql-1` por el nombre de tu contenedor MySQL. Lo ves con `docker ps`.
 
-    . Y el segundo
+    !!! tip "¿Cómo se llaman los contenedores?"
 
-    mysql
+        Docker Compose los llama `<carpeta-del-proyecto>-<servicio>-1`. Si tu carpeta es `actividades-laravel`, serán `actividades-laravel-php-1`, `actividades-laravel-nginx-1` y `actividades-laravel-mysql-1` (compruébalo con `docker ps`). Por eso es más cómodo `docker compose exec <servicio>`: usa el nombre del servicio del `docker-compose.yml` (`php`, `nginx` o `mysql`), que es siempre el mismo. Ojo: no mezcles las dos formas; `docker exec -it mysql ...` falla porque no hay ningún contenedor que se llame solo `mysql`.
 
-    es el comando que queremos ejecutar dentro del contenedor.
 
 !!! tip "Atención"
 
@@ -631,23 +588,7 @@ El servidor mostrará las bases de datos disponibles.
     SELECT user, host FROM mysql.user;
     ```
 
-    Esto mostrará los usuarios creados en el servidor MySQL. El usuario
-
-    alumno
-
-    debe aparecer en la lista como:
-
-    user: alumno
-
-    ,
-
-    host: %
-
-    . Esto significa que el usuario
-
-    alumno
-
-    puede conectarse desde cualquier host.
+    Esto mostrará los usuarios creados en el servidor MySQL. El usuario `alumno` debe aparecer en la lista como: `user: alumno`, `host: %`. Esto significa que el usuario `alumno` puede conectarse desde cualquier host.
 
 ---
 

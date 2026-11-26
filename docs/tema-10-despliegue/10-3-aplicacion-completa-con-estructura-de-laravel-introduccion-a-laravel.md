@@ -115,11 +115,7 @@ Comprobamos que todo funciona correctamente accediendo a la siguiente URL:
 http://localhost:8080
 ```
 
-Ahora debemos crear un repositorio en GitHub y subir el proyecto a GitHub. Ya que necesitaremos
-
-github actions
-
-para realizar el despliegue en el servidor remoto.
+Ahora debemos crear un repositorio en GitHub y subir el proyecto a GitHub. Ya que necesitaremos `github actions` para realizar el despliegue en el servidor remoto.
 
 !!! info "Vista local"
 
@@ -175,15 +171,7 @@ phpDeployTest/
     ├── index.php
 ```
 
-La carpeta
-
-public
-
-desaparece y su contenido se mueve a
-
-htdocs
-
-para que sea accesible desde la web.
+La carpeta `public` desaparece y su contenido se mueve a `htdocs` para que sea accesible desde la web.
 
 ## Despliegue en producción
 
@@ -649,11 +637,7 @@ Este script permite ejecutar las migraciones, con los siguientes parámetros:
 http://localhost:8080/migrate.php?key=123456&action=migrate
 ```
 
-Esto ejecutará las migraciones en la base de datos configurada en el archivo
-
-.env
-
-de Laravel. Asegúrate de que la base de datos está configurada correctamente y que los datos son correctos.
+Esto ejecutará las migraciones en la base de datos configurada en el archivo `.env` de Laravel. Asegúrate de que la base de datos está configurada correctamente y que los datos son correctos.
 
 Igual que hemos hecho con migrate podemos crar otros scripts o ampliar este para ejecutar comandos de Artisan, como `db:seed` o `cache:clear`, siguiendo la misma estructura.
 

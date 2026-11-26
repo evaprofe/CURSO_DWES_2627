@@ -40,11 +40,7 @@ primero con `cat /etc/os-release` mira si tu imagen es `debian` o `alpine`. Si e
 apt update && apt install -y nodejs npm
 ```
 
-Si nuestra imagen fuera
-
-alpine
-
-, haríamos:
+Si nuestra imagen fuera `alpine`, haríamos:
 
 ```bash
 apk add --no-cache nodejs npm

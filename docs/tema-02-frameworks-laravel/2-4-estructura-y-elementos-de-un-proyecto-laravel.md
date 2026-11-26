@@ -113,7 +113,7 @@ Dentro del contenedor PHP, puedes instalar el instalador de Laravel si quieres c
 
 !!! tip "Instalador de Laravel"
 
-    Recuerda que en nuestro caso la instalación de laravel la tenemos que hacer **dentro del contenedor PHP**. `docker exec -it php bash` y luego ejecutar el siguiente comando.
+    Recuerda que en nuestro caso la instalación de laravel la tenemos que hacer **dentro del contenedor PHP**. `docker compose exec php bash` y luego ejecutar el siguiente comando.
 
 !!! note "Instalar el instalador de Laravel"
 
@@ -174,7 +174,7 @@ laravel new nombre-del-proyecto
 
 !!! tip "Comando `php artisan`"
 
-    Recuerda que en nuestro caso la instalación de laravel la tenemos que hacer **dentro del contenedor PHP**. `docker exec -it php bash` y luego ejecutar el siguiente los comandos necesarios. Pero tanto el comando `laravel` como `php artisan` se ejecutan dentro del contenedor PHP.
+    Recuerda que en nuestro caso la instalación de laravel la tenemos que hacer **dentro del contenedor PHP**. `docker compose exec php bash` y luego ejecutar el siguiente los comandos necesarios. Pero tanto el comando `laravel` como `php artisan` se ejecutan dentro del contenedor PHP.
 
 Algunos ejemplos de uso del comando `php artisan` (Los iremos viendo a lo largo del curso):
 

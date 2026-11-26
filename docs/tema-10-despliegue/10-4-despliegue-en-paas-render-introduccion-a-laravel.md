@@ -115,15 +115,7 @@ Crear la rama `Render` es sencillo, simplemente ejecutamos el siguiente comando 
 git checkout -b Render
 ```
 
-Esto creará una nueva rama llamada
-
-Render
-
-y nos cambiará a esa rama. A partir de ahora, todos los cambios que realicemos se guardarán en esta rama. Y si estamos en local y queremos subir los cambios a GitHub, simplemente hacemos un
-
-push
-
-:
+Esto creará una nueva rama llamada `Render` y nos cambiará a esa rama. A partir de ahora, todos los cambios que realicemos se guardarán en esta rama. Y si estamos en local y queremos subir los cambios a GitHub, simplemente hacemos un `push`:
 
 ```bash
 git push -u origin Render
@@ -137,11 +129,7 @@ Ahora creamos la carpeta `Render` en la raíz de nuestro proyecto:
 mkdir Render
 ```
 
-Y dentro de esta carpeta vamos a crear los archivos necesarios para el despliegue en
-
-Render
-
-.
+Y dentro de esta carpeta vamos a crear los archivos necesarios para el despliegue en **Render**.
 
 ### Configuración del archivo `.env`
 
@@ -153,15 +141,7 @@ Creamos el archivo `.env.render` dentro de la carpeta `Render`:
 touch Render/.env.render
 ```
 
-Y editamos el archivo para configurar la conexión a la base de datos. Vamos a utilizar las credenciales que nos ha proporcionado
-
-Render
-
-al crear la base de datos. El contenido del archivo
-
-.env.render
-
-será el siguiente:
+Y editamos el archivo para configurar la conexión a la base de datos. Vamos a utilizar las credenciales que nos ha proporcionado **Render** al crear la base de datos. El contenido del archivo `.env.render` será el siguiente:
 
 !!! note ".env.render"
 
@@ -214,15 +194,7 @@ será el siguiente:
 touch Render/Dockerfile
 ```
 
-Creamos el archivo
-
-Dockerfile
-
-dentro de la carpeta
-
-Render
-
-:
+Creamos el archivo `Dockerfile` dentro de la carpeta `Render`:
 
 ```bash
 touch Render/Dockerfile
@@ -305,45 +277,13 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 ```
 
-Esta sección instala las dependencias necesarias para nuestra aplicación Laravel. Incluye herramientas como
-
-git
-
-,
-
-unzip
-
-,
-
-curl
-
-y las bibliotecas necesarias para las extensiones de PHP que vamos a utilizar. También limpia la caché de apt para reducir el tamaño de la imagen. En este caso ya hemos añadido las dependencias necesarias para
-
-MongoDB
-
-y
-
-PostgreSQL
-
-. Si en nuestro proyecto local utiliamos más dependencias, las debemos añadir aquí. Recordad que este Docker debe ser igual al que tenemos en nuestro proyecto local, para que no tengamos problemas de dependencias al desplegar la aplicación.
+Esta sección instala las dependencias necesarias para nuestra aplicación Laravel. Incluye herramientas como `git`, `unzip`, `curl` y las bibliotecas necesarias para las extensiones de PHP que vamos a utilizar. También limpia la caché de apt para reducir el tamaño de la imagen. En este caso ya hemos añadido las dependencias necesarias para `MongoDB`y `PostgreSQL`. Si en nuestro proyecto local utiliamos más dependencias, las debemos añadir aquí. Recordad que este Docker debe ser igual al que tenemos en nuestro proyecto local, para que no tengamos problemas de dependencias al desplegar la aplicación.
 
 ```dockerfile
 RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql xml ctype zip
 ```
 
-En este caso he mantenido las extensiones para mysql y pgsql. Seguramente ya que en
-
-Render
-
-vamos a utilizar
-
-PostgreSQL
-
-, podemos eliminar la extensión
-
-pdo_mysql
-
-si no la vamos a utilizar en el proyecto. Pero si la tenemos en nuestro proyecto local, es mejor dejarla para evitar problemas de dependencias.
+En este caso he mantenido las extensiones para mysql y pgsql. Seguramente ya que en `Render` vamos a utilizar `PostgreSQL`, podemos eliminar la extensión `pdo_mysql` si no la vamos a utilizar en el proyecto. Pero si la tenemos en nuestro proyecto local, es mejor dejarla para evitar problemas de dependencias.
 
 ```dockerfile
 # Instalar MongoDB extension
@@ -357,22 +297,14 @@ Esta línea está comentada, pero si en nuestro proyecto utilizamos MongoDB, deb
 # RUN pecl install xdebug && docker-php-ext-enable xdebug
 ```
 
-Esta línea también está comentada, no es normal que utilicemos
-
-Xdebug
-
-en producción.
+Esta línea también está comentada, no es normal que utilicemos `Xdebug` en producción.
 
 ```dockerfile
 # Instalar Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 ```
 
-Esta línea instala Composer, el gestor de dependencias de PHP. Esto nos permitirá instalar las dependencias de nuestra aplicación Laravel. Recordad que la carpeta
-
-vendor
-
-no se sube al repositorio, por lo que debemos instalar las dependencias en el contenedor.
+Esta línea instala Composer, el gestor de dependencias de PHP. Esto nos permitirá instalar las dependencias de nuestra aplicación Laravel. Recordad que la carpeta `vendor` no se sube al repositorio, por lo que debemos instalar las dependencias en el contenedor.
 
 ```dockerfile
 # Establecer directorio de trabajo
@@ -386,30 +318,14 @@ Esta línea establece el directorio de trabajo dentro del contenedor. Todas las 
 COPY src/ /var/www/html/
 ```
 
-Esta línea copia el código de nuestra aplicación Laravel desde la carpeta
-
-src
-
-del repositorio al directorio de trabajo del contenedor. Asegúrate de que tu código Laravel está en la carpeta
-
-src
-
-del repositorio. 'src\' es la carpeta donde debemos tener nuestro proyecto de Laravel. Si hemos cambiado el nombre de la carpeta, debemos cambiar esta línea para que apunte a la carpeta correcta.
+Esta línea copia el código de nuestra aplicación Laravel desde la carpeta `src` del repositorio al directorio de trabajo del contenedor. Asegúrate de que tu código Laravel está en la carpeta `src` del repositorio. 'src\' es la carpeta donde debemos tener nuestro proyecto de Laravel. Si hemos cambiado el nombre de la carpeta, debemos cambiar esta línea para que apunte a la carpeta correcta.
 
 ```dockerfile
 # Copiar .env.render
 COPY Render/.env.render /var/www/html/.env
 ```
 
-Esta línea copia el archivo
-
-.env.render
-
-que hemos creado anteriormente al directorio de trabajo del contenedor y lo renombra a
-
-.env
-
-. Esto es necesario para que Laravel pueda leer la configuración de la base de datos y otras variables de entorno.
+Esta línea copia el archivo `.env.render` que hemos creado anteriormente al directorio de trabajo del contenedor y lo renombra a `.env`. Esto es necesario para que Laravel pueda leer la configuración de la base de datos y otras variables de entorno.
 
 !!! tip "Seguridad"
 
@@ -420,15 +336,7 @@ que hemos creado anteriormente al directorio de trabajo del contenedor y lo reno
 RUN composer install --optimize-autoloader --no-dev
 ```
 
-Esta línea ejecuta Composer para instalar las dependencias de nuestra aplicación Laravel. Utiliza la opción
-
---optimize-autoloader
-
-para optimizar el autoloading y
-
---no-dev
-
-para no instalar las dependencias de desarrollo. Esto es importante para reducir el tamaño de la imagen y mejorar el rendimiento en producción.
+Esta línea ejecuta Composer para instalar las dependencias de nuestra aplicación Laravel. Utiliza la opción `--optimize-autoloader` para optimizar el autoloading y `--no-dev` para no instalar las dependencias de desarrollo. Esto es importante para reducir el tamaño de la imagen y mejorar el rendimiento en producción.
 
 ```dockerfile
 # Exponer puerto 1000 (o el que uses)
