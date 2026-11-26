@@ -320,7 +320,7 @@ Esto habilitará Xdebug en el contenedor PHP y permitirá la depuración remota.
     docker compose up -d --build php
     ```
 
-    Para comprobar que está activo: `docker compose exec php php -i | grep xdebug.mode` debe mostrar `debug`.
+    Para comprobar que está activo: `docker compose exec php php -r "echo ini_get('xdebug.mode');"` debe mostrar `debug`. (Funciona igual en CMD, PowerShell y Git Bash; `grep` no existe en CMD ni en PowerShell.)
 
 ---
 
