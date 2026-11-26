@@ -232,6 +232,23 @@ Deberías ver la pantalla de bienvenida de Laravel:
 
 Esto indica que Laravel está instalado correctamente y que la configuración del entorno es funcional.
 
+!!! failure "Error 500: `tempnam(): file created in the system's temporary directory` o `Permission denied`"
+
+    Laravel necesita **escribir** en `storage/` (vistas compiladas, sesiones, logs) y en `bootstrap/cache/`. Composer creó esas carpetas como `root`, pero PHP-FPM atiende las peticiones con el usuario `www-data`, que no puede escribir en ellas. Dale permisos desde la carpeta del proyecto:
+
+    ```bash
+    docker compose exec php chown -R www-data:www-data storage bootstrap/cache
+    docker compose exec php chmod -R 775 storage bootstrap/cache
+    ```
+
+    Recarga `localhost:8080`. Si sigue fallando (en Windows, las carpetas compartidas con Docker a veces ignoran el cambio de propietario), usa permisos completos, que en tu ordenador de desarrollo no son un problema:
+
+    ```bash
+    docker compose exec php chmod -R 777 storage bootstrap/cache
+    ```
+
+    Nunca hagas esto último en un servidor de producción.
+
 !!! info "¡Listo para empezar!"
 
     Ahora que Laravel está instalado, el siguiente paso será aprender a trabajar con rutas, controladores y modelos dentro del framework.
