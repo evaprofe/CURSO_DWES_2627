@@ -232,22 +232,24 @@ Deberías ver la pantalla de bienvenida de Laravel:
 
 Esto indica que Laravel está instalado correctamente y que la configuración del entorno es funcional.
 
-!!! failure "Error 500: `tempnam(): file created in the system's temporary directory` o `Permission denied`"
+!!! failure "Error 500: `tempnam(): file created...`, `Permission denied` o `attempt to write a readonly database`"
 
-    Laravel necesita **escribir** en `storage/` (vistas compiladas, sesiones, logs) y en `bootstrap/cache/`. Composer creó esas carpetas como `root`, pero PHP-FPM atiende las peticiones con el usuario `www-data`, que no puede escribir en ellas. Dale permisos desde la carpeta del proyecto:
+    Laravel necesita **escribir** en `storage/` (vistas compiladas, logs), en `bootstrap/cache/` y, mientras use SQLite (la base de datos que trae por defecto, donde guarda las sesiones), en `database/`. Composer creó esas carpetas como `root`, pero PHP-FPM atiende las peticiones con el usuario `www-data`, que no puede escribir en ellas. Dale permisos desde la carpeta del proyecto:
 
     ```bash
-    docker compose exec php chown -R www-data:www-data storage bootstrap/cache
-    docker compose exec php chmod -R 775 storage bootstrap/cache
+    docker compose exec php chown -R www-data:www-data storage bootstrap/cache database
+    docker compose exec php chmod -R 775 storage bootstrap/cache database
     ```
 
     Recarga `localhost:8080`. Si sigue fallando (en Windows, las carpetas compartidas con Docker a veces ignoran el cambio de propietario), usa permisos completos, que en tu ordenador de desarrollo no son un problema:
 
     ```bash
-    docker compose exec php chmod -R 777 storage bootstrap/cache
+    docker compose exec php chmod -R 777 storage bootstrap/cache database
     ```
 
     Nunca hagas esto último en un servidor de producción.
+
+    En el tema 4 cambiaremos SQLite por MySQL en el archivo `.env`; desde entonces la carpeta `database/` ya no necesita permisos de escritura.
 
 !!! info "¡Listo para empezar!"
 
