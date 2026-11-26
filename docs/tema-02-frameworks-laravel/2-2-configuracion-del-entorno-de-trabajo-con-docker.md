@@ -298,7 +298,7 @@ volumes:
 
 Este volumen se utiliza para guardar los datos de MySQL fuera del contenedor. De esta manera, la información de la base de datos no se pierde al detener o recrear los servicios.
 
-El contenido del fichero `docker/php/xdebug.ini` es opcional, pero si quieres usar Xdebug, puedes crear un archivo con el siguiente contenido:
+El fichero `docker/php/xdebug.ini` configura Xdebug, el depurador de PHP que usaremos en el paso 10. Su contenido es:
 
 !!! note "Configuración Xdebug"
 
@@ -311,6 +311,16 @@ El contenido del fichero `docker/php/xdebug.ini` es opcional, pero si quieres us
     ```
 
 Esto habilitará Xdebug en el contenedor PHP y permitirá la depuración remota.
+
+!!! warning "Si lo dejas vacío, la depuración del paso 10 no funcionará"
+
+    Sin este contenido, Xdebug queda en su modo por defecto (`develop`) y nunca se conecta con VS Code: pulsas F5, recargas la página y no se detiene en ningún punto de interrupción. Como el `Dockerfile` **copia** este archivo dentro de la imagen, si lo rellenas o lo cambias después tienes que reconstruir el contenedor PHP:
+
+    ```bash
+    docker compose up -d --build php
+    ```
+
+    Para comprobar que está activo: `docker compose exec php php -i | grep xdebug.mode` debe mostrar `debug`.
 
 ---
 
