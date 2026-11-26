@@ -1,0 +1,3062 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Apuntes de Desarrollo Web en Entorno Servidor">
+      
+      
+        <meta name="author" content="Eva María Gómez Abad">
+      
+      
+        <link rel="canonical" href="https://evaprofe.github.io/CURSO_DWES_2627/tema-02-frameworks-laravel/2-4-estructura-y-elementos-de-un-proyecto-laravel/">
+      
+      
+        <link rel="prev" href="../2-3-instalacion-y-puesta-en-marcha-de-laravel/">
+      
+      
+        <link rel="next" href="../2-5-actividad-del-tema-2/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
+    
+    
+      
+        <title>2.4 Estructura de un Proyecto Laravel - Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#estructura-y-elementos-de-un-proyecto-laravel" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-header__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2.4 Estructura de un Proyecto Laravel
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Activar modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Activar modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Activar modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" class="md-nav__button md-logo" aria-label="Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Curso Laravel (2º CURSO DAW-IES JUAN DE GARAY)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introducción al Desarrollo Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1. Introducción al Desarrollo Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/introduccion-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1 Desarrollo Web en el Servidor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2 Patrón Modelo-Vista-Controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.3 Protocolo HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-01-introduccion-desarrollo-web/1-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 1 · MVC y HTTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Frameworks y Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2. Frameworks y Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1 Introducción a los Frameworks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-2-configuracion-del-entorno-de-trabajo-con-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.2 Entorno de Trabajo con Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-3-instalacion-y-puesta-en-marcha-de-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.3 Instalación y Puesta en Marcha
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.4 Estructura de un Proyecto Laravel
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.4 Estructura de un Proyecto Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion-al-patron-mvc-en-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción al Patrón MVC en Laravel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estructura-del-proyecto-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estructura del Proyecto Laravel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Estructura del Proyecto Laravel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#elementos-principales-mvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Elementos principales (MVC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#otras-carpetas-y-archivos-importantes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Otras carpetas y archivos importantes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instalacion-del-comando-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instalación del Comando laravel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Instalación del Comando laravel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#instalar-el-instalador-de-laravel-globalmente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instalar el instalador de Laravel globalmente
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diferencias-entre-laravel-y-php-artisan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diferencias entre laravel y php artisan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sobre-php-artisan-serve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sobre php artisan serve
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clase-route-en-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clase Route en Laravel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Clase Route en Laravel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#routeget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Route::get()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#routepost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Route::post()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#routeput-y-routedelete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Route::put() y Route::delete()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#el-metodo-routeview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        el método Route::view()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poner-en-practica-las-rutas-con-un-ejemplo-sencillo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poner en práctica las rutas con un ejemplo sencillo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Poner en práctica las rutas con un ejemplo sencillo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-crear-las-vistas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Crear las vistas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-definir-las-rutas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Definir las rutas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-probar-las-rutas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Probar las rutas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-5-actividad-del-tema-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 2 · Introducción a Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anexo-problemas-frecuentes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🛠 Problemas frecuentes del entorno
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anexos-tailwind-css/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anexo · Tailwind CSS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anexo-laravel-windows-11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anexo · Laravel en Windows 11
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. Vistas con Blade
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-03-vistas-blade/3-1-vistas-con-blade-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.1 Creación de Vistas con Blade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-03-vistas-blade/3-2-actividad-del-tema-3-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 3 · Agencia de Viajes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4. Migraciones y Modelos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-04-migraciones-modelos/4-1-migraciones-y-modelos-con-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.1 Migraciones y Modelos en Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-04-migraciones-modelos/4-2-actividad-del-tema-4-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 4 · Migraciones y Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Controladores de Laravel
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5. Controladores de Laravel
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/5-1-controladores-de-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.1 Controladores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/unidad-5-2-relaciones-uno-a-muchos-en-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.2 Relaciones Uno a Muchos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-05-controladores/actividad-del-tema-5-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 5 · Controladores y Rutas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Desarrollo CRUD Completo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. Desarrollo CRUD Completo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-06-crud-completo/6-1-desarrollo-de-un-crud-completo-en-laravel-parte-1-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1 Desarrollo de un CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-06-crud-completo/6-2-actividad-del-tema-6-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 6 · CRUD de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7. Validaciones, Rutas y Mensajes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-07-validaciones-rutas-mensajes/7-1-validaciones-rutas-resource-y-mensajes-del-sistema-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.1 Validaciones y Rutas Resource
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-07-validaciones-rutas-mensajes/actividad-del-tema-7-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 7 · Validaciones del CRUD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. API REST
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    8. API REST
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-1-apis-restful-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.1 Creación de API REST
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-2-apis-con-sanctum-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8.2 API con Sanctum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-08-api-rest/8-3-actividad-del-tema-8-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 8 · API de Productos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Seeders, Factories y Faker
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    9. Seeders, Factories y Faker
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-09-seeders-factories-faker/9-1-creacion-de-datos-iniciales-y-de-prueba-seeders-factories-y-faker-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9.1 Datos Iniciales y de Prueba
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-09-seeders-factories-faker/actividad-del-tema-9-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 9 · Generación de Datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    10. Despliegue de Aplicaciones Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-1-introduccion-al-despliegue-de-aplicaciones-web-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.1 Introducción al Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-2-aplicacion-simple-con-estructura-precaria-php-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.2 Aplicación PHP Sencilla
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-3-aplicacion-completa-con-estructura-de-laravel-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.3 Aplicación Laravel Completa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-4-despliegue-en-paas-render-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10.4 Despliegue en Render
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/10-5-actividad-del-tema-10-introduccion-a-laravel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 10 · Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-10-despliegue/anexo-error-en-la-migracion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anexo · Error en la migración
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Login y Roles
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    11. Login y Roles
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-11-login-roles/11-1-login-y-roles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11.1 Login y roles con Breeze
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tema-11-login-roles/11-2-actividad-login-y-roles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Actividad 11 · Login y roles en tu tienda
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion-al-patron-mvc-en-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción al Patrón MVC en Laravel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estructura-del-proyecto-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estructura del Proyecto Laravel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Estructura del Proyecto Laravel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#elementos-principales-mvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Elementos principales (MVC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#otras-carpetas-y-archivos-importantes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Otras carpetas y archivos importantes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instalacion-del-comando-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instalación del Comando laravel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Instalación del Comando laravel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#instalar-el-instalador-de-laravel-globalmente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instalar el instalador de Laravel globalmente
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diferencias-entre-laravel-y-php-artisan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diferencias entre laravel y php artisan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sobre-php-artisan-serve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sobre php artisan serve
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clase-route-en-laravel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clase Route en Laravel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Clase Route en Laravel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#routeget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Route::get()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#routepost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Route::post()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#routeput-y-routedelete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Route::put() y Route::delete()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#el-metodo-routeview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        el método Route::view()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poner-en-practica-las-rutas-con-un-ejemplo-sencillo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poner en práctica las rutas con un ejemplo sencillo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Poner en práctica las rutas con un ejemplo sencillo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-crear-las-vistas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Crear las vistas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-definir-las-rutas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Definir las rutas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-probar-las-rutas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Probar las rutas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="estructura-y-elementos-de-un-proyecto-laravel">Estructura y Elementos de un Proyecto Laravel<a class="headerlink" href="#estructura-y-elementos-de-un-proyecto-laravel" title="Permanent link">&para;</a></h1>
+<h2 id="introduccion-al-patron-mvc-en-laravel">Introducción al Patrón MVC en Laravel<a class="headerlink" href="#introduccion-al-patron-mvc-en-laravel" title="Permanent link">&para;</a></h2>
+<p>Laravel sigue el patrón <strong>MVC (Modelo - Vista - Controlador)</strong>, una forma de organizar el código para separar responsabilidades:</p>
+<ul>
+<li><strong>Modelos (M):</strong> Representan los datos y la lógica de negocio. Se encuentran en <code>app/Models</code>.</li>
+<li><strong>Vistas (V):</strong> Son las pantallas o interfaces que verá el usuario. Están en <code>resources/views</code>.</li>
+<li><strong>Controladores (C):</strong> Gestionan la lógica de la aplicación, recibiendo las peticiones y devolviendo respuestas. Están en <code>app/Http/Controllers</code>.</li>
+<li><strong>Rutas:</strong> Definen por dónde accede el usuario a cada funcionalidad. Se configuran en <code>routes/web.php</code>.</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Esquema MVC en Laravel</p>
+<pre class="mermaid"><code>graph TD
+  Usuario --&gt;|Solicita| Rutas
+  Rutas --&gt;|Delegan| Controladores
+  Controladores --&gt;|Consultan| Modelos
+  Modelos --&gt;|Datos| BaseDeDatos
+  Controladores --&gt;|Devuelven| Vistas</code></pre>
+</div>
+<p>Esta separación facilita el mantenimiento, la escalabilidad y la organización del código.</p>
+<h2 id="estructura-del-proyecto-laravel">Estructura del Proyecto Laravel<a class="headerlink" href="#estructura-del-proyecto-laravel" title="Permanent link">&para;</a></h2>
+<p>Dividimos la estructura en dos bloques: <strong>elementos MVC</strong> y <strong>otras carpetas importantes</strong>.</p>
+<h3 id="elementos-principales-mvc">Elementos principales (MVC)<a class="headerlink" href="#elementos-principales-mvc" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Carpeta/Archivo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app/Models/</code></td>
+<td>Modelos de la base de datos. Ej: <code>User.php</code>.</td>
+</tr>
+<tr>
+<td><code>resources/views/</code></td>
+<td>Plantillas Blade que generan el HTML.</td>
+</tr>
+<tr>
+<td><code>app/Http/Controllers/</code></td>
+<td>Lógica que maneja las peticiones HTTP.</td>
+</tr>
+<tr>
+<td><code>routes/web.php</code></td>
+<td>Archivo donde se definen las rutas para clientes web.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="otras-carpetas-y-archivos-importantes">Otras carpetas y archivos importantes<a class="headerlink" href="#otras-carpetas-y-archivos-importantes" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Carpeta/Archivo</th>
+<th>Descripción detallada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app/</code></td>
+<td>Contiene la lógica de la aplicación: controladores, modelos, middleware.</td>
+</tr>
+<tr>
+<td><code>bootstrap/</code></td>
+<td>Carga inicial de la aplicación. Incluye <code>app.php</code>.</td>
+</tr>
+<tr>
+<td><code>config/</code></td>
+<td>Archivos de configuración de todo el sistema: base de datos, correo, sesiones, etc.</td>
+</tr>
+<tr>
+<td><code>database/</code></td>
+<td>Contiene migraciones, seeders y fábricas de datos para pruebas.</td>
+</tr>
+<tr>
+<td><code>public/</code></td>
+<td>Carpeta pública servida por Nginx. Contiene <code>index.php</code>, CSS, JS públicos.</td>
+</tr>
+<tr>
+<td><code>storage/</code></td>
+<td>Archivos generados automáticamente: logs, caché, ficheros temporales, subidas de usuarios.</td>
+</tr>
+<tr>
+<td><code>tests/</code></td>
+<td>Tests unitarios y funcionales para automatizar comprobaciones del proyecto.</td>
+</tr>
+<tr>
+<td><code>.env</code></td>
+<td>Archivo oculto que define las variables de entorno (configuraciones sensibles).</td>
+</tr>
+<tr>
+<td>vendor/</td>
+<td>Carpeta generada por Composer que contiene todas las dependencias del proyecto.</td>
+</tr>
+<tr>
+<td><code>artisan</code></td>
+<td>Comando CLI propio de Laravel para realizar tareas de desarrollo dentro del proyecto.</td>
+</tr>
+<tr>
+<td><code>composer.json</code></td>
+<td>Archivo que define todas las dependencias PHP del proyecto (gestor Composer).</td>
+</tr>
+</tbody>
+</table>
+<p>Dentro de <code>app/</code> podemos encontrar:</p>
+<table>
+<thead>
+<tr>
+<th>Carpeta/Archivo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Http/</code></td>
+<td>Contiene controladores y middleware.</td>
+</tr>
+<tr>
+<td><code>Models/</code></td>
+<td>Contiene los modelos de la base de datos.</td>
+</tr>
+<tr>
+<td><code>Console/</code></td>
+<td>Contiene comandos personalizados de Artisan.</td>
+</tr>
+</tbody>
+</table>
+<p>Dentro de <code>config/</code> podemos encontrar:</p>
+<table>
+<thead>
+<tr>
+<th>Carpeta/Archivo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app.php</code></td>
+<td>Configuración de la aplicación.</td>
+</tr>
+<tr>
+<td><code>database.php</code></td>
+<td>Configuración de la base de datos.</td>
+</tr>
+<tr>
+<td><code>mail.php</code></td>
+<td>Configuración del correo electrónico.</td>
+</tr>
+<tr>
+<td><code>session.php</code></td>
+<td>Configuración de sesiones.</td>
+</tr>
+<tr>
+<td><code>auth.php</code></td>
+<td>Configuración de autenticación.</td>
+</tr>
+</tbody>
+</table>
+<p>Dentro de <code>database/</code> podemos encontrar:</p>
+<table>
+<thead>
+<tr>
+<th>Carpeta/Archivo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>migrations/</code></td>
+<td>Archivos que definen la estructura de las tablas de la base de datos.</td>
+</tr>
+<tr>
+<td><code>seeders/</code></td>
+<td>Archivos que permiten poblar la base de datos con datos iniciales.</td>
+</tr>
+<tr>
+<td><code>factories/</code></td>
+<td>Archivos que permiten crear datos de prueba para los modelos.</td>
+</tr>
+</tbody>
+</table>
+<p>Dentro de <code>storage/</code> podemos encontrar:</p>
+<table>
+<thead>
+<tr>
+<th>Carpeta/Archivo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app/</code></td>
+<td>Archivos subidos por los usuarios.</td>
+</tr>
+<tr>
+<td><code>framework/</code></td>
+<td>Archivos generados automáticamente por Laravel.</td>
+</tr>
+<tr>
+<td><code>logs/</code></td>
+<td>Archivos de registro de errores y eventos.</td>
+</tr>
+</tbody>
+</table>
+<p>Dentro de <code>tests/</code> podemos encontrar:</p>
+<table>
+<thead>
+<tr>
+<th>Carpeta/Archivo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Feature/</code></td>
+<td>Tests funcionales que comprueban el comportamiento de la aplicación.</td>
+</tr>
+<tr>
+<td><code>Unit/</code></td>
+<td>Tests unitarios que comprueban la lógica de los modelos y controladores.</td>
+</tr>
+</tbody>
+</table>
+<p>Dentro de <code>public/</code> podemos encontrar:</p>
+<table>
+<thead>
+<tr>
+<th>Carpeta/Archivo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>css/</code></td>
+<td>Archivos CSS públicos.</td>
+</tr>
+<tr>
+<td><code>js/</code></td>
+<td>Archivos JavaScript públicos.</td>
+</tr>
+<tr>
+<td><code>index.php</code></td>
+<td>Punto de entrada a la aplicación.</td>
+</tr>
+<tr>
+<td><code>favicon.ico</code></td>
+<td>Icono de la página web.</td>
+</tr>
+<tr>
+<td><code>robots.txt</code></td>
+<td>Archivo que indica a los motores de búsqueda qué páginas indexar.</td>
+</tr>
+<tr>
+<td><code>htaccess</code></td>
+<td>Archivo de configuración de Apache (no usado en nuestro caso).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="instalacion-del-comando-laravel">Instalación del Comando <code>laravel</code><a class="headerlink" href="#instalacion-del-comando-laravel" title="Permanent link">&para;</a></h2>
+<p>Laravel dispone de una interfaz de línea de comandos (CLI) para facilitar tareas de creación de proyectos y componentes.</p>
+<div class="admonition info">
+<p class="admonition-title">Este apartado es informativo: no necesitas hacerlo</p>
+<p>Tu proyecto ya está creado con <code>composer create-project</code> (apartado 2.3), que es lo que usamos en el curso. El instalador <code>laravel</code> solo sirve para crear proyectos nuevos y, dentro de Docker, <strong>se pierde al reconstruir el contenedor</strong>. Léelo para saber que existe.</p>
+<p>Si quieres probarlo, se hace en la terminal de VS Code, en dos pasos:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>php<span class="w"> </span>bash<span class="w">          </span><span class="c1"># 1. entras en el contenedor (el indicador cambia a root@...:/var/www/html#)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>composer<span class="w"> </span>global<span class="w"> </span>require<span class="w"> </span>laravel/installer<span class="w">   </span><span class="c1"># 2. ya dentro, instalas el comando</span>
+</code></pre></div>
+<p>Y para salir del contenedor, <code>exit</code>. <strong>No ejecutes <code>laravel new</code> dentro de <code>/var/www/html</code></strong>: crearía otro proyecto dentro de tu proyecto.</p>
+</div>
+<h3 id="instalar-el-instalador-de-laravel-globalmente">Instalar el instalador de Laravel globalmente<a class="headerlink" href="#instalar-el-instalador-de-laravel-globalmente" title="Permanent link">&para;</a></h3>
+<p>Dentro del contenedor PHP, puedes instalar el instalador de Laravel si quieres crear proyectos más rápidamente:</p>
+<div class="admonition tip">
+<p class="admonition-title">Instalador de Laravel</p>
+<p>Recuerda que en nuestro caso la instalación de laravel la tenemos que hacer <strong>dentro del contenedor PHP</strong>. <code>docker compose exec php bash</code> y luego ejecutar el siguiente comando.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Instalar el instalador de Laravel</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>composer<span class="w"> </span>global<span class="w"> </span>require<span class="w"> </span>laravel/installer
+</code></pre></div>
+</div>
+<p>Esto instalará el comando <code>laravel</code> de forma global.</p>
+<h3 id="diferencias-entre-laravel-y-php-artisan">Diferencias entre <code>laravel</code> y <code>php artisan</code><a class="headerlink" href="#diferencias-entre-laravel-y-php-artisan" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><code>laravel</code>:</p>
+<ul>
+<li>Se usa principalmente <strong>fuera de los proyectos</strong>.</li>
+<li>Sirve para crear <strong>nuevos proyectos</strong>:</li>
+</ul>
+</li>
+</ul>
+<p>Ejemplos de uso del comando <code>laravel</code>:</p>
+<p>Verificar la instalación:</p>
+<div class="admonition note">
+<p class="admonition-title">Comprobar la versión del instalador de Laravel</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>laravel<span class="w"> </span>--version
+</code></pre></div>
+</div>
+<div class="admonition failure">
+<p class="admonition-title">Si el comando anterior no funciona</p>
+<p>Si el comando <code>laravel</code> no funciona, es posible que el directorio de Composer no esté en tu variable de entorno <code>PATH</code>. Normalmente es <code>~/.composer/vendor/bin</code> o <code>~/.config/composer/vendor/bin</code> dependiendo de tu sistema operativo. Asegúrate de añadirlo a tu <code>PATH</code> para poder usar el comando <code>laravel</code> globalmente.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">BIN_DIR</span><span class="o">=</span><span class="k">$(</span>composer<span class="w"> </span>global<span class="w"> </span>config<span class="w"> </span>bin-dir<span class="w"> </span>--absolute<span class="k">)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"export PATH=</span><span class="nv">$BIN_DIR</span><span class="s2">:\$PATH"</span><span class="w"> </span>&gt;<span class="w"> </span>/etc/profile.d/composer.sh
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">source</span><span class="w"> </span>/etc/profile
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nb">source</span><span class="w"> </span>/etc/profile.d/composer.sh
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nb">hash</span><span class="w"> </span>-r
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>laravel<span class="w"> </span>--version
+</code></pre></div>
+</div>
+<p>El problema con este comando es que estamos utilizando un contenedor Docker para el desarrollo, y el comando <code>laravel</code> se instala dentro del contenedor PHP. Cuando reiniciamos el contenedor la instalación se pierde.</p>
+<p>Nosotros en el curso utilizaremos <code>composer create-project laravel/laravel:^12.0 .</code> para crear el proyecto Laravel dentro del contenedor PHP, y no usaremos el comando <code>laravel</code> para crear proyectos. Sin embargo, es importante conocer la existencia de este comando, ya que es muy utilizado en entornos de desarrollo sin Docker.</p>
+<p>La salida de este comando debería ser similar a:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>laravel --version
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Laravel Installer 5.19.0
+</code></pre></div>
+<p>Ahora cuando queramos crear un nuevo proyecto Laravel, podemos usar:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>laravel<span class="w"> </span>new<span class="w"> </span>nombre-del-proyecto
+</code></pre></div>
+<p><strong><code>php artisan</code></strong>: Se usa <strong>dentro de un proyecto Laravel ya creado</strong>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Comando <code>php artisan</code></p>
+<p>Recuerda que en nuestro caso la instalación de laravel la tenemos que hacer <strong>dentro del contenedor PHP</strong>. <code>docker compose exec php bash</code> y luego ejecutar el siguiente los comandos necesarios. Pero tanto el comando <code>laravel</code> como <code>php artisan</code> se ejecutan dentro del contenedor PHP.</p>
+</div>
+<p>Algunos ejemplos de uso del comando <code>php artisan</code> (Los iremos viendo a lo largo del curso):</p>
+<div class="highlight"><span class="filename">Crear un nuevo controlador</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>php<span class="w"> </span>artisan<span class="w"> </span>make:controller<span class="w"> </span>NombreControlador
+</code></pre></div>
+<div class="highlight"><span class="filename">Crear un nuevo modelo</span><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>php<span class="w"> </span>artisan<span class="w"> </span>make:model<span class="w"> </span>NombreModelo
+</code></pre></div>
+<div class="highlight"><span class="filename">Crear un nuevo recurso (controlador + rutas)</span><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>php<span class="w"> </span>artisan<span class="w"> </span>make:controller<span class="w"> </span>NombreControlador<span class="w"> </span>--resource
+</code></pre></div>
+<div class="highlight"><span class="filename">Crear un nuevo middleware</span><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>php<span class="w"> </span>artisan<span class="w"> </span>make:middleware<span class="w"> </span>NombreMiddleware
+</code></pre></div>
+<div class="highlight"><span class="filename">Crear una nueva migración</span><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>php<span class="w"> </span>artisan<span class="w"> </span>make:migration<span class="w"> </span>crear_tabla_usuarios
+</code></pre></div>
+<div class="highlight"><span class="filename">Crear un nuevo seeder</span><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>php<span class="w"> </span>artisan<span class="w"> </span>route:list
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Importante</p>
+<p>En este curso nos centraremos principalmente en <code>php artisan</code>, ya que es el que se utiliza dentro de los proyectos Laravel. El comando <code>laravel</code> solo se usa para crear nuevos proyectos y lo utilizaremos mínimamente.</p>
+</div>
+<h3 id="sobre-php-artisan-serve">Sobre <code>php artisan serve</code><a class="headerlink" href="#sobre-php-artisan-serve" title="Permanent link">&para;</a></h3>
+<div class="admonition tip">
+<p class="admonition-title">¿Usar php artisan serve?</p>
+<p>En nuestro entorno con Docker <strong>NO usamos <code>php artisan serve</code></strong>.</p>
+<p>Ya tenemos configurado <strong>Nginx</strong> como servidor web. <code>php artisan serve</code> solo se utiliza en entornos locales simples (sin Docker, sin Nginx).</p>
+<p>Todo el acceso debe ser a través de <a href="http://localhost:8080">http://localhost:8080</a> utilizando Nginx.</p>
+</div>
+<p>Podríamos haber prescindido de Nginx y usar <code>php artisan serve</code> para levantar un servidor web simple. Pero en entornos profesionales se utiliza siempre un servidor web dedicado (Nginx o Apache). Por tanto, para simular un entorno real de producción, hemos configurado Nginx.</p>
+<h2 id="clase-route-en-laravel">Clase <code>Route</code> en Laravel<a class="headerlink" href="#clase-route-en-laravel" title="Permanent link">&para;</a></h2>
+<p>Por su importancia, vamos a comenzar hablando de las rutas en Laravel, ya que son el punto de entrada a nuestra aplicación. La clase <code>Route</code> permite definir cómo responde nuestra aplicación a las diferentes URLs. Toda aplicación de php/laravel comienza por definir sus rutas.</p>
+<p>Hay dos grandes tipos de rutas:</p>
+<ul>
+<li><strong>Rutas web</strong>: Se definen en <code>routes/web.php</code> y manejan peticiones de navegadores tradicionales.</li>
+<li><strong>Rutas API</strong>: Se definen en <code>routes/api.php</code> y están pensadas para ser usadas por clientes REST (apps móviles, servicios externos).</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Rutas API</p>
+<p>No busques en tus archivos el fichero <code>routes/api.php</code>. A partir de la versión 12 de laravel el fichero <code>routes/api.php</code> no se instala en el proyecto por defecto. En el tema correspondiente a APIs REST veremos como crear la estructura necesaria para trabajar con APIs REST.</p>
+</div>
+<p>Los métodos estáticos de la clase <code>Route</code> coinciden con los verbos HTTP más comunes. De esta manera podemos definir rutas que respondan a diferentes tipos de peticiones. Luego como parámetros reciben la URL y una función anónima (closure) o el nombre de un controlador y su método. De momento como no hemos visto los controladores vamos a usar closures.</p>
+<p>Algunos métodos estáticos principales de <code>Route</code>:</p>
+<h3 id="routeget"><code>Route::get()</code><a class="headerlink" href="#routeget" title="Permanent link">&para;</a></h3>
+<p>Responde a peticiones HTTP GET (páginas web).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nx">Route</span><span class="o">::</span><span class="na">get</span><span class="p">(</span><span class="s1">'/home'</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'home'</span><span class="p">);</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="p">});</span>
+</code></pre></div>
+<p>Este ejemplo define una ruta que responde a la URL <code>/home</code> y devuelve la vista <code>home</code>. Tenemos que tener creada la vista <code>home.blade.php</code> en la carpeta <code>resources/views/</code>. la parte del fichero <code>.blade.php</code> no se pone en la ruta, laravel lo añade automáticamente.</p>
+<h3 id="routepost"><code>Route::post()</code><a class="headerlink" href="#routepost" title="Permanent link">&para;</a></h3>
+<p>Responde a peticiones HTTP POST (envíos de formularios). En este caso vamos a responder con un simple texto. Esto lo utilizaremos al principio para ver que las rutas están funcionando correctamente. Luego ya cambiaremos el texto por una vista o por un controlador.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nx">Route</span><span class="o">::</span><span class="na">post</span><span class="p">(</span><span class="s1">'/submit'</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    <span class="k">return</span> <span class="s1">'Formulario enviado'</span><span class="p">;</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="p">});</span>
+</code></pre></div>
+<h3 id="routeput-y-routedelete"><code>Route::put()</code> y <code>Route::delete()</code><a class="headerlink" href="#routeput-y-routedelete" title="Permanent link">&para;</a></h3>
+<p>Actualiza recursos existentes, o los elimina, utilizado en APIs REST. El esquema es similar a los anteriores.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nx">Route</span><span class="o">::</span><span class="na">put</span><span class="p">(</span><span class="s1">'/profile'</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    <span class="k">return</span> <span class="s1">'Perfil actualizado'</span><span class="p">;</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="p">});</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nx">Route</span><span class="o">::</span><span class="na">delete</span><span class="p">(</span><span class="s1">'/post'</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>    <span class="k">return</span> <span class="s1">'Publicación eliminada'</span><span class="p">;</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="p">});</span>
+</code></pre></div>
+<h3 id="el-metodo-routeview">el método <code>Route::view()</code><a class="headerlink" href="#el-metodo-routeview" title="Permanent link">&para;</a></h3>
+<p>Este método es importante por simplicidad. Evita tener que pasar por un controlador si solo queremos devolver una vista simple sin lógica adicional. Por tanto se utiliza para rutas que solo muestran una página estática, por ejemplo la página <code>home</code>, la página de <code>about</code>, etc. Mientras no necesitemos lógica adicional, este método es perfecto.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="nx">Route</span><span class="o">::</span><span class="na">view</span><span class="p">(</span><span class="s1">'/'</span><span class="p">,</span> <span class="s1">'welcome'</span><span class="p">);</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title"><code>/</code></p>
+<p>Esta ruta responde a la URL raíz del sitio web, es decir, <code>http://localhost:8080/</code> en nuestro entorno Docker. Por tanto es la página principal de nuestra web. Es importante que la ruta <code>/</code> siempre esté definida en nuestras aplicaciones web y apunte a una página de bienvenida, inicio, landing o similar.</p>
+</div>
+<h2 id="poner-en-practica-las-rutas-con-un-ejemplo-sencillo">Poner en práctica las rutas con un ejemplo sencillo<a class="headerlink" href="#poner-en-practica-las-rutas-con-un-ejemplo-sencillo" title="Permanent link">&para;</a></h2>
+<p>Vamos a crear un par de rutas simples para ver cómo funcionan. Asociaremos a cada ruta una vista sencilla que crearemos en la carpeta <code>resources/views/</code>.</p>
+<p>Vamos a crear dos vistas (páginas HTML) estáticas.</p>
+<h3 id="1-crear-las-vistas">1. Crear las vistas<a class="headerlink" href="#1-crear-las-vistas" title="Permanent link">&para;</a></h3>
+<p>Dentro de <code>resources/views/</code>, crea una carpeta <code>landing</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>resources/views/landing/
+</code></pre></div>
+<p>Dentro de <code>landing/</code>, crea dos archivos:</p>
+<div class="admonition tip">
+<p class="admonition-title">Páginas HTML5 en VSCode</p>
+<p>Si usas Visual Studio Code, puedes crear un archivo nuevo y escribir <code>!</code> y luego pulsar <code>Tab</code> para que se genere una plantilla básica de HTML5 automáticamente.</p>
+</div>
+<p><strong>resources/views/landing/index.blade.php</strong></p>
+<div class="admonition note">
+<p class="admonition-title">resources/views/landing/index.blade.php</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Bienvenido a nuestra página principal<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</code></pre></div>
+</div>
+<p><strong>resources/views/landing/about.blade.php</strong></p>
+<div class="admonition note">
+<p class="admonition-title">resources/views/landing/about.blade.php</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Sobre nosotros<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</code></pre></div>
+</div>
+<p>Es importante que las extensiones de los archivos sean <code>.blade.php</code>, ya que Laravel utiliza el motor de plantillas Blade para procesar estas vistas. Aunque luego en el enrutador no se vean las extensiones, Laravel las procesa como plantillas. Por ejemplo si tenemos el archivo:</p>
+<ul>
+<li><code>index.blade.php</code>, en el enrutador lo llamaremos <code>index</code> y no <code>index.blade.php</code>.</li>
+<li><code>/user/index.blade.php</code>, en el enrutador lo llamaremos <code>user.index</code> y no <code>user/index.blade.php</code>.</li>
+</ul>
+<p>En el último caso resaltar el uso de un <code>.</code> para separar la carpeta de la vista. Esto es importante porque Laravel utiliza el punto como separador de carpetas al buscar las vistas.</p>
+<h3 id="2-definir-las-rutas">2. Definir las rutas<a class="headerlink" href="#2-definir-las-rutas" title="Permanent link">&para;</a></h3>
+<p>Edita el archivo <code>routes/web.php</code> y añade:</p>
+<div class="admonition note">
+<p class="admonition-title">routes/web.php</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="nx">Route</span><span class="o">::</span><span class="na">view</span><span class="p">(</span><span class="s1">'/'</span><span class="p">,</span> <span class="s1">'landing.index'</span><span class="p">)</span><span class="o">-&gt;</span> <span class="na">name</span><span class="p">(</span><span class="s1">'index'</span><span class="p">);</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="nx">Route</span><span class="o">::</span><span class="na">view</span><span class="p">(</span><span class="s1">'/about'</span><span class="p">,</span> <span class="s1">'landing.about'</span><span class="p">)</span><span class="o">-&gt;</span> <span class="na">name</span><span class="p">(</span><span class="s1">'about'</span><span class="p">);</span>
+</code></pre></div>
+</div>
+<p>A las rutas les hemos dado un nombre para poder referenciarlas más fácilmente en el futuro. Esto nos será de mucha utilidad más adelante.</p>
+<div class="admonition warning">
+<p class="admonition-title">Borra la ruta que trae Laravel</p>
+<p>El <code>web.php</code> recién instalado ya tiene una ruta para <code>/</code> que muestra la página de bienvenida:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="x">Route::get('/', function () {</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="x">    return view('welcome');</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="x">});</span>
+</code></pre></div>
+<p><strong>Bórrala</strong> (o sustitúyela por las nuevas). Si la dejas <em>después</em> de tus rutas, Laravel usa la última definida para la misma dirección y en <code>/</code> seguirás viendo la página de bienvenida de Laravel en lugar de la tuya. Deja también la línea <code>use Illuminate\Support\Facades\Route;</code> al principio del archivo.</p>
+<p>El archivo completo queda así:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="k">use</span> <span class="nx">Illuminate\Support\Facades\Route</span><span class="p">;</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="nx">Route</span><span class="o">::</span><span class="na">view</span><span class="p">(</span><span class="s1">'/'</span><span class="p">,</span> <span class="s1">'landing.index'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">(</span><span class="s1">'index'</span><span class="p">);</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="nx">Route</span><span class="o">::</span><span class="na">view</span><span class="p">(</span><span class="s1">'/about'</span><span class="p">,</span> <span class="s1">'landing.about'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">(</span><span class="s1">'about'</span><span class="p">);</span>
+</code></pre></div>
+<p>Para comprobar qué rutas tiene registradas Laravel: <code>docker compose exec php php artisan route:list</code>.</p>
+</div>
+<h3 id="3-probar-las-rutas">3. Probar las rutas<a class="headerlink" href="#3-probar-las-rutas" title="Permanent link">&para;</a></h3>
+<p>Para acceder a las páginas, abre tu navegador y visita:</p>
+<ul>
+<li>página principal: <a href="http://localhost:8080/">http://localhost:8080/</a></li>
+<li>página "Sobre nosotros": <a href="http://localhost:8080/about">http://localhost:8080/about</a></li>
+</ul>
+<div class="admonition success">
+<p class="admonition-title">Felicitaciones</p>
+<p>¡Ya has creado tu primera pequeña web usando Laravel, rutas y vistas Blade!</p>
+<p><img alt="Imagen home" src="../../assets/beteta/T02/img02.png" /></p>
+<p><img alt="Imagen about" src="../../assets/beteta/T02/img03.png" /></p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      IES JUAN DE GARAY - 2º DWES · Curso original de Beteta adaptado por Eva María Gómez Abad
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>
