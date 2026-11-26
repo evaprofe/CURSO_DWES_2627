@@ -107,6 +107,19 @@ Dentro de `public/` podemos encontrar:
 
 Laravel dispone de una interfaz de línea de comandos (CLI) para facilitar tareas de creación de proyectos y componentes.
 
+!!! info "Este apartado es informativo: no necesitas hacerlo"
+
+    Tu proyecto ya está creado con `composer create-project` (apartado 2.3), que es lo que usamos en el curso. El instalador `laravel` solo sirve para crear proyectos nuevos y, dentro de Docker, **se pierde al reconstruir el contenedor**. Léelo para saber que existe.
+
+    Si quieres probarlo, se hace en la terminal de VS Code, en dos pasos:
+
+    ```bash
+    docker compose exec php bash          # 1. entras en el contenedor (el indicador cambia a root@...:/var/www/html#)
+    composer global require laravel/installer   # 2. ya dentro, instalas el comando
+    ```
+
+    Y para salir del contenedor, `exit`. **No ejecutes `laravel new` dentro de `/var/www/html`**: crearía otro proyecto dentro de tu proyecto.
+
 ### Instalar el instalador de Laravel globalmente
 
 Dentro del contenedor PHP, puedes instalar el instalador de Laravel si quieres crear proyectos más rápidamente:
