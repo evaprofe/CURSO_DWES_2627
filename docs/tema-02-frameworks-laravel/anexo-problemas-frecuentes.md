@@ -36,6 +36,21 @@ docker compose exec mysql mysql -uroot -p
 docker compose exec php bash
 ```
 
+### `"composer" no se reconoce como un comando` · `"php" no se reconoce` · `artisan` no funciona
+
+**Causa:** PHP y Composer están instalados **dentro del contenedor `php`**, no en Windows. La terminal de VS Code, al abrirse, está en Windows.
+
+**Solución:** entra antes en el contenedor y ejecuta ahí los comandos:
+
+```bash
+docker compose exec php bash      # el indicador cambia a root@...:/var/www/html#
+composer --version
+php artisan route:list
+exit                              # para volver a Windows
+```
+
+O, sin entrar, anteponiendo `docker compose exec php` a cada comando: `docker compose exec php composer --version`.
+
 ## Docker y MySQL
 
 ### `Bind for 0.0.0.0:3306 failed: port is already allocated`
