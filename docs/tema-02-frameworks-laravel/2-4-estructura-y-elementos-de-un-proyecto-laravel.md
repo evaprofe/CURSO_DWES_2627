@@ -360,9 +360,37 @@ Edita el archivo `routes/web.php` y añade:
 
 A las rutas les hemos dado un nombre para poder referenciarlas más fácilmente en el futuro. Esto nos será de mucha utilidad más adelante.
 
+!!! warning "Borra la ruta que trae Laravel"
+
+    El `web.php` recién instalado ya tiene una ruta para `/` que muestra la página de bienvenida:
+
+    ```php
+    Route::get('/', function () {
+        return view('welcome');
+    });
+    ```
+
+    **Bórrala** (o sustitúyela por las nuevas). Si la dejas *después* de tus rutas, Laravel usa la última definida para la misma dirección y en `/` seguirás viendo la página de bienvenida de Laravel en lugar de la tuya. Deja también la línea `use Illuminate\Support\Facades\Route;` al principio del archivo.
+
+    El archivo completo queda así:
+
+    ```php
+    <?php
+
+    use Illuminate\Support\Facades\Route;
+
+    Route::view('/', 'landing.index')->name('index');
+    Route::view('/about', 'landing.about')->name('about');
+    ```
+
+    Para comprobar qué rutas tiene registradas Laravel: `docker compose exec php php artisan route:list`.
+
 ### 3. Probar las rutas
 
-Para acceder a las páginas, abre tu navegador y visita: - página principal: [http://localhost:8080/](http://localhost:8080/) - página "Sobre nosotros": [http://localhost:8080/about](http://localhost:8080/about)
+Para acceder a las páginas, abre tu navegador y visita:
+
+- página principal: [http://localhost:8080/](http://localhost:8080/)
+- página "Sobre nosotros": [http://localhost:8080/about](http://localhost:8080/about)
 
 !!! success "Felicitaciones"
 
